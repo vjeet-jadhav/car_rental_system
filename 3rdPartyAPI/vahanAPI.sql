@@ -1,7 +1,7 @@
 create database if not exists vahanapi;
 
 create table vahanDetails (
-    carId char primary key,
+    carId varchar(10) primary key,
     registrationNumber varchar(15) unique not null,
     make varchar(20),
     model varchar(20),
