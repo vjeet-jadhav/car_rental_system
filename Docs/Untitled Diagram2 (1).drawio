@@ -1,0 +1,298 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36" version="26.2.14">
+  <diagram name="Page-1" id="GP_Fx0xqsRA6HyaVk3IY">
+    <mxGraphModel dx="872" dy="439" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="720" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-2" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="150" width="265" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-3" value="&lt;b style=&quot;font-size: 27px;&quot;&gt;Aapli Car&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="50" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-4" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;Home&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="540" y="50" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-5" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;Profile&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="660" y="60" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-6" value="&lt;font style=&quot;font-size: 23px;&quot;&gt;My cars&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="330" y="78" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-8" value="Current Details" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="255" y="340" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-9" value="" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.004;exitY=0.604;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1.004;entryY=0.591;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="b-P6NmiFPvROYHEKWxM8-2" target="b-P6NmiFPvROYHEKWxM8-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="250" as="sourcePoint" />
+            <mxPoint x="450" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-10" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="430" y="150" width="265" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-11" value="" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.004;exitY=0.604;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1.004;entryY=0.591;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="430" y="285" as="sourcePoint" />
+            <mxPoint x="695" y="282" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-13" value="Car Variant" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="147" y="340" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-15" value="Car Brand" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="461" y="301" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-16" value="Car Brand" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="146" y="300" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-17" value="Car Model" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="255" y="300" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-18" value="Car Model" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="300" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-19" value="Car Variant" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="462" y="340" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-20" value="Current Details" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="340" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-25" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;Add Car&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="390" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-27" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="850" y="40" width="710" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-28" value="&lt;font style=&quot;font-size: 19px;&quot;&gt;&lt;b&gt;Car Details&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1153" y="98" width="115" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-29" value="&lt;b style=&quot;font-size: 27px;&quot;&gt;Aapli Car&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="890" y="50" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-30" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;Home&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1367" y="50" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-31" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;Profile&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="60" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-32" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="920" y="185" width="260" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-33" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1225" y="190" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-34" value="Car Brand" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="1245" y="180" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-36" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1389" y="188" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-37" value="Car Model" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="1409" y="178" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-38" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1225" y="240" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-39" value="Rental Status" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="1245" y="230" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-44" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1389" y="240" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-45" value="Client Name" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="1409" y="230" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-46" value="Avail Car" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="920" y="380" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-47" value="Remove availability" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1155" y="380" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-48" value="Deregister car" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1380" y="380" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-49" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1225" y="300" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-50" value="Client Number" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="1245" y="290" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-51" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1389" y="300" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-52" value="Release Date" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="1409" y="290" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-56" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;My Cars&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1284" y="50" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-57" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;Earning&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1191" y="50" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-58" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;Booking&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="50" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-60" value="&lt;span style=&quot;color: rgba(0, 0, 0, 0); font-family: monospace; font-size: 0px; text-align: start; text-wrap-mode: nowrap;&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22%26lt%3Bfont%20style%3D%26quot%3Bfont-size%3A%2019px%3B%26quot%3B%26gt%3B%26lt%3Bb%26gt%3BCar%20Details%26lt%3B%2Fb%26gt%3B%26lt%3B%2Ffont%26gt%3B%22%20style%3D%22text%3Bhtml%3D1%3Balign%3Dcenter%3BverticalAlign%3Dmiddle%3BwhiteSpace%3Dwrap%3Brounded%3D0%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%221153%22%20y%3D%2298%22%20width%3D%22115%22%20height%3D%2250%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1760" y="40" width="720" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-61" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;Profile&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2396" y="59" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-62" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;Home&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2295" y="49" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-63" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;My Cars&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2208" y="50" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-64" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;Earning&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2111" y="51" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-65" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;Booking&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2006" y="51" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-66" value="&lt;b style=&quot;font-size: 27px;&quot;&gt;Aapli Car&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="51" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-67" value="&lt;font style=&quot;font-size: 19px;&quot;&gt;&lt;b&gt;Bookings&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2068" y="98" width="115" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-68" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1844.94" y="170" width="265" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-69" value="Current Details" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1989.94" y="360" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-70" value="" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.004;exitY=0.604;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1.004;entryY=0.591;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="b-P6NmiFPvROYHEKWxM8-68" target="b-P6NmiFPvROYHEKWxM8-68">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="2134.94" y="270" as="sourcePoint" />
+            <mxPoint x="2184.94" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-71" value="Car Variant" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1881.94" y="360" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-72" value="Car Brand" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1880.94" y="320" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-73" value="Car Model" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1989.94" y="320" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-74" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2160" y="170" width="265" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-75" value="Current Details" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2305" y="360" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-76" value="" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.004;exitY=0.604;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1.004;entryY=0.591;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="b-P6NmiFPvROYHEKWxM8-74" target="b-P6NmiFPvROYHEKWxM8-74">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="2450" y="270" as="sourcePoint" />
+            <mxPoint x="2500" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-77" value="Car Variant" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2197" y="360" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-78" value="Car Brand" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2196" y="320" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-79" value="Car Model" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2305" y="320" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-80" value="&lt;span style=&quot;color: rgba(0, 0, 0, 0); font-family: monospace; font-size: 0px; text-align: start; text-wrap-mode: nowrap;&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22%26lt%3Bfont%20style%3D%26quot%3Bfont-size%3A%2019px%3B%26quot%3B%26gt%3B%26lt%3Bb%26gt%3BCar%20Details%26lt%3B%2Fb%26gt%3B%26lt%3B%2Ffont%26gt%3B%22%20style%3D%22text%3Bhtml%3D1%3Balign%3Dcenter%3BverticalAlign%3Dmiddle%3BwhiteSpace%3Dwrap%3Brounded%3D0%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%221153%22%20y%3D%2298%22%20width%3D%22115%22%20height%3D%2250%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2600" y="40" width="720" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-81" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;Profile&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="3236" y="59" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-82" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;Home&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="3135" y="49" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-83" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;My Cars&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="3048" y="50" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-84" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;Earning&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2951" y="51" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-85" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;Booking&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2846" y="51" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-86" value="&lt;b style=&quot;font-size: 27px;&quot;&gt;Aapli Car&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2610" y="51" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-87" value="&lt;font style=&quot;font-size: 19px;&quot;&gt;&lt;b&gt;Earnings&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2902.5" y="101" width="115" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-92" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2670" y="185" width="580" height="195" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-93" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2670" y="240" width="580" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-94" value="&lt;font style=&quot;font-size: 19px;&quot;&gt;Total&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2670" y="330" width="580" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-96" value="" style="endArrow=none;html=1;rounded=0;entryX=0.202;entryY=0.01;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="b-P6NmiFPvROYHEKWxM8-92">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="2787" y="330" as="sourcePoint" />
+            <mxPoint x="3000" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-97" value="" style="endArrow=none;html=1;rounded=0;entryX=0.202;entryY=0.01;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="2892" y="330" as="sourcePoint" />
+            <mxPoint x="2892.12" y="185.29999999999995" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-98" value="" style="endArrow=none;html=1;rounded=0;entryX=0.202;entryY=0.01;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="3010" y="330" as="sourcePoint" />
+            <mxPoint x="3010" y="185" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-101" value="Car Brand" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2790" y="190" width="100" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-102" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0.395;entryY=0.026;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="b-P6NmiFPvROYHEKWxM8-101" target="b-P6NmiFPvROYHEKWxM8-92">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-103" value="Car No" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2680" y="190" width="100" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-104" value="Car Model" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2902.5" y="190" width="100" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-105" value="" style="endArrow=none;html=1;rounded=0;entryX=0.202;entryY=0.01;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="3120" y="380" as="sourcePoint" />
+            <mxPoint x="3120" y="187" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-106" value="Car Variant" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="3017.5" y="190" width="100" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-107" value="Earning / Month" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="3135" y="190" width="100" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-108" value="Monthly" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="3088" y="138" width="120" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-111" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="3189" y="160" as="sourcePoint" />
+            <mxPoint x="3199" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b-P6NmiFPvROYHEKWxM8-112" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="3189" y="160" as="sourcePoint" />
+            <mxPoint x="3179" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
