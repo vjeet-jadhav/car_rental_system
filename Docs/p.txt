@@ -1,0 +1,20 @@
+public void displayFor() {
+		if(size == 0) {
+			System.out.println("Nothing to Display: ");
+			return;
+		}
+		//Stack<String> st = new Stack<>();
+		
+		TaskNode trav = head;
+		System.out.println("");
+		System.out.print("Forward List: ");
+		do {
+			System.out.print(" -> " + trav.taskId + " : " + trav.taskName);
+			st.push(trav.taskName);
+			trav = trav.next;
+
+		} while (trav != head);
+		System.out.println("");
+		//System.out.println("");
+
+	}
