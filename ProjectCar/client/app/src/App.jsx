@@ -5,6 +5,7 @@ import './App.css'
 import { Routes,Route } from 'react-router-dom'
 import Container from './Screens/Container'
 import Navbar from './Components/Navbar'
+import Signup from './Screens/Client/Signup'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -12,6 +13,11 @@ function App() {
   return (
     <>
       <Routes>
+        <Route
+        path='/'
+        element = {<Signup />}
+        >
+        </Route>
        
         <Route
         path="/"
