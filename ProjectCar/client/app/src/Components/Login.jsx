@@ -1,0 +1,64 @@
+
+import React from 'react';
+
+
+function Login() {
+  return (
+    <div style={{ backgroundColor : '#fb8500' }}  className="container p-4 app-background mt-5">
+
+      <div className="row">
+
+        {/* Left Section */}
+        <div className="col-md-6 d-flex flex-column justify-content-center text-center text-md-start">
+                    {/* <img src='/Image/login.png' width="400" style={{ width :'350px', border: '2px solid #fff' , marginLeft: '100px'}}></img> */}
+          <img src='/Image/login.png' width="400" style={{ width :'350px' , marginLeft: '100px'}}></img>
+          <h1 style={{color: '#fff'}} className="display-3 fw-bold my-5 px-3 ">
+            <span className="ms-5" >Welcome Back User...</span>
+          </h1>
+        </div>
+
+        {/* Right Section */}
+        <div className="col-md-4 position-relative">
+
+          <div className="shape shape-1"></div>
+          <div className="shape shape-2"></div>
+
+          <div  className="card t my-5">
+            <div className="card-body p-5">
+
+              <label className="form-check-label ms-2 mb-3 fw-bold" htmlFor="email">
+                  Email :
+              </label>
+
+              <input type="email" id='email' className="form-control mb-4" placeholder="Email" />
+
+              <label className="form-check-label ms-2 mb-3 fw-bold"  htmlFor="pass">
+                  Password :
+              </label>
+
+              <input type="password" id='pass' className="form-control mb-4" placeholder="Password" />
+
+              <div className="form-check d-flex justify-content-center mb-4">
+                <input className="form-check-input" type="checkbox" id="remember" />
+                <label className="form-check-label ms-2 fw-bold" htmlFor="remember">
+                  Remember me.
+                </label>
+              </div>
+
+              <button style={{ backgroundColor : '#fb8500' , color : '#fff'}} className="btn  w-100 mb-4 fw-bold">Log-In</button>
+              <p  className="text-center"  d-flex justify-content-center gap-3>or</p>
+              <button style={{ backgroundColor : '#fb8500' , color : '#fff' }} className="btn  w-100 mb-4 fw-bold">Sign-Up</button>
+              
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  );
+}
+
+export default Login;
