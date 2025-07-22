@@ -1,6 +1,8 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import Login from '../Components/Login'
+
+import Navbar from '../Components/Navbar'
+
 
 function Container() {
   return (
@@ -8,6 +10,9 @@ function Container() {
       {/* navbar */}
       <Login></Login>
       <div>
+
+        <Navbar />
+
       </div>
 
       {/* main content */}
