@@ -4,7 +4,7 @@ import { Outlet , useLocation} from 'react-router-dom'
 import Navbar from '../Components/Navbar'
 import Login from '../Components/Login'
 import CarList from './Admin/CarList'
-import AdminNav from '../Components/AdminNav'
+import AdminNav from './Admin/AdminNav'
 import Profile from '../Components/Profile'
 
 import MyCar from './Host/MyCar'
