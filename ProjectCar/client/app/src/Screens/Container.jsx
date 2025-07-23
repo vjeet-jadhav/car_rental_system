@@ -1,8 +1,10 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 
-import Navbar from '../Components/LandingNavbar'
-import Login from '../Components/Login.jsx'
+import Navbar from '../Components/Navbar'
+
+import MyCar from './Host/MyCar'
+
 
 function Container() {
   return (
@@ -11,13 +13,14 @@ function Container() {
       {/* <Login></Login> */}
       <div>
 
-        <Navbar />
+        {/*<Navbar />*/}
 
       </div>
 
       {/* main content */}
       <div>
         <Outlet/>
+        
       </div>
 
       {/* footer */}
