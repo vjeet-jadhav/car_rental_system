@@ -1,0 +1,9 @@
+.custom-colored tbody tr:nth-of-type(odd) {
+  background-color: rgba(252, 210, 72, 1) !important;
+  color: #000; /* dark text for contrast */
+}
+
+.custom-colored tbody tr:nth-of-type(even) {
+  background-color: rgba(248, 91, 60, 1) !important;
+  color: #fff; /* white text */
+}

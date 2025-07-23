@@ -1,29 +1,23 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet , useLocation} from 'react-router-dom'
 
 import Navbar from '../Components/Navbar'
+import Login from '../Components/Login'
+import CarList from './Admin/CarList'
+import AdminNav from '../Components/AdminNav'
+import Profile from '../Components/Profile'
+
+import MyCar from './Host/MyCar'
 
 
 function Container() {
+  
   return (
-    <div>
-      {/* navbar */}
-      <Login></Login>
-      <div>
+    <div style={{ position: 'relative' }}>
+      <AdminNav />
+      
 
-        <Navbar />
-
-      </div>
-
-      {/* main content */}
-      <div>
-        <Outlet/>
-      </div>
-
-      {/* footer */}
-      <div>
-
-      </div>
+      <Outlet />
     </div>
 
   )
