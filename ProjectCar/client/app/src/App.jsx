@@ -5,8 +5,6 @@ import './App.css'
 import { Routes,Route } from 'react-router-dom'
 
 import Container from './Screens/Container'
-import Navbar from './Components/Navbar'
-import Signup from './Screens/Client/Signup'
 
 
 function App() {
@@ -16,20 +14,19 @@ function App() {
     <>
       {/* <h1>hello</h1> */}
       <Routes>
-
       
        
         <Route
         path="/"
         element={<Container></Container>}
-
         >
-          {/* here insert you page route */}
-          {/* eg 
-          <Route path="/container/home" element={<Home/>}>
-           */}
+          {/* here insert you page route
+          eg 
+          <Route path="/container/home" element={<Home/>}> */}
+          
         </Route>
       </Routes>
+
     </>
   )
 }

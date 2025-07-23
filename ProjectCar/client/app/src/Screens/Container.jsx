@@ -1,14 +1,14 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 
-import Navbar from '../Components/Navbar'
-
+import Navbar from '../Components/LandingNavbar'
+import Login from '../Components/Login.jsx'
 
 function Container() {
   return (
     <div>
       {/* navbar */}
-      <Login></Login>
+      {/* <Login></Login> */}
       <div>
 
         <Navbar />
