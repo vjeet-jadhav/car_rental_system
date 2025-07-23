@@ -14,7 +14,7 @@ function Container() {
   
   return (
     <div style={{ position: 'relative' }}>
-      <AdminNav />
+
       
 
       <Outlet />
