@@ -7,18 +7,14 @@ import CarList from './Admin/CarList'
 import AdminNav from '../Components/AdminNav'
 import Profile from '../Components/Profile'
 
+import MyCar from './Host/MyCar'
+
 
 function Container() {
-
-  const location = useLocation();
-
-  const showProfile = location.pathname === '/dashboard/edit';
-
+  
   return (
     <div style={{ position: 'relative' }}>
       <AdminNav />
-
-      {/* for displaying profile on edit */}
       
 
       <Outlet />
