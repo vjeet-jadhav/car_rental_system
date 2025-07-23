@@ -1,29 +1,27 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet , useLocation} from 'react-router-dom'
 
 import Navbar from '../Components/Navbar'
+import Login from '../Components/Login'
+import CarList from './Admin/CarList'
+import AdminNav from '../Components/AdminNav'
+import Profile from '../Components/Profile'
 
 
 function Container() {
+
+  const location = useLocation();
+
+  const showProfile = location.pathname === '/dashboard/edit';
+
   return (
-    <div>
-      {/* navbar */}
-      <Login></Login>
-      <div>
+    <div style={{ position: 'relative' }}>
+      <AdminNav />
 
-        <Navbar />
+      {/* for displaying profile on edit */}
+      
 
-      </div>
-
-      {/* main content */}
-      <div>
-        <Outlet/>
-      </div>
-
-      {/* footer */}
-      <div>
-
-      </div>
+      <Outlet />
     </div>
 
   )
