@@ -6,7 +6,6 @@ import AdminNav from './AdminNav'
 function AdminContainer() {
   return (
     <div>
-      <AdminNav></AdminNav>
       <Outlet></Outlet>
     </div>
   )

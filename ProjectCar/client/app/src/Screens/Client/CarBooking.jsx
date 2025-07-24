@@ -8,7 +8,7 @@ function CarBooking() {
             <div className=' d-flex flex-row gap-3 m-4'>
 
                 {/* Proceed for payment */}
-                <div className="my-4 p-4 col-4 border border-4">
+                <div className="my-4 p-4 col-4 border rounded-4">
                     <h3>Car Rental Payment</h3>
 
                     <form className="d-flex flex-column gap-3" style={{ maxWidth: '450px' }}>
@@ -69,8 +69,8 @@ function CarBooking() {
                 </div>
 
                 {/* car information */}
-                <div className='my-4 col-8 border border-4 p-4'>
-                    <div className='d-flex justify-content-evenly align-content-center border border-info'>
+                <div className='my-4 col-8 p-4'>
+                    <div className='d-flex justify-content-evenly align-content-center '>
                         {/* Main Image */}
                         <div>
                             <img src="../public/Image/car-hero-section.svg" alt="" className='border border-2 rounded-4' style={{ width: '400px', height: '410px' }} />
@@ -94,7 +94,7 @@ function CarBooking() {
                         </div>
                     </div>
 
-                    <div className='d-flex justify-content-between align-items-center mt-4'>
+                    <div className='d-flex justify-content-between align-items-center mt-4 p-4'>
                         <div className='d-flex flex-column gap-3'>
                             <span>Hosted By Sanket Padul</span>
                             <span className='fw-bold' style={{fontSize:'2rem'}}>Maruti Suzuki</span>
