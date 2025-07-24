@@ -1,5 +1,4 @@
 
-
 import { useState } from "react";
 import "./App.css";
 import Signup from './Screens/Client/Signup'
@@ -14,6 +13,12 @@ import Profile from "./Components/Profile";
 import AdminContainer from "./Screens/Admin/AdminContainer";
 import ScheduleAgenet from "./Screens/Admin/ScheduleAgenet";
 import RegisterAgent from "./Screens/Admin/RegisterAgent";
+import PendingRequests from "./Screens/Agent/PendingRequests";
+import History from "./Screens/Agent/History";
+import AgentContainer from "./Screens/Agent/AgentContainer";
+import Register from "./Screens/Host/Register";
+import Login from "./Components/Login";
+import ClientBooking from "./Screens/Client/ClientBooking";
 
 import HostContainer from "./Screens/Host/HostContainer";
 import HostRegistration from "./Screens/Host/HostRegistration";
@@ -23,7 +28,7 @@ import HostHomePage from "./Screens/Host/HostHomePage";
 
 function App() {
   const [count, setCount] = useState(0);
-  
+
   return (
     <>
       <Routes>
@@ -47,16 +52,38 @@ function App() {
           />
 
           <Route
-          path="/allcars"
-          element={<CarInfo/>}
+            path="/allcars"
+            element={<CarInfo />}
           />
 
           <Route
-          path="/carbooking"
-          element={<CarBooking/>}
+            path="/carbooking"
+            element={<CarBooking />}
           />
-                                       
+
+          <Route
+            path="edit"
+            element={<Profile />} />
+
+          <Route
+            path="become-host"
+            element={<Register />} />
+
+          <Route
+            path="user-login"
+            element={<Login />} />
+
+          <Route
+            path="user-signup"
+            element={<Signup />} />
+          
+          <Route
+            path="user-booking"
+            element={<ClientBooking />} />
+
         </Route>
+
+
       </Routes>
     </>
   );
