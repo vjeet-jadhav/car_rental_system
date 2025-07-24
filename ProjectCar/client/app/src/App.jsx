@@ -1,5 +1,4 @@
 
-
 import { useState } from "react";
 import "./App.css";
 import Navbar from './Components/Navbar'
@@ -29,21 +28,14 @@ function App() {
             <Route path="schedule" element={<ScheduleAgenet />} />
             <Route path="register" element={<RegisterAgent></RegisterAgent>}></Route>
           </Route>
-                <Route
-          path="/home"
-          element={<Home/>}
-          />
 
-          <Route
-          path="/allcars"
-          element={<CarInfo/>}
-          />
+          
 
-          <Route
-          path="/carbooking"
-          element={<CarBooking/>}
-          />
-                                       
+        <Route path="/home" element={<Home/>} />
+
+          <Route path="/allcars" element={<CarInfo/>} />
+
+          <Route path="/carbooking" element={<CarBooking/>}/>
         </Route>
       </Routes>
     </>
