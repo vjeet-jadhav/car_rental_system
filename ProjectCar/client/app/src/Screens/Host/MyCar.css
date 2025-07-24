@@ -1,0 +1,107 @@
+.booking-page {
+  font-family: Arial, sans-serif;
+  background-color: white;
+  color: #333;
+  padding: 20px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: orange;
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+
+.logo {
+  font-size: 24px;
+  margin-left: 10px;
+  font-weight: bold;
+  color: white;
+}
+
+.nav-links a {
+  color: white;
+  margin-right: 10px;
+  margin-left: 20px;
+  text-decoration: none;
+}
+
+.page-title {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.car-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.car-box {
+  border: 2px solid orange;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.car-box-content {
+  display: flex;
+  height: 325px;
+}
+
+/* --- Image Section & Button Overlay --- */
+.car-image {
+  position: relative;
+  width: 50%;
+  background-color: #ffe9d6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.car-image img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 8px;
+}
+
+.view-btn {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: orange;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* --- Details Section --- */
+.car-details {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.detail-item label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.detail-item span {
+  display: block;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fafafa;
+}
