@@ -1,33 +1,33 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet , useLocation} from 'react-router-dom'
 
 import Navbar from '../Components/Navbar'
+import Footer from '../Components/Footer'
 
-import MyCar from './Host/MyCar'
 
 
 function Container() {
+  
   return (
+
     <div>
       {/* navbar */}
-      {/* <Login></Login> */}
+      
       <div>
-
-        {/*<Navbar />*/}
-
+        <Navbar />
       </div>
 
       {/* main content */}
       <div>
         <Outlet/>
-        
       </div>
 
       {/* footer */}
       <div>
-
+          <Footer/>
       </div>
-    </div>
+
+   
 
   )
 }
