@@ -14,6 +14,9 @@ import Profile from "./Components/Profile";
 import AdminContainer from "./Screens/Admin/AdminContainer";
 import ScheduleAgenet from "./Screens/Admin/ScheduleAgenet";
 import RegisterAgent from "./Screens/Admin/RegisterAgent";
+import PendingRequests from "./Screens/Agent/PendingRequests";
+import History from "./Screens/Agent/History";
+import AgentContainer from "./Screens/Agent/AgentContainer";
 import Register from "./Screens/Host/Register";
 import Login from "./Components/Login";
 import ClientBooking from "./Screens/Client/ClientBooking";
@@ -31,6 +34,19 @@ function App() {
             <Route path="schedule" element={<ScheduleAgenet />} />
             <Route path="register" element={<RegisterAgent></RegisterAgent>}></Route>
           </Route>
+          <Route
+            path="agent"
+            element={<AgentContainer />}
+          >
+            <Route
+            path=""
+            element={<PendingRequests/>}/>
+
+            <Route
+            path="history"
+            element={<History/>}/>
+          </Route>
+
 
           {/* user section routing */}
           <Route
@@ -69,6 +85,8 @@ function App() {
             element={<ClientBooking />} />
 
         </Route>
+
+
       </Routes>
     </>
   );

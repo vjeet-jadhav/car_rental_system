@@ -7,7 +7,6 @@ import AdminNav from './Admin/AdminNav';
 
 
 
-
 function Container() {
 
    const location = useLocation();
@@ -37,6 +36,7 @@ function Container() {
           <Footer />
         </div>
       </div>
+
     </>
   )
 }
