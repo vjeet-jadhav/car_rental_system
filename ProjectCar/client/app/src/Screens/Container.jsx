@@ -1,34 +1,43 @@
 import React from 'react'
-import { Outlet , useLocation} from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 
 import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer'
+import AdminNav from './Admin/AdminNav';
+
 
 
 
 function Container() {
-  
+
+   const location = useLocation();
+  const path = location.pathname;
+
+  // Choose the correct navbar based on path
+  const renderNavbar = () => {
+    if (path.startsWith("/home")) return <Navbar />;
+    // if (path.startsWith("/agent")) return <Navbar />;
+    // if (path.startsWith("/host")) return <Navbar />;
+    if (path.startsWith("/admin")) return <AdminNav></AdminNav>;
+    
+    return <Navbar />;
+  };
+
   return (
-
-    <div>
-      {/* navbar */}
-      
+    <>
       <div>
-        <Navbar />
+
+        <div>{renderNavbar()}</div>
+
+        <div>
+          <Outlet />
+        </div>
+
+        <div>
+          <Footer />
+        </div>
       </div>
-
-      {/* main content */}
-      <div>
-        <Outlet/>
-      </div>
-
-      {/* footer */}
-      <div>
-          <Footer/>
-      </div>
-
-   
-
+    </>
   )
 }
 

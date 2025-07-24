@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 function CarInfo() {
     return (
         <div>
+            {/* top section */}
             <div className='d-flex mt-5  p-2 gap-1' >
                 {/* left-section */}
                 <div className='col-3 border border-2 border-danger'>  
@@ -18,6 +19,7 @@ function CarInfo() {
                     </div>
                 </div>
             </div>
+            {/* middle section */}
             <div className='d-flex mt-2 p-2 gap-1' >
                 {/* left-section */}
                 <div className='col-3  border-danger p-3 '>
@@ -30,13 +32,13 @@ function CarInfo() {
                                     <input type="checkbox" style={{transform: 'scale(1.3)'}}/> <span className=' px-2'>SUV</span>
                                 </div>
                                 <div>
-                                    <input type="checkbox" style={{transform: 'scale(1.3)'}}/> <span className=' px-2'>SUV</span>
+                                    <input type="checkbox" style={{transform: 'scale(1.3)'}}/> <span className=' px-2'>Tata Nexon</span>
                                 </div>
                                 <div>
-                                    <input type="checkbox" style={{transform: 'scale(1.3)'}}/> <span className=' px-2'>SUV</span>
+                                    <input type="checkbox" style={{transform: 'scale(1.3)'}}/> <span className=' px-2'>Hyundai i20</span>
                                 </div>
                                 <div>
-                                    <input type="checkbox" style={{transform: 'scale(1.3)'}}/> <span className=' px-2'>SUV</span>
+                                    <input type="checkbox" style={{transform: 'scale(1.3)'}}/> <span className=' px-2'>Mahindra XUV700</span>
                                 </div>
                             </div>
                         </div>
