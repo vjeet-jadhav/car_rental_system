@@ -38,11 +38,11 @@ function AdminNav() {
           </ul>
 
           <div className="d-flex align-items-center">
+            <Link to="/admin" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
+              Schedule Agent
+            </Link>
             <Link to="/admin/register" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
               Register Agent
-            </Link>
-            <Link to="/admin/schedule" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
-              Schedule Agent
             </Link>
             <Link to="/admin/restrict" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
               Cars & Users

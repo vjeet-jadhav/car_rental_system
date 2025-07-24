@@ -4,21 +4,20 @@ import { Link } from 'react-router-dom';
 
 function Login() {
   return (
-    <div style={{ backgroundColor: '#fb8500',maxWidth:'75%' }} className="container p-4 app-background mt-5">
+    <div style={{ backgroundColor: '#fb8500' }} className="container  app-background mt-3 w-75">
 
       <div className="row" >
 
         {/* Left Section */}
         <div className="col-md-6 d-flex flex-column justify-content-center text-center text-md-start">
-          {/* <img src='/Image/login.png' width="400" style={{ width :'350px', border: '2px solid #fff' , marginLeft: '100px'}}></img> */}
           <img src='/Image/login.png' width="400" style={{ width: '350px', marginLeft: '100px' }}></img>
-          <h1 style={{ color: '#fff' }} className=" fw-bold my-5 px-3 ">
+          <h1 style={{ color: '#fff' }} className=" fw-bold my-1 text-center  ">
             <span className="ms-5" >Welcome Back User...</span>
           </h1>
         </div>
 
         {/* Right Section */}
-        <div className="col-md-4 position-relative">
+        <div className="col-md-4 position-relative ">
 
           <div className="shape shape-1"></div>
           <div className="shape shape-2"></div>
@@ -56,9 +55,9 @@ function Login() {
                 </label>
               </div>
 
-              <button style={{ backgroundColor: '#fb8500', color: '#fff' }} className="btn  w-100 mb-4 fw-bold">Log-In</button>
-              <p className="text-center" d-flex justify-content-center gap-3>or</p>
-              <Link to="/user-signup" style={{ backgroundColor: '#fb8500', color: '#fff' }} className="btn  w-100 mb-4 fw-bold">Sign-Up</Link>
+              <button style={{ backgroundColor: '#fb8500', color: '#fff' }} className="btn  w-100 mb-2 fw-bold">Log-In</button>
+              {/* <p className="text-center" d-flex justify-content-center gap-3>or</p> */}
+              <Link to="/user-signup" style={{ backgroundColor: '#fb8500', color: '#fff' }} className="btn  w-100 mb-1 fw-bold">Sign-Up</Link>
 
 
             </div>
