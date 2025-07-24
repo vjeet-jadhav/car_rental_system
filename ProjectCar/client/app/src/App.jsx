@@ -21,6 +21,7 @@ function App() {
             <Route path="schedule" element={<ScheduleAgenet />} />
             <Route path="register" element={<RegisterAgent></RegisterAgent>}></Route>
           </Route>
+          
         </Route>
       </Routes>
     </>
