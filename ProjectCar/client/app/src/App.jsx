@@ -1,5 +1,4 @@
 
-
 import { useState } from "react";
 import "./App.css";
 import Navbar from './Components/Navbar'
@@ -68,6 +67,7 @@ function App() {
           <Route
             path="user-booking"
             element={<ClientBooking />} />
+
         </Route>
       </Routes>
     </>
