@@ -36,8 +36,6 @@ function Container() {
         <div>
           <Footer />
         </div>
-
-
       </div>
     </>
   )
