@@ -2,17 +2,16 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 
 import Navbar from '../Components/Navbar'
+import Footer from '../Components/Footer'
 
 
 function Container() {
   return (
     <div>
       {/* navbar */}
-      <Login></Login>
+      
       <div>
-
         <Navbar />
-
       </div>
 
       {/* main content */}
@@ -22,7 +21,7 @@ function Container() {
 
       {/* footer */}
       <div>
-
+          <Footer/>
       </div>
     </div>
 
