@@ -17,7 +17,7 @@ function Home() {
 
         <div className="row p-4 d-flex align-items-center ">
           {/* Left section - Form */}
-          <div className="col-md-6 ">
+          <div className="col-md-4 ">
             <form>
               <div className="border rounded p-3 home-serach-div">
                 <h3 className="mb-3">
@@ -45,7 +45,7 @@ function Home() {
           </div>
 
           {/* Right section - Image */}
-          <div className="col-md-6 d-flex align-items-center justify-content-center">
+          <div className="col-md-7 d-flex align-items-center justify-content-center">
             <img
               src="../public/Image/car-hero-section.svg"
               alt="Car Rental"

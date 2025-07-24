@@ -1,5 +1,4 @@
 
-
 import { useState } from "react";
 import "./App.css";
 import Navbar from './Components/Navbar'
@@ -18,6 +17,9 @@ import RegisterAgent from "./Screens/Admin/RegisterAgent";
 import PendingRequests from "./Screens/Agent/PendingRequests";
 import History from "./Screens/Agent/History";
 import AgentContainer from "./Screens/Agent/AgentContainer";
+import Register from "./Screens/Host/Register";
+import Login from "./Components/Login";
+import ClientBooking from "./Screens/Client/ClientBooking";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -33,7 +35,22 @@ function App() {
             <Route path="register" element={<RegisterAgent></RegisterAgent>}></Route>
           </Route>
           <Route
-            path="/home"
+            path="agent"
+            element={<AgentContainer />}
+          >
+            <Route
+            path=""
+            element={<PendingRequests/>}/>
+
+            <Route
+            path="history"
+            element={<History/>}/>
+          </Route>
+
+
+          {/* user section routing */}
+          <Route
+            path=""
             element={<Home />}
           />
 
@@ -48,19 +65,25 @@ function App() {
           />
 
           <Route
-            path="agent"
-            element={<AgentContainer />}
-          >
-            <Route
-            path=""
-            element={<PendingRequests/>}/>
+            path="edit"
+            element={<Profile />} />
 
-            <Route
-            path="history"
-            element={<History/>}/>
-          </Route>
+          <Route
+            path="become-host"
+            element={<Register />} />
 
-            
+          <Route
+            path="user-login"
+            element={<Login />} />
+
+          <Route
+            path="user-signup"
+            element={<Signup />} />
+          
+          <Route
+            path="user-booking"
+            element={<ClientBooking />} />
+
         </Route>
 
 
