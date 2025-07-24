@@ -23,12 +23,12 @@ function Container() {
   };
 
   return (
-    <>
-      <div>
+    < >
+      <div className="d-flex flex-column min-vh-100">
 
         <div>{renderNavbar()}</div>
 
-        <div>
+        <div className="flex-grow-1">
           <Outlet />
         </div>
 

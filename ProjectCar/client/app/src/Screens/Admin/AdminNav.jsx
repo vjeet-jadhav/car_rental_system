@@ -9,7 +9,7 @@ function AdminNav() {
           <img
             src="/Image/logo.svg"
             height="40"
-            alt="MDB Logo"
+            alt="Logo"
             loading="lazy"
             style={{ marginTop: "" }}
           />
