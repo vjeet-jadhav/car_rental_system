@@ -15,10 +15,13 @@ import Profile from "./Components/Profile";
 import AdminContainer from "./Screens/Admin/AdminContainer";
 import ScheduleAgenet from "./Screens/Admin/ScheduleAgenet";
 import RegisterAgent from "./Screens/Admin/RegisterAgent";
+import PendingRequests from "./Screens/Agent/PendingRequests";
+import History from "./Screens/Agent/History";
+import AgentContainer from "./Screens/Agent/AgentContainer";
 
 function App() {
   const [count, setCount] = useState(0);
-  
+
   return (
     <>
       <Routes>
@@ -29,22 +32,38 @@ function App() {
             <Route path="schedule" element={<ScheduleAgenet />} />
             <Route path="register" element={<RegisterAgent></RegisterAgent>}></Route>
           </Route>
-                <Route
-          path="/home"
-          element={<Home/>}
+          <Route
+            path="/home"
+            element={<Home />}
           />
 
           <Route
-          path="/allcars"
-          element={<CarInfo/>}
+            path="/allcars"
+            element={<CarInfo />}
           />
 
           <Route
-          path="/carbooking"
-          element={<CarBooking/>}
+            path="/carbooking"
+            element={<CarBooking />}
           />
-                                       
+
+          <Route
+            path="agent"
+            element={<AgentContainer />}
+          >
+            <Route
+            path=""
+            element={<PendingRequests/>}/>
+
+            <Route
+            path="history"
+            element={<History/>}/>
+          </Route>
+
+            
         </Route>
+
+
       </Routes>
     </>
   );

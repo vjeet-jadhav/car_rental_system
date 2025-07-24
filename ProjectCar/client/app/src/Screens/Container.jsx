@@ -3,7 +3,8 @@ import { Outlet , useLocation} from 'react-router-dom'
 
 import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer'
-
+import PendingRequests from './Agent/PendingRequests'
+import History from './Agent/History'
 
 
 function Container() {
@@ -19,7 +20,8 @@ function Container() {
 
       {/* main content */}
       <div>
-        <Outlet/>
+        <Outlet />
+        
       </div>
 
       {/* footer */}
@@ -28,7 +30,7 @@ function Container() {
       </div>
 
    
-
+    </div>
   )
 }
 
