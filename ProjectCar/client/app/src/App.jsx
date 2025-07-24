@@ -31,7 +31,7 @@ function App() {
           <Route path="admin" element={<AdminContainer></AdminContainer>}>
             <Route path="restrict" element={<CarList />}></Route>
             <Route path="edit" element={<Profile />} />
-            <Route path="schedule" element={<ScheduleAgenet />} />
+            <Route index element={<ScheduleAgenet />} />
             <Route path="register" element={<RegisterAgent></RegisterAgent>}></Route>
           </Route>
           <Route

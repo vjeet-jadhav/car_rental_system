@@ -5,9 +5,8 @@ function Footer() {
         <div>
             <footer>
                 <div
-                    className="d-flex mt-5 py-3 rounded justify-content-between align-items-center px-3 px-lg-5 flex-wrap w-100"
-                    style={{ backgroundColor: 'salmon',position:'relative',bottom:'0px',left:'0px' }}
-                >
+                    className="d-flex mt-5 py-3 rounded justify-content-between align-items-center px-3 px-lg-5 flex-wrap w-100 bg-body-tertiary "
+                    style={{ borderTop: '2px solid rgba(248, 91, 60, 1)' }}     >
                     {/* Brand Name */}
                     <div>
                         <h1 className="m-0" style={{cursor: 'pointer'}}>CarServices</h1>

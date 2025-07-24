@@ -3,13 +3,13 @@ import './Register.css'
 function Register() {
   return (
     <div className="host-container" >
-      <header className="host-navbar">
+      {/* <header className="host-navbar">
         <div className="logo">Aapli Car</div>
         <div className="nav-buttons">
           <button>Home</button>
           <button>Profile</button>
         </div>
-      </header>
+      </header> */}
 
       <div className="main-section">
         <h2>Host Your Car...</h2>
