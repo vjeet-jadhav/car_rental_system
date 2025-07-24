@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import "./App.css";
-import Navbar from './Components/Navbar'
 import Signup from './Screens/Client/Signup'
 import Home from './Screens/Client/Home'
 import Footer from './Components/Footer'
@@ -15,6 +14,12 @@ import Profile from "./Components/Profile";
 import AdminContainer from "./Screens/Admin/AdminContainer";
 import ScheduleAgenet from "./Screens/Admin/ScheduleAgenet";
 import RegisterAgent from "./Screens/Admin/RegisterAgent";
+
+import HostContainer from "./Screens/Host/HostContainer";
+import HostRegistration from "./Screens/Host/HostRegistration";
+import HostRegistrationForm from "./Screens/Host/HostRegistrationForm";
+import HostHomePage from "./Screens/Host/HostHomePage";
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -29,7 +34,14 @@ function App() {
             <Route path="schedule" element={<ScheduleAgenet />} />
             <Route path="register" element={<RegisterAgent></RegisterAgent>}></Route>
           </Route>
-                <Route
+
+          <Route path="host" element={<HostContainer></HostContainer>}>
+            <Route path="carregistration" element={<HostRegistration></HostRegistration>}></Route>
+            <Route path="registrationform" element={<HostRegistrationForm></HostRegistrationForm>}></Route>
+            <Route path ="home" element={<HostHomePage></HostHomePage>}></Route>
+          </Route>
+
+          <Route
           path="/home"
           element={<Home/>}
           />
