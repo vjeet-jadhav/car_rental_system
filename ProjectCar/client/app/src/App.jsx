@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import "./App.css";
-import Navbar from './Components/Navbar'
 import Signup from './Screens/Client/Signup'
 import Home from './Screens/Client/Home'
 import Footer from './Components/Footer'
@@ -21,6 +20,12 @@ import Register from "./Screens/Host/Register";
 import Login from "./Components/Login";
 import ClientBooking from "./Screens/Client/ClientBooking";
 
+import HostContainer from "./Screens/Host/HostContainer";
+import HostRegistration from "./Screens/Host/HostRegistration";
+import HostRegistrationForm from "./Screens/Host/HostRegistrationForm";
+import HostHomePage from "./Screens/Host/HostHomePage";
+
+
 function App() {
   const [count, setCount] = useState(0);
 
@@ -34,24 +39,16 @@ function App() {
             <Route index element={<ScheduleAgenet />} />
             <Route path="register" element={<RegisterAgent></RegisterAgent>}></Route>
           </Route>
-          <Route
-            path="agent"
-            element={<AgentContainer />}
-          >
-            <Route
-            path=""
-            element={<PendingRequests/>}/>
 
-            <Route
-            path="history"
-            element={<History/>}/>
+          <Route path="host" element={<HostContainer></HostContainer>}>
+            <Route path="carregistration" element={<HostRegistration></HostRegistration>}></Route>
+            <Route path="registrationform" element={<HostRegistrationForm></HostRegistrationForm>}></Route>
+            <Route path ="home" element={<HostHomePage></HostHomePage>}></Route>
           </Route>
 
-
-          {/* user section routing */}
           <Route
-            path=""
-            element={<Home />}
+          path="/home"
+          element={<Home/>}
           />
 
           <Route
