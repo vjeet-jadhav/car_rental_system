@@ -15,10 +15,13 @@ import Profile from "./Components/Profile";
 import AdminContainer from "./Screens/Admin/AdminContainer";
 import ScheduleAgenet from "./Screens/Admin/ScheduleAgenet";
 import RegisterAgent from "./Screens/Admin/RegisterAgent";
+import Register from "./Screens/Host/Register";
+import Login from "./Components/Login";
+import ClientBooking from "./Screens/Client/ClientBooking";
 
 function App() {
   const [count, setCount] = useState(0);
-  
+
   return (
     <>
       <Routes>
@@ -29,21 +32,42 @@ function App() {
             <Route path="schedule" element={<ScheduleAgenet />} />
             <Route path="register" element={<RegisterAgent></RegisterAgent>}></Route>
           </Route>
-                <Route
-          path="/home"
-          element={<Home/>}
+
+          {/* user section routing */}
+          <Route
+            path=""
+            element={<Home />}
           />
 
           <Route
-          path="/allcars"
-          element={<CarInfo/>}
+            path="/allcars"
+            element={<CarInfo />}
           />
 
           <Route
-          path="/carbooking"
-          element={<CarBooking/>}
+            path="/carbooking"
+            element={<CarBooking />}
           />
-                                       
+
+          <Route
+            path="edit"
+            element={<Profile />} />
+
+          <Route
+            path="become-host"
+            element={<Register />} />
+
+          <Route
+            path="user-login"
+            element={<Login />} />
+
+          <Route
+            path="user-signup"
+            element={<Signup />} />
+          
+          <Route
+            path="user-booking"
+            element={<ClientBooking />} />
         </Route>
       </Routes>
     </>
