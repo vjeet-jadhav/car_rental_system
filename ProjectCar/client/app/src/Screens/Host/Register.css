@@ -5,11 +5,11 @@ body {
   color: #333;
 }
 
-.container {
+.host-container {
   padding: 20px;
 }
 
-.navbar {
+.host-navbar {
   margin-top: 20px;
   display: flex;
   justify-content: space-between;

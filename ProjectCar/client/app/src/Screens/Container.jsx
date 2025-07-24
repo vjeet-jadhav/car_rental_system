@@ -33,7 +33,9 @@ function Container() {
           <Outlet />
         </div>
 
-        <Footer />
+        <div>
+          <Footer />
+        </div>
       </div>
     </>
   )

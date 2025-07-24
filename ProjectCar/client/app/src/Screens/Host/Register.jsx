@@ -2,8 +2,8 @@ import React from 'react'
 import './Register.css'
 function Register() {
   return (
-    <div className="container" >
-      <header className="navbar">
+    <div className="host-container" >
+      <header className="host-navbar">
         <div className="logo">Aapli Car</div>
         <div className="nav-buttons">
           <button>Home</button>

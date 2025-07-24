@@ -5,8 +5,8 @@ function Footer() {
         <div>
             <footer>
                 <div
-                    className="d-flex mt-5 py-3 mb-1 rounded justify-content-between align-items-center px-3 px-lg-5 flex-wrap bg-body-tertiary"
-                    style={{ borderTop: '2px solid rgba(248, 91, 60, 1)'  }}
+                    className="d-flex mt-5 py-3 rounded justify-content-between align-items-center px-3 px-lg-5 flex-wrap w-100"
+                    style={{ backgroundColor: 'salmon',position:'relative',bottom:'0px',left:'0px' }}
                 >
                     {/* Brand Name */}
                     <div>
