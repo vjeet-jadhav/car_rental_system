@@ -12,6 +12,8 @@ export default function Profile() {
   };
 
   return (
+    <>
+    <h1 className="mb-3 text-center mt-5">Edit Profile</h1>
     <div
       className="card  "
       style={{
@@ -19,7 +21,7 @@ export default function Profile() {
         boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
         maxWidth: '400px',
         backgroundColor: '#fff',
-        marginTop:'100px',
+        marginTop:'50px',
         alignSelf:'center',
         justifySelf:'center'
       }}
@@ -72,5 +74,6 @@ export default function Profile() {
         </div>
       </div>
     </div>
+    </>
   );
 }
