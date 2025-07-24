@@ -1,9 +1,10 @@
 import React from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 
-import Navbar from '../Components/Navbar'
+import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer'
 import AdminNav from './Admin/AdminNav';
+import HostNav from './Host/HostNav';
 
 
 
@@ -16,7 +17,7 @@ function Container() {
   const renderNavbar = () => {
     if (path.startsWith("/home")) return <Navbar />;
     // if (path.startsWith("/agent")) return <Navbar />;
-    // if (path.startsWith("/host")) return <Navbar />;
+    if (path.startsWith("/host")) return <HostNav />;
     if (path.startsWith("/admin")) return <AdminNav></AdminNav>;
     
     return <Navbar />;

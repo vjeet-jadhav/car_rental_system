@@ -16,7 +16,7 @@ import RegisterAgent from "./Screens/Admin/RegisterAgent";
 import PendingRequests from "./Screens/Agent/PendingRequests";
 import History from "./Screens/Agent/History";
 import AgentContainer from "./Screens/Agent/AgentContainer";
-import Register from "./Screens/Host/Register";
+
 import Login from "./Components/Login";
 import ClientBooking from "./Screens/Client/ClientBooking";
 
@@ -67,7 +67,7 @@ function App() {
 
           <Route
             path="become-host"
-            element={<Register />} />
+            element={<HostRegistration />} />
 
           <Route
             path="user-login"
