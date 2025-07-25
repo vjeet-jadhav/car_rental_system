@@ -24,6 +24,7 @@ import HostContainer from "./Screens/Host/HostContainer";
 import HostRegistration from "./Screens/Host/HostRegistration";
 import HostRegistrationForm from "./Screens/Host/HostRegistrationForm";
 import HostHomePage from "./Screens/Host/HostHomePage";
+import ClientCarReview from "./Screens/Client/ClientCarReview";
 
 
 function App() {
@@ -52,8 +53,8 @@ function App() {
           </Route>
 
           <Route
-          path="/home"
-          element={<Home/>}
+            path="/home"
+            element={<Home />}
           />
 
           <Route
@@ -85,6 +86,10 @@ function App() {
           <Route
             path="user-booking"
             element={<ClientBooking />} />
+
+          <Route
+            path="review-car"
+            element={<ClientCarReview />} />
         </Route>
 
 
