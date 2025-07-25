@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import "./App.css";
-import Navbar from './Components/Navbar'
 import Signup from './Screens/Client/Signup'
 import Home from './Screens/Client/Home'
 import Footer from './Components/Footer'
@@ -14,10 +13,20 @@ import Profile from "./Components/Profile";
 import AdminContainer from "./Screens/Admin/AdminContainer";
 import ScheduleAgenet from "./Screens/Admin/ScheduleAgenet";
 import RegisterAgent from "./Screens/Admin/RegisterAgent";
+import PendingRequests from "./Screens/Agent/PendingRequests";
+import History from "./Screens/Agent/History";
+import AgentContainer from "./Screens/Agent/AgentContainer";
 import Register from "./Screens/Host/Register";
 import Login from "./Components/Login";
 import ClientBooking from "./Screens/Client/ClientBooking";
+
+import HostContainer from "./Screens/Host/HostContainer";
+import HostRegistration from "./Screens/Host/HostRegistration";
+import HostRegistrationForm from "./Screens/Host/HostRegistrationForm";
+import HostHomePage from "./Screens/Host/HostHomePage";
+
 import AgentUI from "./Screens/Agent/AgentUI"
+
 function App() {
   const [count, setCount] = useState(0);
 
@@ -28,14 +37,19 @@ function App() {
           <Route path="admin" element={<AdminContainer></AdminContainer>}>
             <Route path="restrict" element={<CarList />}></Route>
             <Route path="edit" element={<Profile />} />
-            <Route path="schedule" element={<ScheduleAgenet />} />
+            <Route index element={<ScheduleAgenet />} />
             <Route path="register" element={<RegisterAgent></RegisterAgent>}></Route>
           </Route>
 
-          {/* user section routing */}
+          <Route path="host" element={<HostContainer></HostContainer>}>
+            <Route path="carregistration" element={<HostRegistration></HostRegistration>}></Route>
+            <Route path="registrationform" element={<HostRegistrationForm></HostRegistrationForm>}></Route>
+            <Route path ="home" element={<HostHomePage></HostHomePage>}></Route>
+          </Route>
+
           <Route
-            path=""
-            element={<Home />}
+          path="/home"
+          element={<Home/>}
           />
 
           <Route
@@ -68,6 +82,8 @@ function App() {
             path="user-booking"
             element={<ClientBooking />} />
         </Route>
+
+
       </Routes>
     </>
   );
