@@ -24,6 +24,7 @@ import HostContainer from "./Screens/Host/HostContainer";
 import HostRegistration from "./Screens/Host/HostRegistration";
 import HostRegistrationForm from "./Screens/Host/HostRegistrationForm";
 import HostHomePage from "./Screens/Host/HostHomePage";
+import ClientCarReview from "./Screens/Client/ClientCarReview";
 
 
 function App() {
@@ -51,40 +52,16 @@ function App() {
             <Route path="" element={<PendingRequests></PendingRequests>}></Route>
           </Route>
 
-          <Route
-          path="/home"
-          element={<Home/>}
-          />
+          <Route path="" element={<Home/>} />
+          <Route  path="allcars"  element={<CarInfo />} />
+          <Route  path="carbooking"  element={<CarBooking />}/>
+          <Route path="edit" element={<Profile />} />
+          <Route path="become-host" element={<HostRegistration />} />
+          <Route path="user-login" element={<Login />} />
+          <Route path="user-signup" element={<Signup />} />
+          <Route path="user-booking" element={<ClientBooking />} />
+          <Route  path="review-car"  element={<ClientCarReview />} />
 
-          <Route
-            path="allcars"
-            element={<CarInfo />}
-          />
-
-          <Route
-            path="carbooking"
-            element={<CarBooking />}
-          />
-
-          <Route
-            path="edit"
-            element={<Profile />} />
-
-          <Route
-            path="become-host"
-            element={<HostRegistration />} />
-
-          <Route
-            path="user-login"
-            element={<Login />} />
-
-          <Route
-            path="user-signup"
-            element={<Signup />} />
-
-          <Route
-            path="user-booking"
-            element={<ClientBooking />} />
         </Route>
 
 

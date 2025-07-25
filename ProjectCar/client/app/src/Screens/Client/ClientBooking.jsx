@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom';
 function ClientBooking() {
     const bookings = [
         {
@@ -17,7 +17,7 @@ function ClientBooking() {
         },
         {
             BookingID: 2,
-            UserName: 'Riya Sharma',
+            UserName: 'Rohit Sharma',
             CarModel: 'Hyundai i20',
             StartDateTime: '2025-07-25 09:00',
             EndDateTime: '2025-07-25 13:00',
@@ -60,6 +60,7 @@ function ClientBooking() {
                             <th>Total Amount</th>
                             <th>Booking Status</th>
                             <th>Payment Status</th>
+                            <th>Review</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -82,6 +83,11 @@ function ClientBooking() {
                                     <span className={`badge bg-${getStatusColor(booking.PaymentStatus)} btn `} style={{Width:'200px'}}>
                                         {booking.PaymentStatus}
                                     </span>
+                                </td>
+                                <td>
+                                    <Link to="/review-car" className="text-decoration-none fw-medium">
+                                        Review
+                                    </Link>
                                 </td>
                             </tr>
                         ))}
