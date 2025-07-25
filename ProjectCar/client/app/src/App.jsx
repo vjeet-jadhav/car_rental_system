@@ -24,8 +24,9 @@ import HostContainer from "./Screens/Host/HostContainer";
 import HostRegistration from "./Screens/Host/HostRegistration";
 import HostRegistrationForm from "./Screens/Host/HostRegistrationForm";
 import HostHomePage from "./Screens/Host/HostHomePage";
+import HostCarInformation from "./Screens/Host/HostCarInformation"
 
-import AgentUI from "./Screens/Agent/AgentUI"
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -45,44 +46,29 @@ function App() {
             <Route path="carregistration" element={<HostRegistration></HostRegistration>}></Route>
             <Route path="registrationform" element={<HostRegistrationForm></HostRegistrationForm>}></Route>
             <Route index element={<HostHomePage></HostHomePage>}></Route>
+            <Route path="carinformation" element={<HostCarInformation></HostCarInformation>}></Route>
           </Route>
 
-          <Route
-          path="/home"
-          element={<Home/>}
-          />
 
-          <Route
-            path="allcars"
-            element={<CarInfo />}
-          />
+          <Route path="" element={<Home/>}/>
 
-          <Route
-            path="carbooking"
-            element={<CarBooking />}
-          />
+          <Route path="allcars" element={<CarInfo />}/>
 
-          <Route
-            path="edit"
-            element={<Profile />} />
+          <Route path="carbooking" element={<CarBooking />}/>
 
-          <Route
-            path="become-host"
-            element={<HostRegistration />} />
+          <Route path="edit" element={<Profile />} />
 
-          <Route
-            path="user-login"
-            element={<Login />} />
+          <Route path="become-host" element={<HostRegistration />}></Route>
 
-          <Route
-            path="user-signup"
-            element={<Signup />} />
+          <Route path="become-host/registration-form" element={<HostRegistrationForm/>}></Route>
 
-          <Route
-            path="user-booking"
-            element={<ClientBooking />} />
+          <Route path="user-login" element={<Login />} />
+
+          <Route path="user-signup" element={<Signup />} />
+
+          <Route path="user-booking" element={<ClientBooking />} />
+
         </Route>
-
 
       </Routes>
     </>
