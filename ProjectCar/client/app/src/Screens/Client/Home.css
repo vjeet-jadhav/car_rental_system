@@ -25,5 +25,5 @@
     /* hover:scale-105 transition-all hover:shadow-blue-500 */
     transition: all 0.3s ease-in-out;
     transform: scale(1.03);
-    box-shadow:2px 2px 2px 1px #155dfc ;
+    box-shadow:2px 2px 2px 1px rgb(251, 85, 25) ;
 }
