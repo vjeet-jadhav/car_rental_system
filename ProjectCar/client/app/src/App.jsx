@@ -25,6 +25,7 @@ import HostRegistration from "./Screens/Host/HostRegistration";
 import HostRegistrationForm from "./Screens/Host/HostRegistrationForm";
 import HostHomePage from "./Screens/Host/HostHomePage";
 
+import AgentUI from "./Screens/Agent/AgentUI"
 
 function App() {
   const [count, setCount] = useState(0);
@@ -52,12 +53,12 @@ function App() {
           />
 
           <Route
-            path="/allcars"
+            path="allcars"
             element={<CarInfo />}
           />
 
           <Route
-            path="/carbooking"
+            path="carbooking"
             element={<CarBooking />}
           />
 
@@ -76,11 +77,10 @@ function App() {
           <Route
             path="user-signup"
             element={<Signup />} />
-          
+
           <Route
             path="user-booking"
             element={<ClientBooking />} />
-
         </Route>
 
 
