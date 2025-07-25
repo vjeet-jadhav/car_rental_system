@@ -35,7 +35,6 @@ const requests = [
   },
 ];
 
-export default function History() {
 export default function AgentHistory() {
   const navigate = useNavigate();
   return (

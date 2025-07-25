@@ -25,7 +25,7 @@ import HostRegistration from "./Screens/Host/HostRegistration";
 import HostRegistrationForm from "./Screens/Host/HostRegistrationForm";
 import HostHomePage from "./Screens/Host/HostHomePage";
 
-import AgentUI from "./Screens/Agent/AgentUI"
+// import AgentUI from "./Screens/Agent/AgentUI"
 
 function App() {
   const [count, setCount] = useState(0);
