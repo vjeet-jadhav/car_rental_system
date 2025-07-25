@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 
-function AdminNav() {
+function HostNav() {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary ">
       <div className="container">
@@ -9,7 +9,7 @@ function AdminNav() {
           <img
             src="/Image/logo.svg"
             height="40"
-            alt="Logo"
+            alt="MDB Logo"
             loading="lazy"
             style={{ marginTop: "" }}
           />
@@ -38,16 +38,19 @@ function AdminNav() {
           </ul>
 
           <div className="d-flex align-items-center">
-            <Link to="/admin" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
-              Schedule Agent
+            <Link to="/host/home" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
+              My Cars
             </Link>
-            <Link to="/admin/register" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
-              Register Agent
+            <Link to="/host/carregistration" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
+              Register New Car
             </Link>
-            <Link to="/admin/restrict" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
-              Cars & Users
+            <Link to="/host/carearnings" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
+              Earning
             </Link>
-            <Link to="/admin/edit" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
+            <Link to="/host/history" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
+              History
+            </Link>
+            <Link to="/host/edit" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
               Edit
             </Link>
             <button type="button" className="btn btn-primary me-3" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
@@ -62,4 +65,4 @@ function AdminNav() {
   )
 }
 
-export default AdminNav
+export default HostNav

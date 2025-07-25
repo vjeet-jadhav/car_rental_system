@@ -35,13 +35,14 @@ const requests = [
   },
 ];
 
-export default function History() {
-  const navigate = useNavigate();
+export default function AgentHistory() {
   return (
     <div className="p-4">
+
       <h1 className="text-3xl font-bold mb-6  text-center">History</h1>
       
       <table className="table table-bordered table-striped text-center mt-5 ">
+
         <thead>
           <tr className="border-b-2">
             <th className="p-3 border-2 text-center">Registration Number</th>
