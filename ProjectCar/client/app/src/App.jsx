@@ -14,9 +14,9 @@ import AdminContainer from "./Screens/Admin/AdminContainer";
 import ScheduleAgenet from "./Screens/Admin/ScheduleAgenet";
 import RegisterAgent from "./Screens/Admin/RegisterAgent";
 import PendingRequests from "./Screens/Agent/PendingRequests";
-import History from "./Screens/Agent/History";
+import AgentHistory from "./Screens/Agent/History";
 import AgentContainer from "./Screens/Agent/AgentContainer";
-import Register from "./Screens/Host/Register";
+
 import Login from "./Components/Login";
 import ClientBooking from "./Screens/Client/ClientBooking";
 
@@ -25,7 +25,6 @@ import HostRegistration from "./Screens/Host/HostRegistration";
 import HostRegistrationForm from "./Screens/Host/HostRegistrationForm";
 import HostHomePage from "./Screens/Host/HostHomePage";
 
-// import AgentUI from "./Screens/Agent/AgentUI"
 
 function App() {
   const [count, setCount] = useState(0);
@@ -44,7 +43,12 @@ function App() {
           <Route path="host" element={<HostContainer></HostContainer>}>
             <Route path="carregistration" element={<HostRegistration></HostRegistration>}></Route>
             <Route path="registrationform" element={<HostRegistrationForm></HostRegistrationForm>}></Route>
-            <Route path ="home" element={<HostHomePage></HostHomePage>}></Route>
+            <Route index element={<HostHomePage></HostHomePage>}></Route>
+          </Route>
+
+          <Route path="agent" element={<AgentContainer></AgentContainer>}>
+            <Route path="history" element={<AgentHistory></AgentHistory>}></Route>
+            <Route path="" element={<PendingRequests></PendingRequests>}></Route>
           </Route>
 
           <Route
@@ -68,7 +72,7 @@ function App() {
 
           <Route
             path="become-host"
-            element={<Register />} />
+            element={<HostRegistration />} />
 
           <Route
             path="user-login"

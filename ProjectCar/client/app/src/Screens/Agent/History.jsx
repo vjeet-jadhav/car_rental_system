@@ -36,59 +36,36 @@ const requests = [
 ];
 
 export default function AgentHistory() {
-  const navigate = useNavigate();
   return (
     <div className="p-4">
-      <h1 className="text-3xl font-bold mb-6  text-center">Agent UI</h1>
-      <div className="flex space-x-32 mb-6 text-center">
-        <button
-          style={{ backgroundColor: '#fb8500', color: '#fff' }}
-          className="px-4 py-2 bg-orange-500 text-white rounded mx-0.5"
-          disabled
-        >
-          History
-        </button>
-        <button
-          onClick={()=> navigate('/agent')}
-          style={{ backgroundColor: '#fb8500', color: '#fff' }}
-          className="px-4 py-2 bg-orange-500 text-white rounded mx-1"
-        >
-          Pending Request
-        </button>
-        <button
-          style={{ backgroundColor: '#fb8500', color: '#fff' }}
-          className="px-4 py-2 bg-orange-500 text-white rounded"
-        >
-          Profile
-        </button>
-         <button style={{ backgroundColor : '#fb8500' , color : '#fff'}} className="px-4 py-2 bg-orange-500 text-white rounded" disabled>History</button>
-         <button style={{ backgroundColor : '#fb8500' , color : '#fff'}} className="px-4 py-2 bg-orange-500 text-white rounded "  >Pending Request</button>
-         <button style={{ backgroundColor : '#fb8500' , color : '#fff'}} className="px-4 py-2 bg-orange-500 text-white rounded">Profile</button>
-      </div>
-      <table className="w-100 table-auto border-stripped mt-5">
+
+      <h1 className="text-3xl font-bold mb-6  text-center">History</h1>
+      
+      <table className="table table-bordered table-striped text-center mt-5 ">
+
         <thead>
           <tr className="border-b-2">
-            <th className="p-2 border-2 text-center">Registration Number</th>
-            <th className="p-2 border-2 text-center">Brand</th>
-            <th className="p-2 border-2 text-center">Model</th>
-            <th className="p-2 border-2 text-center">Variant</th>
-            <th className="p-2 border-2 text-center">Owner Name</th>
-            <th className="p-2 border-2 text-center">Owner Mobile</th>
-            <th className="p-2 border-2 text-center">Address</th>
-            <th className="p-2 border-2 text-center">Status</th>  
+            <th className="p-3 border-2 text-center">Registration Number</th>
+            <th className="p-3 border-2 text-center">Brand</th>
+            <th className="p-3 border-2 text-center">Model</th>
+            <th className="p-3 border-2 text-center">Variant</th>
+            <th className="p-3 border-2 text-center">Owner Name</th>
+            <th className="p-3 border-2 text-center">Owner Mobile</th>
+            <th className="p-3 border-2 text-center">Address</th>
+            <th className="p-3 border-2 text-center">Status</th>  
           </tr>
         </thead>
         <tbody>
           {requests.map((req) => (
             <tr key={req.registration} className="border-b-2 hover:bg-gray-50">
-              <td className="p-2 border-2 text-center">{req.registration}</td>
-              <td className="p-2 border-2 text-center">{req.brand}</td>
-              <td className="p-2 border-2 text-center">{req.model}</td>
-              <td className="p-2 border-2 text-center">{req.variant}</td>
-              <td className="p-2 border-2 text-center">{req.ownerName}</td>
-              <td className="p-2 border-2 text-center">{req.ownerMobile}</td>
-              <td className="p-2 border-2 text-center">{req.address}</td>
-              <td className="p-2 border-2 text-center">{req.status}</td>
+              <td className="p-3 border-2 text-center">{req.registration}</td>
+              <td className="p-3 border-2 text-center">{req.brand}</td>
+              <td className="p-3 border-2 text-center">{req.model}</td>
+              <td className="p-3 border-2 text-center">{req.variant}</td>
+              <td className="p-3 border-2 text-center">{req.ownerName}</td>
+              <td className="p-3 border-2 text-center">{req.ownerMobile}</td>
+              <td className="p-3 border-2 text-center">{req.address}</td>
+              <td className="p-3 border-2 text-center">{req.status}</td>
             </tr>
           ))}
         </tbody>
