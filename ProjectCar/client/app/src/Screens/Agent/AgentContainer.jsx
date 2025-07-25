@@ -5,6 +5,7 @@ import AgentNavbar from './AgentNavbar'
 function AgentContainer() {
   return (
     <div>
+      {/* <AgentNavbar/> */}
       <Outlet/>
     </div>
   )
