@@ -4,14 +4,14 @@ function ClientCarReview() {
     const [rating, setRating] = useState(0);
     const [hovered, setHovered] = useState(0);
     return (
-        <div className='container mt-5 d-flex  justify-content-evenly  p-4'
+        <div className='container mt-5 d-flex  justify-content-evenly'
         >
 
             {/* image */}
             <div >
-                <img src="../public/Image/car-image-review.jpg" alt="" style={{width: '500px'}} className='rounded-3'/>
+                <img src="../public/Image/car-image-review.png" alt="" style={{width: '500px', height:'700px'}} className='rounded-3'/>
             </div>
-
+            {/* form */}
             <div className="bg-white border rounded shadow-sm p-4 col-5">
                 <div className="d-flex align-items-center mb-3">
                     <i className="bi bi-chat-left-text fs-3 me-2" style={{ color: 'rgb(251, 85, 25)' }}></i>
