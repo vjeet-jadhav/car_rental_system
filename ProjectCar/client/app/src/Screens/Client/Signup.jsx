@@ -54,7 +54,7 @@ function Signup() {
                   <Link to="/user-login" style={{ backgroundColor: '#fb8500', color: '#fff' }} className="btn  w-100  fw-bold">Sign-In</Link>
                 </div>
                 <div className="col-6 ">
-                 <Link to="/user-signup" style={{ backgroundColor: '#fb8500', color: '#fff' }} className="btn  w-100 fw-bold">Sign-Up</Link>
+                 <Link to="/user-login" style={{ backgroundColor: '#fb8500', color: '#fff' }} className="btn  w-100 fw-bold">Sign-Up</Link>
                 </div>
             </div>
         </div>
