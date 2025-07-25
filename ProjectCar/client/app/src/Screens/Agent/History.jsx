@@ -1,12 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function AgentHistory() {
+  const navigate = useNavigate();
   return (
     <div className="w-screen h-screen p-4 overflow-auto">
       <h1 className="text-3xl font-bold mb-6  text-center">History</h1>
       <div className="flex space-x-32 mb-6 text-center">
          <button style={{ backgroundColor : '#fb8500' , color : '#fff'}} className="px-4 py-2 bg-orange-500 text-white rounded" disabled>History</button>
-         <button style={{ backgroundColor : '#fb8500' , color : '#fff'}} className="px-4 py-2 bg-orange-500 text-white rounded" >Pending Request</button>
+         <button style={{ backgroundColor : '#fb8500' , color : '#fff'}} className="px-4 py-2 bg-orange-500 text-white rounded "  >Pending Request</button>
          <button style={{ backgroundColor : '#fb8500' , color : '#fff'}} className="px-4 py-2 bg-orange-500 text-white rounded">Profile</button>
       </div>
       <div className="overflow-x-auto">

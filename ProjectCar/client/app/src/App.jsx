@@ -17,7 +17,7 @@ import RegisterAgent from "./Screens/Admin/RegisterAgent";
 import Register from "./Screens/Host/Register";
 import Login from "./Components/Login";
 import ClientBooking from "./Screens/Client/ClientBooking";
-
+import AgentUI from "./Screens/Agent/AgentUI"
 function App() {
   const [count, setCount] = useState(0);
 
@@ -39,12 +39,12 @@ function App() {
           />
 
           <Route
-            path="/allcars"
+            path="allcars"
             element={<CarInfo />}
           />
 
           <Route
-            path="/carbooking"
+            path="carbooking"
             element={<CarBooking />}
           />
 
@@ -63,11 +63,10 @@ function App() {
           <Route
             path="user-signup"
             element={<Signup />} />
-          
+
           <Route
             path="user-booking"
             element={<ClientBooking />} />
-
         </Route>
       </Routes>
     </>
