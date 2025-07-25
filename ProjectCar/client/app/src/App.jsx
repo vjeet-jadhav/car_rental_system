@@ -43,7 +43,7 @@ function App() {
           <Route path="host" element={<HostContainer></HostContainer>}>
             <Route path="carregistration" element={<HostRegistration></HostRegistration>}></Route>
             <Route path="registrationform" element={<HostRegistrationForm></HostRegistrationForm>}></Route>
-            <Route path ="home" element={<HostHomePage></HostHomePage>}></Route>
+            <Route index element={<HostHomePage></HostHomePage>}></Route>
           </Route>
 
           <Route
