@@ -5,7 +5,7 @@ function Home() {
 
   const navigate = useNavigate();
 
-  const NavigateOnCars = ()=>{
+  const NavigateOnCars = () => {
     navigate('/allcars')
   }
 
@@ -61,7 +61,8 @@ function Home() {
         <h2 className='text-center'>Top cars</h2>
         <div className='d-flex justify-content-evenly mt-5'>
           {/* cards */}
-          <div className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up" >
+
+          <Link to="carbooking" className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none" >
             <img
               src="/Image/car-hero-section.svg" // Corrected path for React
               className="card-img-top"
@@ -85,9 +86,9 @@ function Home() {
                 <span className="fw-bold">₹196/hr</span>
               </div>
             </div>
-          </div>
+          </Link>
 
-          <div className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up" >
+          <Link to="carbooking" className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none" >
             <img
               src="/Image/car-hero-section.svg" // Corrected path for React
               className="card-img-top"
@@ -111,11 +112,11 @@ function Home() {
                 <span className="fw-bold">₹196/hr</span>
               </div>
             </div>
-          </div>
+          </Link>
 
-          <div className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up" >
+          <Link to="carbooking" className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none" >
             <img
-              src="/Image/car-hero-section.svg" 
+              src="/Image/car-hero-section.svg" // Corrected path for React
               className="card-img-top"
               alt="Car"
             />
@@ -137,7 +138,11 @@ function Home() {
                 <span className="fw-bold">₹196/hr</span>
               </div>
             </div>
-          </div>
+          </Link>
+
+
+
+
         </div>
 
         <div className="d-flex justify-content-center align-content-center">
