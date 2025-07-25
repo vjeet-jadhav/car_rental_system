@@ -14,7 +14,7 @@ import AdminContainer from "./Screens/Admin/AdminContainer";
 import ScheduleAgenet from "./Screens/Admin/ScheduleAgenet";
 import RegisterAgent from "./Screens/Admin/RegisterAgent";
 import PendingRequests from "./Screens/Agent/PendingRequests";
-import History from "./Screens/Agent/History";
+import AgentHistory from "./Screens/Agent/History";
 import AgentContainer from "./Screens/Agent/AgentContainer";
 
 import Login from "./Components/Login";
