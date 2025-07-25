@@ -38,7 +38,7 @@ function HostNav() {
           </ul>
 
           <div className="d-flex align-items-center">
-            <Link to="/host/home" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
+            <Link to="/host" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
               My Cars
             </Link>
             <Link to="/host/carregistration" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
