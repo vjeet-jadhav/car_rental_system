@@ -36,6 +36,7 @@ const requests = [
 ];
 
 export default function History() {
+export default function AgentHistory() {
   const navigate = useNavigate();
   return (
     <div className="p-4">
@@ -61,6 +62,9 @@ export default function History() {
         >
           Profile
         </button>
+         <button style={{ backgroundColor : '#fb8500' , color : '#fff'}} className="px-4 py-2 bg-orange-500 text-white rounded" disabled>History</button>
+         <button style={{ backgroundColor : '#fb8500' , color : '#fff'}} className="px-4 py-2 bg-orange-500 text-white rounded "  >Pending Request</button>
+         <button style={{ backgroundColor : '#fb8500' , color : '#fff'}} className="px-4 py-2 bg-orange-500 text-white rounded">Profile</button>
       </div>
       <table className="w-100 table-auto border-stripped mt-5">
         <thead>
