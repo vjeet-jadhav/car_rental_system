@@ -24,6 +24,7 @@ import HostContainer from "./Screens/Host/HostContainer";
 import HostRegistration from "./Screens/Host/HostRegistration";
 import HostRegistrationForm from "./Screens/Host/HostRegistrationForm";
 import HostHomePage from "./Screens/Host/HostHomePage";
+import ClientCarReview from "./Screens/Client/ClientCarReview";
 import HostCarInformation from "./Screens/Host/HostCarInformation"
 
 
@@ -49,24 +50,22 @@ function App() {
             <Route path="carinformation" element={<HostCarInformation></HostCarInformation>}></Route>
           </Route>
 
+          <Route path="agent" element={<AgentContainer></AgentContainer>}>
+            <Route path="history" element={<AgentHistory></AgentHistory>}></Route>
+            <Route path="" element={<PendingRequests></PendingRequests>}></Route>
+          </Route>
+
 
           <Route path="" element={<Home/>}/>
-
           <Route path="allcars" element={<CarInfo />}/>
-
           <Route path="carbooking" element={<CarBooking />}/>
-
           <Route path="edit" element={<Profile />} />
-
           <Route path="become-host" element={<HostRegistration />}></Route>
-
           <Route path="become-host/registration-form" element={<HostRegistrationForm/>}></Route>
-
           <Route path="user-login" element={<Login />} />
-
           <Route path="user-signup" element={<Signup />} />
-
           <Route path="user-booking" element={<ClientBooking />} />
+          <Route  path="review-car"  element={<ClientCarReview />} />
 
         </Route>
 

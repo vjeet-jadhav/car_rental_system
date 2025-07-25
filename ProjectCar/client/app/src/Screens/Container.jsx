@@ -4,17 +4,13 @@ import { Outlet, useLocation } from 'react-router-dom'
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer'
 import AdminNav from './Admin/AdminNav';
-
 import HostNav from './Host/HostNav';
-
 import AgentNavbar from './Agent/AgentNavbar';
-
-
 
 
 function Container() {
 
-   const location = useLocation();
+  const location = useLocation();
   const path = location.pathname;
 
   // Choose the correct navbar based on path
