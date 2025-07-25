@@ -10,7 +10,6 @@ function HostContainer() {
     <div>
         
     <div>
-        <HostNav></HostNav>
         <Outlet></Outlet>
     </div>
 
