@@ -5,7 +5,7 @@ import AdminNav from './AdminNav'
 
 function AdminContainer() {
   return (
-    <div>
+    <div >
       <Outlet></Outlet>
     </div>
   )

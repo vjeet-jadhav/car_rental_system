@@ -64,12 +64,13 @@ function Home() {
 
           <Link to="carbooking" className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none" >
             <img
-              src="/Image/car-hero-section.svg" // Corrected path for React
-              className="card-img-top"
+              src="/Image/carBg1.jpg" // Corrected path for React
+              className=""
               alt="Car"
+               style={{height:'70%'}}
             />
 
-            <div className="card-body">
+            <div className="card-body" style={{height:'20%'}}>
               <h5 className="card-title mb-2">Model: TATA</h5>
 
               <div className="d-flex justify-content-between text-muted small mb-2">
@@ -90,12 +91,13 @@ function Home() {
 
           <Link to="carbooking" className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none" >
             <img
-              src="/Image/car-hero-section.svg" // Corrected path for React
-              className="card-img-top"
+              src="/Image/carBg2.jpg" // Corrected path for React
+              className=""
               alt="Car"
+              style={{height:'70%'}}
             />
 
-            <div className="card-body">
+            <div className="card-body " style={{height:'20%'}}>
               <h5 className="card-title mb-2">Model: TATA</h5>
 
               <div className="d-flex justify-content-between text-muted small mb-2">
@@ -116,12 +118,13 @@ function Home() {
 
           <Link to="carbooking" className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none" >
             <img
-              src="/Image/car-hero-section.svg" // Corrected path for React
-              className="card-img-top"
+              src="/Image/carBg3.jpg" // Corrected path for React
+              className=""
               alt="Car"
+              style={{height:'70%'}}
             />
 
-            <div className="card-body">
+            <div className="card-body" style={{height:'20%'}}>
               <h5 className="card-title mb-2">Model: TATA</h5>
 
               <div className="d-flex justify-content-between text-muted small mb-2">
@@ -139,14 +142,11 @@ function Home() {
               </div>
             </div>
           </Link>
-
-
-
 
         </div>
 
         <div className="d-flex justify-content-center align-content-center">
-          <Link to="/allcars" className="fw-bold fs-5 btn btn-success">
+          <Link to="/allcars" className="fw-bold fs-5 btn btn-success" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
             Browse All Cars
           </Link>
         </div>
