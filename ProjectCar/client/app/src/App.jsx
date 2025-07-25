@@ -14,7 +14,7 @@ import AdminContainer from "./Screens/Admin/AdminContainer";
 import ScheduleAgenet from "./Screens/Admin/ScheduleAgenet";
 import RegisterAgent from "./Screens/Admin/RegisterAgent";
 import PendingRequests from "./Screens/Agent/PendingRequests";
-import History from "./Screens/Agent/History";
+import AgentHistory from "./Screens/Agent/History";
 import AgentContainer from "./Screens/Agent/AgentContainer";
 
 import Login from "./Components/Login";
@@ -24,8 +24,8 @@ import HostContainer from "./Screens/Host/HostContainer";
 import HostRegistration from "./Screens/Host/HostRegistration";
 import HostRegistrationForm from "./Screens/Host/HostRegistrationForm";
 import HostHomePage from "./Screens/Host/HostHomePage";
+import ClientCarReview from "./Screens/Client/ClientCarReview";
 
-import AgentUI from "./Screens/Agent/AgentUI"
 
 function App() {
   const [count, setCount] = useState(0);
@@ -47,40 +47,21 @@ function App() {
             <Route index element={<HostHomePage></HostHomePage>}></Route>
           </Route>
 
-          <Route
-          path="/home"
-          element={<Home/>}
-          />
+          <Route path="agent" element={<AgentContainer></AgentContainer>}>
+            <Route path="history" element={<AgentHistory></AgentHistory>}></Route>
+            <Route path="" element={<PendingRequests></PendingRequests>}></Route>
+          </Route>
 
-          <Route
-            path="allcars"
-            element={<CarInfo />}
-          />
+          <Route path="" element={<Home/>} />
+          <Route  path="allcars"  element={<CarInfo />} />
+          <Route  path="carbooking"  element={<CarBooking />}/>
+          <Route path="edit" element={<Profile />} />
+          <Route path="become-host" element={<HostRegistration />} />
+          <Route path="user-login" element={<Login />} />
+          <Route path="user-signup" element={<Signup />} />
+          <Route path="user-booking" element={<ClientBooking />} />
+          <Route  path="review-car"  element={<ClientCarReview />} />
 
-          <Route
-            path="carbooking"
-            element={<CarBooking />}
-          />
-
-          <Route
-            path="edit"
-            element={<Profile />} />
-
-          <Route
-            path="become-host"
-            element={<HostRegistration />} />
-
-          <Route
-            path="user-login"
-            element={<Login />} />
-
-          <Route
-            path="user-signup"
-            element={<Signup />} />
-
-          <Route
-            path="user-booking"
-            element={<ClientBooking />} />
         </Route>
 
 

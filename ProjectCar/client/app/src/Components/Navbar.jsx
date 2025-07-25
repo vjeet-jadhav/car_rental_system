@@ -38,6 +38,9 @@ function Navbar() {
                         </ul>
 
                         <div className="d-flex align-items-center">
+                            <Link to="/favourite" className="px-3 me-2"style={{fontSize:'20px',color:'rgba(248, 91, 60, 1)'}} >
+                                <i class="bi bi-heart"></i>
+                            </Link>
                             <Link to="/user-booking" className="btn btn-primary px-3 me-2" style={{ backgroundColor: 'rgba(248, 91, 60, 1)', border: 'none' }}>
                                 My Booking
                             </Link>
