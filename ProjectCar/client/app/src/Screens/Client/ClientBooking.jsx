@@ -51,7 +51,7 @@ function ClientBooking() {
                     <thead className="table-dark">
                         <tr>
                             <th>#</th>
-                            <th>User</th>
+                            <th>Owner</th>
                             <th>Car</th>
                             <th>Start Time</th>
                             <th>End Time</th>
