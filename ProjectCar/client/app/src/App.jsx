@@ -26,8 +26,6 @@ import HostRegistrationForm from "./Screens/Host/HostRegistrationForm";
 import HostHomePage from "./Screens/Host/HostHomePage";
 
 
-
-
 function App() {
   const [count, setCount] = useState(0);
 
