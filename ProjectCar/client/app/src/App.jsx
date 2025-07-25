@@ -52,44 +52,16 @@ function App() {
             <Route path="" element={<PendingRequests></PendingRequests>}></Route>
           </Route>
 
-          <Route
-            path=""
-            element={<Home />}
-          />
+          <Route path="" element={<Home/>} />
+          <Route  path="allcars"  element={<CarInfo />} />
+          <Route  path="carbooking"  element={<CarBooking />}/>
+          <Route path="edit" element={<Profile />} />
+          <Route path="become-host" element={<HostRegistration />} />
+          <Route path="user-login" element={<Login />} />
+          <Route path="user-signup" element={<Signup />} />
+          <Route path="user-booking" element={<ClientBooking />} />
+          <Route  path="review-car"  element={<ClientCarReview />} />
 
-          <Route
-            path="allcars"
-            element={<CarInfo />}
-          />
-
-          <Route
-            path="carbooking"
-            element={<CarBooking />}
-          />
-
-          <Route
-            path="edit"
-            element={<Profile />} />
-
-          <Route
-            path="become-host"
-            element={<HostRegistration />} />
-
-          <Route
-            path="user-login"
-            element={<Login />} />
-
-          <Route
-            path="user-signup"
-            element={<Signup />} />
-
-          <Route
-            path="user-booking"
-            element={<ClientBooking />} />
-
-          <Route
-            path="review-car"
-            element={<ClientCarReview />} />
         </Route>
 
 

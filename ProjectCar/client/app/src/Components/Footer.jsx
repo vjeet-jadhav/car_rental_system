@@ -9,7 +9,7 @@ function Footer() {
                     style={{ borderTop: '2px solid rgba(248, 91, 60, 1)' }}     >
                     {/* Brand Name */}
                     <div>
-                        <h1 className="m-0" style={{cursor: 'pointer'}}>CarServices</h1>
+                        <h1 className="m-0" style={{cursor: 'pointer'}}>Car Rentals</h1>
                     </div>
 
                     {/* Social Icons */}

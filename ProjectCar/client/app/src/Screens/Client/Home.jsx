@@ -60,91 +60,102 @@ function Home() {
       <div className='container mt-5  p-5' >
         <div className="bg-light p-4 rounded shadow-sm">
           <h2 className='text-center'>Top cars</h2>
-          <div className='d-flex justify-content-evenly mt-5'>
-            {/* cards */}
-
-            <Link to="carbooking" className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none" >
-              <img
-                src="/Image/car-hero-section.svg" // Corrected path for React
-                className="card-img-top"
-                alt="Car"
-              />
-
-              <div className="card-body">
-                <h5 className="card-title mb-2">Model: TATA</h5>
-
-                <div className="d-flex justify-content-between text-muted small mb-2">
-                  <div>
-                    <span>Manual</span> | <span>Petrol</span> | <span>7 seats</span>
-                  </div>
-                  <div>
-                    <span>4.5⭐</span>
-                  </div>
-                </div>
-
-                <div className="d-flex justify-content-between">
-                  <span className="text-success">Delivery Available</span>
-                  <span className="fw-bold">₹196/hr</span>
-                </div>
-              </div>
-            </Link>
-
-            <Link to="carbooking" className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none" >
-              <img
-                src="/Image/car-hero-section.svg" // Corrected path for React
-                className="card-img-top"
-                alt="Car"
-              />
-
-              <div className="card-body">
-                <h5 className="card-title mb-2">Model: TATA</h5>
-
-                <div className="d-flex justify-content-between text-muted small mb-2">
-                  <div>
-                    <span>Manual</span> | <span>Petrol</span> | <span>7 seats</span>
-                  </div>
-                  <div>
-                    <span>4.5⭐</span>
-                  </div>
-                </div>
-
-                <div className="d-flex justify-content-between">
-                  <span className="text-success">Delivery Available</span>
-                  <span className="fw-bold">₹196/hr</span>
-                </div>
-              </div>
-            </Link>
-
-            <Link to="carbooking" className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none" >
-              <img
-                src="/Image/car-hero-section.svg" // Corrected path for React
-                className="card-img-top"
-                alt="Car"
-              />
-
-              <div className="card-body">
-                <h5 className="card-title mb-2">Model: TATA</h5>
-
-                <div className="d-flex justify-content-between text-muted small mb-2">
-                  <div>
-                    <span>Manual</span> | <span>Petrol</span> | <span>7 seats</span>
-                  </div>
-                  <div>
-                    <span>4.5⭐</span>
-                  </div>
-                </div>
-
-                <div className="d-flex justify-content-between">
-                  <span className="text-success">Delivery Available</span>
-                  <span className="fw-bold">₹196/hr</span>
-                </div>
-              </div>
-            </Link>
-
-
-
-
-          </div>
+          <div className="d-flex justify-content-evenly mt-5">
+                      {/* cards */}
+          
+                      <Link
+                        to="carbooking"
+                        className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none "
+                      >
+                        <img
+                          src="/Image/carBg1.jpg" // Corrected path for React
+                          className=""
+                          alt="Car"
+                          style={{ height: "70%" }}
+                        />
+          
+                        <div className="card-body" style={{ height: "20%" }}>
+                          <h5 className="card-title mb-2">Model: TATA</h5>
+          
+                          <div className="d-flex justify-content-between text-muted small mb-2">
+                            <div>
+                              <span>Manual</span> | <span>Petrol</span> |{" "}
+                              <span>7 seats</span>
+                            </div>
+                            <div>
+                              <span>4.5⭐</span>
+                            </div>
+                          </div>
+          
+                          <div className="d-flex justify-content-between">
+                            <span className="text-success">Delivery Available</span>
+                            <span className="fw-bold">₹196/hr</span>
+                          </div>
+                        </div>
+                      </Link>
+          
+                      <Link
+                        to="carbooking"
+                        className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none"
+                      >
+                        <img
+                          src="/Image/carBg2.jpg" // Corrected path for React
+                          className=""
+                          alt="Car"
+                          style={{ height: "70%" }}
+                        />
+          
+                        <div className="card-body " style={{ height: "20%" }}>
+                          <h5 className="card-title mb-2">Model: TATA</h5>
+          
+                          <div className="d-flex justify-content-between text-muted small mb-2">
+                            <div>
+                              <span>Manual</span> | <span>Petrol</span> |{" "}
+                              <span>7 seats</span>
+                            </div>
+                            <div>
+                              <span>4.5⭐</span>
+                            </div>
+                          </div>
+          
+                          <div className="d-flex justify-content-between">
+                            <span className="text-success">Delivery Available</span>
+                            <span className="fw-bold">₹196/hr</span>
+                          </div>
+                        </div>
+                      </Link>
+          
+                      <Link
+                        to="carbooking"
+                        className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none"
+                      >
+                        <img
+                          src="/Image/carBg3.jpg" // Corrected path for React
+                          className=""
+                          alt="Car"
+                          style={{ height: "70%" }}
+                        />
+          
+                        <div className="card-body" style={{ height: "20%" }}>
+                          <h5 className="card-title mb-2">Model: TATA</h5>
+          
+                          <div className="d-flex justify-content-between text-muted small mb-2">
+                            <div>
+                              <span>Manual</span> | <span>Petrol</span> |{" "}
+                              <span>7 seats</span>
+                            </div>
+                            <div>
+                              <span>4.5⭐</span>
+                            </div>
+                          </div>
+          
+                          <div className="d-flex justify-content-between">
+                            <span className="text-success">Delivery Available</span>
+                            <span className="fw-bold">₹196/hr</span>
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
 
           <div className="d-flex justify-content-center align-content-center">
             <button className="btn btn-link text-decoration-none fw-medium" onClick={() => navigate("/allcars")} style={{ color: 'rgba(248, 91, 60, 1)' }}>
@@ -165,42 +176,42 @@ function Home() {
           </div>
 
           <div className='d-flex justify-content-evenly mt-5 flex-row gap-3'>
-
-            {/* work 1 */}
-            <div className='col-2.5 rounded-3 p-2 home-work-track border'>
+            
+            <div className='col-2.5 rounded-3 p-2 home-work-track border bg-white'>
               <div className='text-center fw-bold rounded-circle text-white' style={{ backgroundColor: 'rgb(251, 85, 25)', width: '25px', height: '25px' }}>1</div>
-              <img src="/Image/car-hero-section.svg" alt="work flow" />
+              <img src="/Image/searchSvg.svg" alt="work flow" />
               <h5 className='text-center  text-success '>Search a car</h5>
               <p style={{ fontSize: '10px' }} className='text-center opacity-75'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, praesentium!</p>
             </div>
-            {/* work 2 */}
-            <div className='col-2.5 rounded-3 p-2 home-work-track border'>
+
+
+            <div className='col-2.5 rounded-3 p-2 home-work-track border bg-white'>
               <div className='text-center fw-bold rounded-circle text-white' style={{ backgroundColor: 'rgb(251, 85, 25)', width: '25px', height: '25px' }}>2</div>
-              <img src="/Image/car-hero-section.svg" alt="work flow" />
+               <img src="/Image/bookSvg.svg" alt="work flow" />
               <h5 className='text-center  text-success '>Book Car</h5>
               <p style={{ fontSize: '10px' }} className='text-center opacity-75'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, praesentium!</p>
-
             </div>
-            {/* work 3 */}
-            <div className='col-2.5 rounded-3 p-2 home-work-track border'>
+
+
+            <div className='col-2.5 rounded-3 p-2 home-work-track border bg-white' >
               <div className='text-center fw-bold rounded-circle text-white' style={{ backgroundColor: 'rgb(251, 85, 25)', width: '25px', height: '25px' }}>3</div>
-              <img src="/Image/car-hero-section.svg" alt="work flow" />
+              <img src="/Image/bookSvg.svg" alt="work flow" />
               <h5 className='text-center  text-success '>Make Payment</h5>
               <p style={{ fontSize: '10px' }} className='text-center opacity-75'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, praesentium!</p>
 
             </div>
-            {/* work 4 */}
-            <div className='col-2.5 rounded-3 p-2 home-work-track border'>
+
+            <div className='col-2.5 rounded-3 p-2 home-work-track border bg-white'>
               <div className='text-center fw-bold rounded-circle text-white' style={{ backgroundColor: 'rgb(251, 85, 25)', width: '25px', height: '25px' }}>4</div>
-              <img src="/Image/car-hero-section.svg" alt="work flow" />
+             <img src="/Image/driveSvg.svg" alt="work flow" />
               <h5 className='text-center  text-success '>Enjoy Drive</h5>
               <p style={{ fontSize: '10px' }} className='text-center opacity-75'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, praesentium!</p>
 
             </div>
-            {/* work 5 */}
-            <div className='col-2.5 rounded-3 p-2 home-work-track border'>
+
+            <div className='col-2.5 rounded-3 p-2 home-work-track border bg-white'>
               <div className='text-center fw-bold rounded-circle text-white' style={{ backgroundColor: 'rgb(251, 85, 25)', width: '25px', height: '25px' }}>5</div>
-              <img src="/Image/car-hero-section.svg" alt="work flow" />
+              <img src="/Image/reviewSvg.svg" alt="work flow" />
               <h5 className='text-center  text-success '>Rate Drive</h5>
               <p style={{ fontSize: '10px' }} className='text-center opacity-75'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, praesentium!</p>
 
