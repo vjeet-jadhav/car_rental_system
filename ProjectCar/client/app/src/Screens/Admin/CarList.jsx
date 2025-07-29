@@ -55,7 +55,7 @@ const CarList = () => {
 
   return (
     <div className="container mt-4">
-      <h3 className="mb-3">Car List</h3>
+      <h1 className="mb-3">Car & Users</h1>
 
       <div className="d-flex mb-3 gap-3 align-items-center">
         <input
@@ -83,7 +83,7 @@ const CarList = () => {
         </select>
       </div>
 
-      <table className="table table-bordered table-striped text-center " >
+      <table className="table table-bordered table-striped text-center" >
         <thead>
           <tr>
             <th>Sr. No.</th>
