@@ -25,6 +25,8 @@ import HostRegistration from "./Screens/Host/HostRegistration";
 import HostRegistrationForm from "./Screens/Host/HostRegistrationForm";
 import HostHomePage from "./Screens/Host/HostHomePage";
 import ClientCarReview from "./Screens/Client/ClientCarReview";
+import HostCarInformation from "./Screens/Host/HostCarInformation"
+
 
 
 function App() {
@@ -45,6 +47,7 @@ function App() {
             <Route path="carregistration" element={<HostRegistration></HostRegistration>}></Route>
             <Route path="registrationform" element={<HostRegistrationForm></HostRegistrationForm>}></Route>
             <Route index element={<HostHomePage></HostHomePage>}></Route>
+            <Route path="carinformation" element={<HostCarInformation></HostCarInformation>}></Route>
           </Route>
 
           <Route path="agent" element={<AgentContainer></AgentContainer>}>
@@ -52,18 +55,19 @@ function App() {
             <Route path="" element={<PendingRequests></PendingRequests>}></Route>
           </Route>
 
-          <Route path="" element={<Home/>} />
-          <Route  path="allcars"  element={<CarInfo />} />
-          <Route  path="carbooking"  element={<CarBooking />}/>
+
+          <Route path="" element={<Home/>}/>
+          <Route path="allcars" element={<CarInfo />}/>
+          <Route path="carbooking" element={<CarBooking />}/>
           <Route path="edit" element={<Profile />} />
-          <Route path="become-host" element={<HostRegistration />} />
+          <Route path="become-host" element={<HostRegistration />}></Route>
+          <Route path="become-host/registration-form" element={<HostRegistrationForm/>}></Route>
           <Route path="user-login" element={<Login />} />
           <Route path="user-signup" element={<Signup />} />
           <Route path="user-booking" element={<ClientBooking />} />
           <Route  path="review-car"  element={<ClientCarReview />} />
 
         </Route>
-
 
       </Routes>
     </>

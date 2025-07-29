@@ -1,7 +1,14 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
 
 function HostRegistrationForm() {
+
+  const navigate = useNavigate();
+  function onFormSubmit(){
+    navigate(`/host`);
+  }
+
   return (
     <div className="bg-white min-vh-100 py-4">
       <div className="container">
@@ -99,7 +106,7 @@ function HostRegistrationForm() {
                 </div>
 
                 <div className="col-12 text-center mt-3">
-                  <button type="submit" className="btn btn-warning px-5">
+                  <button type="submit" className="btn btn-warning px-5" onClick={onFormSubmit}>
                     Submit
                   </button>
                 </div>
