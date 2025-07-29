@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function HostRegistration() {
   const [hasRC, setHasRC] = useState(null);
@@ -7,6 +8,17 @@ function HostRegistration() {
   const handleRCChange = (e) => {
     setHasRC(e.target.value);
   };
+
+  const navigate = useNavigate();
+  const path = useLocation();
+
+function processRegistration() {
+  if (path.pathname.startsWith("/host")) {
+    navigate(`/host/registrationform`);
+  } else {
+    navigate(`/become-host/registration-form`);
+  }
+}
 
   return (
     <div className="container mt-4  bg-white min-vh-100">
@@ -62,7 +74,8 @@ function HostRegistration() {
             disabled={hasRC !== 'yes'}
           />
 
-          <button className="btn btn-warning text-white fw-semibold" disabled={hasRC !== 'yes'}>
+          <button className="btn btn-warning text-white fw-semibold"
+           disabled={hasRC !== 'yes'} onClick={processRegistration}>
             Continue
           </button>
         </div>
