@@ -47,7 +47,7 @@ function Home() {
           {/* Right section - Image */}
           <div className="col-md-7 d-flex align-items-center justify-content-center">
             <img
-              src="../public/Image/car-hero-section.svg"
+              src="/Image/car-hero-section.svg"
               alt="Car Rental"
               className="img-fluid rounded"
             />
