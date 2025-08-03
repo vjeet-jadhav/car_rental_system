@@ -2,9 +2,7 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
-			<item value="C:\Users\RASHMI\OneDrive\Desktop\Car_Rental_Project_CDAC\Car_Rental\car_rental_system\Server"/>
-			<item value="H:\Car rental system\car_rental_system\Server"/>
-			<item value="H:\Car rental system\car_rental_system"/>
+			<item value="C:\Users\vjadh\Desktop\CarRental\car_rental_system\Server"/>
 		</list>
 		<list key="projectNameTemplate">
 			<item value="[artifactId]"/>
