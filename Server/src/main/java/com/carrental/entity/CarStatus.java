@@ -1,5 +1,5 @@
 package com.carrental.entity;
 
 public enum CarStatus {
-	BOOKED, AVAILABLE, VERIFIED, NOTVERIFIED
+	PENDING, BOOKED, AVAILABLE, VERIFIED, NOTVERIFIED, DELETED
 }

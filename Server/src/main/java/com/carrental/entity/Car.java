@@ -4,8 +4,14 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,40 +20,64 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "Cars")
+
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString(callSuper = true)
 
-public class Car {
+public class Car extends BaseEntity{
 
-	@Column(name="host_id", nullable = false)
-	private int hostId;
 	@Column(name="car_brand", nullable = false)
 	private String brand;
-	@Column(name="car_maodel", nullable = false)
+	
+	@Column(name="car_model", nullable = false)
 	private String carModel;
-	@Column(name="year_of_manufacturing", nullable = false)
-	private String yearOfManufacturing;
+	
 	@Column(nullable = false)
 	private String varient;
-	@Column(name="rc_number", nullable = false)
+	
+	@Column(name="year_of_manufacturing", nullable = false)
+	private LocalDate yearOfManufacturing;
+	
+	@Column(name="car_number", nullable = false, unique = true)
+	private String carNumber;
+	
+	@Column(name="rc_number", nullable = false, unique = true)
 	private String rcNumber;
+	
 	@Column(name="daily_rate", nullable = false)
 	private double dailyRate;
+	
+	@Enumerated(EnumType.STRING)
 	@Column(name="car_status", nullable = false)
 	private CarStatus status;
+	
+	@Enumerated(EnumType.STRING)
 	@Column(name="fuel_type", nullable = false)
 	private CarFuelType fuelType;
+	
+	@Enumerated(EnumType.STRING)
 	@Column(name="transmission_type", nullable = false)
 	private CarTransmissionType transmissionType;
-	@Column(name="saet_capacity", nullable = false)
+	
+	@Min(2)
+	@Max(7)
+	@Column(name="seat_capacity", nullable = false )
 	private int seatCapacity;
-	@Column(name="agent_id", nullable = false)
-	private int agentId;
+	
 	@Column(name="approved_at", nullable = false)
 	private LocalDate approvedAt;
-	@Column(name="address_id", nullable = false)
-	private int addrressId;
 	
+	@ManyToOne
+	@JoinColumn(name = "host_id", nullable = false)
+	private User host;
+	
+	@ManyToOne
+	@JoinColumn(name = "agent_id", nullable = false)
+	private User agent;
+	
+	@OneToOne(mappedBy = "car")
+	@JoinColumn(name = "addrress_id", nullable = false)
+	private Address address;
 }
