@@ -4,6 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +16,7 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class Payment {
+public class Payment  extends BaseEntity{
 
 	@Column(nullable = false)
 	private double amount;
@@ -23,13 +25,14 @@ public class Payment {
 	@Enumerated(EnumType.STRING)
 	private PaymentMethod paymentMethod;
 	
-	@Column(nullable = false, length = 30)
+	
+    @Column(nullable = false , length = 30)
 	@Enumerated(EnumType.STRING)
 	private PaymentStatus status;
 	
-	@Column(name = "booking_id", nullable = false)
-	private Booking bookingId;
-	
-	
-	
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "booking_id", nullable = false)
+    private Booking bookingId;
+		
 }
