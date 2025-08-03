@@ -16,7 +16,7 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class Payment {
+public class Payment  extends BaseEntity{
 
 	@Column(nullable = false)
 	private double amount;
