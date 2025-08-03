@@ -64,14 +64,14 @@ const CarList = () => {
           placeholder="Search by Car No. or User No."
           value={search}
           onChange={(e) => setSearch(e.target.value)} 
-          style={{backgroundColor : '#fb8500' }}
+          style={{backgroundColor : '#fff' , border: "1px solid red" }}
         />
 
         <select
           value={sortOption}
           onChange={handleSortChange}
           className="form-select w-auto fw-bolder "
-          style={{backgroundColor : '#fb8500' }}
+          style={{backgroundColor : '#fff',border: "1px solid red"  }}
         >
           <option value="">-- Sort By --</option>
           <option value="rating-desc">Rating: High to Low</option>
@@ -83,7 +83,7 @@ const CarList = () => {
         </select>
       </div>
 
-      <table className="table table-bordered table-striped text-center" >
+      <table className="table table-bordered table-striped text-center"  >
         <thead>
           <tr>
             <th>Sr. No.</th>
