@@ -2,8 +2,10 @@ package com.carrental.dto;
 
 import org.hibernate.validator.constraints.Length;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +32,12 @@ public class UserRequestDto {
 	
 	@NotBlank(message = "City is Required")
 	private String city;
+	
+	@NotBlank(message = "State is Required")
+	private String state;
+	
+	@NotNull(message = "Zip Code Required")
+	private int zipCode;
 	
 	@NotBlank(message = "Mobile Number is Required")
 	@Length(max = 10, message = "Mobile Number Max Length Exceeded")
