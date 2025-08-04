@@ -41,9 +41,13 @@ public class CarRentalApplication {
 
 	}
 	
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+
+	//configure PasswordEncoder as spring bean
+		@Bean
+		PasswordEncoder passwordEncoder()
+		{
+			return new BCryptPasswordEncoder();
+		}
+
 
 }
