@@ -1,5 +1,5 @@
-// JwtUtils.java - placeholder
 package com.carrental.config;
+
 
 import java.util.Collection;
 import java.util.Date;
@@ -49,7 +49,7 @@ public class JwtUtils {
 		
 		User userPrincipal = (User) authentication.getPrincipal();
 		return Jwts.builder()
-				.subject(userPrincipal.getUsername())
+				.subject(userPrincipal.getEmail())
 				.issuedAt(new Date())
 				.expiration(new Date((new Date()).getTime() + jwtExpirationMs))
 				.claim("authorities",getAuthoritiesInString(userPrincipal.getAuthorities()))
@@ -113,4 +113,5 @@ public class JwtUtils {
 		return token;
 	}
 	
+
 }

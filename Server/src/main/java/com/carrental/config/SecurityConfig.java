@@ -1,4 +1,3 @@
-// SecurityConfig.java - placeholder
 package com.carrental.config;
 
 import org.springframework.context.annotation.Bean;
@@ -34,8 +33,8 @@ public class SecurityConfig {
 				.requestMatchers(
 						"/swagger-ui/**",
 						"/v3/api-docs/**",
-						"/users/signin", 
-						"/users/signup").permitAll()
+						"/user/signin", 
+						"/user/signup").permitAll()
 				.requestMatchers(HttpMethod.OPTIONS).permitAll()
 				.requestMatchers(HttpMethod.GET, "/").permitAll()
 				.requestMatchers(HttpMethod.POST,"/admin/register").permitAll()
@@ -56,5 +55,7 @@ public class SecurityConfig {
 		return config.getAuthenticationManager();
 	}
 	
+
 	
 }
+
