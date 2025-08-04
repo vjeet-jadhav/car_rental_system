@@ -15,4 +15,9 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<?> handelApiException(ApiException e){
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiResponse(e.getMessage()));
 	}
+	
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ResponseEntity<?> handelResourceNotFoundException(ResourceNotFoundException e){
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse(e.getMessage()));
+	}
 }
