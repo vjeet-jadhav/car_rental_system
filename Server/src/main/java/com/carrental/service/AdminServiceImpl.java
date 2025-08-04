@@ -8,6 +8,8 @@ import com.carrental.dao.AdminDao;
 import com.carrental.dto.AgentResDTO;
 import com.carrental.dto.RegisterAgentDTO;
 import com.carrental.entity.User;
+import com.carrental.entity.UserRole;
+import com.carrental.entity.UserStatus;
 import com.carrental.exception.ApiException;
 
 import jakarta.transaction.Transactional;
@@ -25,10 +27,13 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public AgentResDTO register(RegisterAgentDTO dto) {
 		// TODO Auto-generated method stub
+//		System.out.println(dto.toString());
 		if(adminDao.existsByEmail(dto.getEmail()))
 			throw new ApiException("Duplicate Email Detected: Agent Exists Already !");
 		User entity = mapper.map(dto, User.class);
-		entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+		entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+		entity.setUserRole(UserRole.AGENT);
+		entity.setUserStatus(UserStatus.ACTIVE);
 		return mapper.map(adminDao.save(entity), AgentResDTO.class);
 	}
 

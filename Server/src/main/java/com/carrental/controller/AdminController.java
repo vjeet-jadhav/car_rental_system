@@ -10,7 +10,8 @@ import com.carrental.dto.RegisterAgentDTO;
 import com.carrental.service.AdminService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -24,8 +25,8 @@ public class AdminController {
 	//register agent
 	@PostMapping("/register")
 	@Operation(description = "register new agent")
-	public ResponseEntity<?> registerAgent(@RequestBody RegisterAgentDTO dto){
-		
+	public ResponseEntity<?> registerAgent(@RequestBody @Valid RegisterAgentDTO dto){
+//		System.out.println(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.register(dto));
 	}
 

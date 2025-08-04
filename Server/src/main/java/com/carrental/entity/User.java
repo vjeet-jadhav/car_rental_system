@@ -1,6 +1,11 @@
 package com.carrental.entity;
 
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +22,7 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @ToString(callSuper = true) //exclude remain
-public class User extends BaseEntity {
+public class User extends BaseEntity implements UserDetails{
 	
 	@Column(name="first_name",length=50,nullable = false)
 	private String firstName;
@@ -56,5 +61,17 @@ public class User extends BaseEntity {
 	
 	@OneToMany(mappedBy = "agent")
 	private List<Car> approvedCars;
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return List.of(new SimpleGrantedAuthority(this.userRole.name()));
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.email;
+	}
 	
 }
