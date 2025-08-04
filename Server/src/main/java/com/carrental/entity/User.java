@@ -34,6 +34,12 @@ public class User extends BaseEntity {
 	@Column(name="city",length=100,nullable = false)
 	private String city;
 	
+	@Column(length = 30)
+	private String state;
+	
+	@Column(name = "zip_code")
+	private int zipCode;
+	
 	@Column(name="mobile_number",length=10,unique=true,nullable = false)
 	private String mob_num;
 	
