@@ -1,5 +1,14 @@
 package com.carrental.service;
 
+import com.carrental.dto.ApiResponse;
+import com.carrental.dto.UserRequestDto;
+import com.carrental.dto.UserResponseDto;
+import com.carrental.dto.UserUpdateRequestDto;
+
+
 public interface UserService {
 
+	UserResponseDto RegisterUser(UserRequestDto userDto);
+	
+	ApiResponse updateUser(Long Id, UserUpdateRequestDto userDto);
 }
