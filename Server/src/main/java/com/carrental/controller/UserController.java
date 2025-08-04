@@ -1,7 +1,62 @@
 package com.carrental.controller;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.carrental.config.JwtUtils;
+import com.carrental.dto.UserLoginRequestDto;
 import com.carrental.service.UserService;
 
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
+import com.carrental.dto.UserRequestDto;
+import com.carrental.dto.UserUpdateRequestDto;
+import com.carrental.service.UserServiceImpl;
+
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+
+@RestController
+@RequestMapping("/user")
+@AllArgsConstructor
 public class UserController {
-	public static UserService userService;
+	
+	private final UserService userService;
+	private AuthenticationManager authenticationManager;
+	private JwtUtils jwtUtils;
+	
+	@PostMapping("/signup")
+	public ResponseEntity<?> RegesterUser(@RequestBody @Valid UserRequestDto userDto) {
+		System.out.println(userDto.toString());
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(userService.RegisterUser(userDto));
+	}
+	
+	@PutMapping("/{userId}")
+	public ResponseEntity<?> updateUserDetails(@PathVariable Long userId, @RequestBody UserUpdateRequestDto userDto){
+		return ResponseEntity.ok(userService.updateUser(userId, userDto));
+	}
+	
+	
+	@PostMapping("/signin")
+	public String userSignIn(@RequestBody UserLoginRequestDto dto)
+	{
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword());
+		System.out.println("before - "+authentication.isAuthenticated());//false);
+		
+		Authentication validAuthentication = authenticationManager.authenticate(authentication);
+		System.out.println(validAuthentication.getPrincipal().getClass());
+		System.out.println(validAuthentication.getPrincipal());//UserEntity
+		System.out.println("after "+validAuthentication.isAuthenticated());//true
+		
+//		In case of success , generate JWT n send it to REST client
+		return jwtUtils.generateJwtToken(validAuthentication);
+	}
 }
