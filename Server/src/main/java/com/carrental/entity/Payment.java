@@ -1,5 +1,7 @@
 package com.carrental.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -21,18 +23,19 @@ public class Payment  extends BaseEntity{
 	@Column(nullable = false)
 	private double amount;
 	
-	@Column(length = 30, nullable = false)
-	@Enumerated(EnumType.STRING)
-	private PaymentMethod paymentMethod;
-	
-	
-    @Column(nullable = false , length = 30)
+	@Column(nullable = false , length = 30)
 	@Enumerated(EnumType.STRING)
 	private PaymentStatus status;
 	
+	@Column(length = 30, nullable = false)
+	@Enumerated(EnumType.STRING)
+	private PaymentMethod paymentMethod;
 
+    @Column(name="payment_date_time")
+    private LocalDateTime paymentTime;
+    
     @ManyToOne(optional = false)
-    @JoinColumn(name = "booking_id", nullable = false)
+    @JoinColumn(name = "booking_id", nullable = false )
     private Booking bookingId;
 		
 }
