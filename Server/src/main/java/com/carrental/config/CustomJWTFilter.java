@@ -7,6 +7,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.carrental.exception.JwtValidationException;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,16 +28,20 @@ public class CustomJWTFilter extends OncePerRequestFilter {
 		
 		String headerValue = request.getHeader("Authorization");
 		
-		if(headerValue != null && headerValue.startsWith("Bearer ")) {
-			String jwt = headerValue.substring(7);
-			
-			Authentication populatedAuthenticationTokenFromJWT = jwtUtils.populateAuthenticationTokenFromJWT(jwt);
-			
-			SecurityContextHolder
-			.getContext()
-			.setAuthentication(populatedAuthenticationTokenFromJWT);
+		if (headerValue == null || !headerValue.startsWith("Bearer ")) {
+            throw new JwtValidationException("Missing or invalid Authorization header");
+        }
 		
-		}
+//		if(headerValue != null && headerValue.startsWith("Bearer ")) 
+		String jwt = headerValue.substring(7);
+			
+		Authentication auth = jwtUtils.populateAuthenticationTokenFromJWT(jwt);
+			
+		SecurityContextHolder
+			.getContext()
+			.setAuthentication(auth);
+		
+		
 		
 		filterChain.doFilter(request, response);
 
