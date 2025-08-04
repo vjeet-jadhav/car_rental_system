@@ -8,6 +8,7 @@ import com.carrental.dao.AdminDao;
 import com.carrental.dto.AgentResDTO;
 import com.carrental.dto.RegisterAgentDTO;
 import com.carrental.entity.User;
+import com.carrental.exception.ApiException;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
