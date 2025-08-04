@@ -5,13 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserResponseDto {
+public class UserUpdateRequestDto {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private String password;
-	private String city;
-	private String state;
-	private int zipCode;
 	private String mob_num;
 }
