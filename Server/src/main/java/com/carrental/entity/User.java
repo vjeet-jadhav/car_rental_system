@@ -1,9 +1,17 @@
 package com.carrental.entity;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import java.util.Collection;
+
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -19,7 +27,7 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @ToString(callSuper = true) //exclude remain
-public class User extends BaseEntity {
+public class User extends BaseEntity implements UserDetails{
 	
 	@Column(name="first_name",length=50,nullable = false)
 	private String firstName;
@@ -35,6 +43,12 @@ public class User extends BaseEntity {
 	
 	@Column(name="city",length=100,nullable = false)
 	private String city;
+	
+	@Column(length = 30)
+	private String state;
+	
+	@Column(name = "zip_code")
+	private int zipCode;
 	
 	@Column(name="mobile_number",length=10,unique=true,nullable = false)
 	private String mob_num;
@@ -52,6 +66,21 @@ public class User extends BaseEntity {
 	
 	@OneToMany(mappedBy = "agent",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Car> approvedCars = new ArrayList<>();
+
+	
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return List.of(new SimpleGrantedAuthority(this.userRole.name()));
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.email;
+	}
+
 	
 //	helpers methods that helps
 	
