@@ -20,6 +20,7 @@ import com.carrental.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
@@ -34,6 +35,7 @@ public class JwtUtils {
 	
 	private SecretKey key;
 	
+	@PostConstruct
 	public void init() {
 		log.info("Key {} Exp Time {}",jwtSecret,jwtExpirationMs);
 		
@@ -47,7 +49,7 @@ public class JwtUtils {
 		
 		User userPrincipal = (User) authentication.getPrincipal();
 		return Jwts.builder()
-				.subject(userPrincipal.getUsername())
+				.subject(userPrincipal.getEmail())
 				.issuedAt(new Date())
 				.expiration(new Date((new Date()).getTime() + jwtExpirationMs))
 				.claim("authorities",getAuthoritiesInString(userPrincipal.getAuthorities()))
