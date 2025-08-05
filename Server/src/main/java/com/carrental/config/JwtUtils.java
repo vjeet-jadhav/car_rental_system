@@ -105,7 +105,7 @@ public class JwtUtils {
 		List<String> authorityNameFromJwt = (List<String>) claims.get("authorities");
 		List<GrantedAuthority> authorities = authorityNameFromJwt
 				.stream()
-				.map(SimpleGrantedAuthority::new)
+				.map(role -> new SimpleGrantedAuthority("ROLE_" + role))
 				.collect(Collectors.toList());
 		
 		return authorities;

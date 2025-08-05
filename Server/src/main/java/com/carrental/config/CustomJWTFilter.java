@@ -28,20 +28,18 @@ public class CustomJWTFilter extends OncePerRequestFilter {
 		
 		String headerValue = request.getHeader("Authorization");
 		
-		if (headerValue == null || !headerValue.startsWith("Bearer ")) {
-            throw new JwtValidationException("Missing or invalid Authorization header");
-        }
-		
-//		if(headerValue != null && headerValue.startsWith("Bearer ")) 
-		String jwt = headerValue.substring(7);
+		if (headerValue != null && headerValue.startsWith("Bearer ")) {
+            
+        
+		    String jwt = headerValue.substring(7);
 			
-		Authentication auth = jwtUtils.populateAuthenticationTokenFromJWT(jwt);
+		    Authentication auth = jwtUtils.populateAuthenticationTokenFromJWT(jwt);
 			
-		SecurityContextHolder
-			.getContext()
-			.setAuthentication(auth);
+		    SecurityContextHolder
+			  .getContext()
+			  .setAuthentication(auth);
 		
-		
+		}
 		
 		filterChain.doFilter(request, response);
 
