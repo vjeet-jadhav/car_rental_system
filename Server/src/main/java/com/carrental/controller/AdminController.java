@@ -57,5 +57,10 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(adminService.assignAgentToCar(carId, agentId));
 	}
+	
+	@GetMapping("/getinfo")
+	public ResponseEntity<?> getAllInfo(){
+		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.getBasicInfo());
+	}
 
 }

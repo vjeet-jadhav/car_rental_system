@@ -11,6 +11,6 @@ public interface AdminDao extends JpaRepository<User, Long> {
 
 	boolean existsByEmail(String email);
 
-	List<User> findByUserRole(UserRole AGENT);
+	List<User> findByUserRole(UserRole role);
 
 }
