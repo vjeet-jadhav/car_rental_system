@@ -7,7 +7,6 @@ import com.carrental.dto.ApiResponse;
 import com.carrental.dto.BasicInfoDTO;
 import com.carrental.dto.RegisterAgentDTO;
 import com.carrental.dto.UserResponseDto;
-import com.carrental.entity.UserRole;
 
 public interface AdminService {
 
@@ -18,5 +17,9 @@ public interface AdminService {
 	ApiResponse assignAgentToCar(Long carId, Long agentId);
 
 	BasicInfoDTO getBasicInfo();
+
+	ApiResponse restrictCarById(Long carId);
+
+	ApiResponse restrictUserById(Long carId);
 
 }

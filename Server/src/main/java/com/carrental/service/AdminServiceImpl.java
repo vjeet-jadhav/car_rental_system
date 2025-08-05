@@ -17,6 +17,7 @@ import com.carrental.dto.BasicInfoDTO;
 import com.carrental.dto.RegisterAgentDTO;
 import com.carrental.dto.UserResponseDto;
 import com.carrental.entity.Car;
+import com.carrental.entity.CarStatus;
 import com.carrental.entity.User;
 import com.carrental.entity.UserRole;
 import com.carrental.entity.UserStatus;
@@ -54,7 +55,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<UserResponseDto> getAgents() {
 //		System.out.println("here");
-		return adminDao.findByUserRole(UserRole.AGENT)
+		return adminDao.findByUserRoleAndUserStatus(UserRole.AGENT,UserStatus.ACTIVE)
 				.stream()
 				.map(user -> mapper.map(user, UserResponseDto.class))
 				.toList();
@@ -78,9 +79,26 @@ public class AdminServiceImpl implements AdminService {
 		 info.setTotalUsers((int)adminDao.count());
 		 info.setTotalBookings((int)bookingDao.count());
 		 info.setTotalRevenue((double)paymentDao.getTotalAmount());
-		 info.setTotalHosts((int)adminDao.findByUserRole(UserRole.HOST).size());
+		 info.setTotalHosts((int)adminDao.findByUserRoleAndUserStatus(UserRole.HOST,UserStatus.ACTIVE).size());
 //		 System.out.println(info);
 		return info;
+	}
+
+	@Override
+	public ApiResponse restrictCarById(Long carId) {
+		// TODO Auto-generated method stu
+		Car car = carDao.findById(carId).orElseThrow(() -> new ResourceNotFoundException("Car with given id is not found !"));
+		car.setStatus(CarStatus.DELETED);
+		return new ApiResponse("Car Restricted By Admin");
+	}
+
+	@Override
+	public ApiResponse restrictUserById(Long userId) {
+		// TODO Auto-generated method stub
+		User user = adminDao.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User with given id is not found !"));
+		user.setUserStatus(UserStatus.INACTIVE);
+
+		return new ApiResponse("User Restricted By Admin");
 	}
 
 }
