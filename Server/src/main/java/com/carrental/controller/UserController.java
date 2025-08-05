@@ -10,12 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.carrental.config.JwtUtils;
+import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
 import com.carrental.dto.UserLoginRequestDto;
 import com.carrental.service.UserService;
 
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.carrental.dto.UserRequestDto;
 import com.carrental.dto.UserUpdateRequestDto;
@@ -69,6 +73,13 @@ public class UserController {
 	{
 		System.out.println("sanket   "+dto.toString());
 		return userService.bookCar(dto);
+	}
+	
+	@GetMapping("/myBooking")
+	public ResponseEntity<?> userBookings()
+	{
+		List<UserBookingsDto> bookings = userService.getAllBookings();
+		return ResponseEntity.status(HttpStatus.OK).body(bookings);
 	}
 	
 	
