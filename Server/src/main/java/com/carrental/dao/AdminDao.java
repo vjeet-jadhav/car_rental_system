@@ -1,17 +1,16 @@
 package com.carrental.dao;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.carrental.entity.User;
+import com.carrental.entity.UserRole;
 
-public interface UserDaoInterface extends JpaRepository<User, Long>{
-
+public interface AdminDao extends JpaRepository<User, Long> {
 
 	boolean existsByEmail(String email);
 
-
-	Optional<User> findByEmail(String email);
+	List<User> findByUserRole(UserRole AGENT);
 
 }
