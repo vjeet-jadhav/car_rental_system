@@ -37,7 +37,7 @@ public class SecurityConfig {
 						"/user/signup").permitAll()
 				.requestMatchers(HttpMethod.OPTIONS).permitAll()
 				.requestMatchers(HttpMethod.GET, "/").permitAll()
-				.requestMatchers(HttpMethod.POST,"/admin/register").permitAll()
+				.requestMatchers(HttpMethod.POST,"/admin/register","/user/bookingCar").permitAll()
 				.anyRequest()
 				.authenticated()
 				);
