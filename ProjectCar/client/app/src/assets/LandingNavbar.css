@@ -1,0 +1,9 @@
+.search{
+    display: flex;
+    flex-direction: row;
+}
+
+.btn btn-outline-success{
+    display: flex;
+    margin-top: 5px;
+}

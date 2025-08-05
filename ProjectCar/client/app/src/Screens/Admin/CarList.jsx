@@ -70,7 +70,7 @@ const CarList = () => {
         <select
           value={sortOption}
           onChange={handleSortChange}
-          className="form-select w-auto fw-bolder "
+          className="form-select w-auto fw-bold "
           style={{backgroundColor : '#fff',border: "1px solid red"  }}
         >
           <option value="">-- Sort By --</option>

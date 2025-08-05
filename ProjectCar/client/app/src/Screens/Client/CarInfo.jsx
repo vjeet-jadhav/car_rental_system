@@ -137,7 +137,7 @@ function CarInfo() {
             {/* cards */}
 
             <Link
-              to="carbooking"
+              to="/carbooking"
               className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none"
             >
               <img
@@ -168,7 +168,7 @@ function CarInfo() {
             </Link>
 
             <Link
-              to="carbooking"
+              to="/carbooking"
               className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none"
             >
               <img
@@ -199,7 +199,7 @@ function CarInfo() {
             </Link>
 
             <Link
-              to="carbooking"
+              to="/carbooking"
               className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none"
             >
               <img

@@ -1,6 +1,17 @@
-// UserService.java - placeholder
 package com.carrental.service;
 
-public class UserService {
+import com.carrental.dto.ApiResponse;
+import com.carrental.dto.UserCarBookingDto;
+import com.carrental.dto.UserRequestDto;
+import com.carrental.dto.UserResponseDto;
+import com.carrental.dto.UserUpdateRequestDto;
 
+
+public interface UserService {
+
+	UserResponseDto RegisterUser(UserRequestDto userDto);
+	
+	ApiResponse updateUser(Long Id, UserUpdateRequestDto userDto);
+
+	String bookCar(UserCarBookingDto dto);
 }
