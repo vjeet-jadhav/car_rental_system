@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 
 import com.carrental.entity.User;
+import com.carrental.exception.JwtValidationException;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -77,14 +78,22 @@ public class JwtUtils {
 
 	public Claims validateJwtToken(String jwtToken) {
 		
-		Claims claims = Jwts.parser()
-				.verifyWith(key)
-				.build()
-				.parseSignedClaims(jwtToken)
-				.getPayload();
-		
-		return claims;
-				
+		try {
+			
+			Claims claims = Jwts.parser()
+					.verifyWith(key)
+					.build()
+					.parseSignedClaims(jwtToken)
+					.getPayload();
+			
+			return claims;
+			
+		} catch(Exception e) {
+			
+			log.error("JWT validation failed: {}", e.getMessage());
+			throw new JwtValidationException("Invalid or expired JWT token");
+
+		}		
 	}
     
 	private List<String> getAuthoritiesInString(Collection<? extends GrantedAuthority> authorities){
@@ -98,7 +107,7 @@ public class JwtUtils {
 		List<String> authorityNameFromJwt = (List<String>) claims.get("authorities");
 		List<GrantedAuthority> authorities = authorityNameFromJwt
 				.stream()
-				.map(SimpleGrantedAuthority::new)
+				.map(role -> new SimpleGrantedAuthority("ROLE_" + role))
 				.collect(Collectors.toList());
 		
 		return authorities;
@@ -108,8 +117,13 @@ public class JwtUtils {
 		
 		Claims payloadClaims = validateJwtToken(jwt);
 		String email = getUserNameFromJwtToken(payloadClaims);
+		Long userId = getUserIdFromJwtToken(payloadClaims);
 		List<GrantedAuthority> authorities = getAuthoritiesFromClaims(payloadClaims);
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email,null, authorities);
+
+		token.setDetails(userId);
+		
+
 		return token;
 	}
 	
