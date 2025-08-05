@@ -15,6 +15,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+
 import com.carrental.entity.User;
 
 import io.jsonwebtoken.Claims;
@@ -26,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class JwtUtils {
+	
 	
 	@Value("${SECRET_KEY}")
 	private String jwtSecret;
@@ -107,9 +109,7 @@ public class JwtUtils {
 		Claims payloadClaims = validateJwtToken(jwt);
 		String email = getUserNameFromJwtToken(payloadClaims);
 		List<GrantedAuthority> authorities = getAuthoritiesFromClaims(payloadClaims);
-		
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email,null, authorities);
-		
 		return token;
 	}
 	
