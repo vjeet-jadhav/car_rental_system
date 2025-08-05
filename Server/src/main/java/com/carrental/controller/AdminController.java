@@ -40,7 +40,7 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.register(dto));
 	}
 	
-	@GetMapping("/get-agents")
+	@GetMapping("/getAgents")
 	public ResponseEntity<?>  getAgents(){
 		
 		List<UserResponseDto> agents = adminService.getAgents();
@@ -52,15 +52,27 @@ public class AdminController {
 		
 	}
 	
-	@PutMapping("/assign-agent/{carId}/{agentId}")
+	@PutMapping("/assignAgent/{carId}/{agentId}")
 	public ResponseEntity<?> assignAgent(@PathVariable Long carId, @PathVariable Long agentId ){
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(adminService.assignAgentToCar(carId, agentId));
 	}
 	
-	@GetMapping("/getinfo")
+	@GetMapping("/getInfo")
 	public ResponseEntity<?> getAllInfo(){
 		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.getBasicInfo());
+	}
+	
+	@PutMapping("/restrictCar/{carId}")
+	public ResponseEntity<?> restrictCar(@PathVariable Long carId){
+		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.restrictCarById(carId));
+		
+	}
+	
+	@PutMapping("/restrictUser/{userId}")
+	public ResponseEntity<?> restrictUser(@PathVariable Long userId){
+		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.restrictUserById(userId));
+		
 	}
 
 }
