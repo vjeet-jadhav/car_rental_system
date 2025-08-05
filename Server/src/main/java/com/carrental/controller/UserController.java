@@ -79,7 +79,7 @@ public class UserController {
 	public ResponseEntity<?> userBookings()
 	{
 		List<UserBookingsDto> bookings = userService.getAllBookings();
-		return ResponseEntity.status(HttpStatus.OK).body(null);
+		return ResponseEntity.status(HttpStatus.OK).body(bookings);
 	}
 	
 	

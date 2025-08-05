@@ -69,7 +69,6 @@ public class UserServiceImpl implements UserService{
 		User user = userDaoInterface.findById(dto.getClient()).orElseThrow();
 		Car car = carDao.findById(dto.getCar()).orElseThrow();
 		User host = userDaoInterface.findById(dto.getHost()).orElseThrow();
-		
 		Booking entity = modelMapper.map(dto, Booking.class);
 		entity.setBookingdate(LocalDate.now());
 		entity.setCar(car);
@@ -84,8 +83,21 @@ public class UserServiceImpl implements UserService{
 		Long id =(Long) SecurityContextHolder.getContext().getAuthentication().getDetails();
 		System.out.println("user id is"+id);
 		List<Booking> bookingList = userDaoInterface.fetchAllBooking(id);
-		System.out.println(bookingList.toString());
-		return null;
+		List<UserBookingsDto> list = bookingList.stream().map(booking -> {
+					UserBookingsDto dto = new UserBookingsDto();
+					dto.setFirstName(booking.getHost().getFirstName());
+					dto.setLastName(booking.getHost().getLastName());
+					dto.setBrand(booking.getCar().getBrand());
+					dto.setCarModel(booking.getCar().getCarModel());
+					dto.setDailyRate(booking.getCar().getDailyRate());
+					dto.setBookingStatus(booking.getBookingStatus());
+//					payment status remaining
+					dto.setStartTrip(booking.getStartTrip());
+					dto.setEndTrip(booking.getEndTrip());
+					return dto;
+		}).toList();
+		
+		return list.stream().map(booking -> modelMapper.map(booking, UserBookingsDto.class)).toList();
 	}
 	
 }

@@ -14,11 +14,11 @@ import lombok.ToString;
 @ToString
 public class UserBookingsDto {
 	
-	private String ownerFirstName;
+	private String firstName;
 	
-	private String ownerSecondName;
+	private String lastName;
 	
-	private String carBrand;
+	private String brand;
 	
 	private String carModel;
 	
@@ -26,7 +26,7 @@ public class UserBookingsDto {
 	
 	private LocalDateTime endTrip;
 	
-	private double perHourRate;
+	private double dailyRate;
 	
 	private BookingStatus bookingStatus;
 	
