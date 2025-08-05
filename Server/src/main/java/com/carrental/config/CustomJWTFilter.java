@@ -7,7 +7,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.carrental.exception.ApiException;
+
 import com.carrental.exception.JwtValidationException;
+
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -35,12 +38,14 @@ public class CustomJWTFilter extends OncePerRequestFilter {
 			
 		    Authentication auth = jwtUtils.populateAuthenticationTokenFromJWT(jwt);
 			
+
 		    SecurityContextHolder
 			  .getContext()
 			  .setAuthentication(auth);
 		
 		}
 		
+
 		filterChain.doFilter(request, response);
 
 	}

@@ -15,6 +15,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+
 import com.carrental.entity.User;
 import com.carrental.exception.JwtValidationException;
 
@@ -27,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class JwtUtils {
+	
 	
 	@Value("${SECRET_KEY}")
 	private String jwtSecret;
@@ -117,10 +119,11 @@ public class JwtUtils {
 		String email = getUserNameFromJwtToken(payloadClaims);
 		Long userId = getUserIdFromJwtToken(payloadClaims);
 		List<GrantedAuthority> authorities = getAuthoritiesFromClaims(payloadClaims);
-		
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email,null, authorities);
+
 		token.setDetails(userId);
 		
+
 		return token;
 	}
 	
