@@ -15,7 +15,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+
 import com.carrental.entity.User;
+import com.carrental.exception.JwtValidationException;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -26,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class JwtUtils {
+	
 	
 	@Value("${SECRET_KEY}")
 	private String jwtSecret;
@@ -46,7 +49,7 @@ public class JwtUtils {
 	public String generateJwtToken(Authentication authentication) {
 		
 		log.info("generate jwt token "+ authentication);  //contains verified user details
-		
+		System.out.println("JWTUtils ke generateJwtToken ke ander hu..:)");
 		User userPrincipal = (User) authentication.getPrincipal();
 		return Jwts.builder()
 				.subject(userPrincipal.getEmail())
@@ -74,15 +77,24 @@ public class JwtUtils {
 
 
 	public Claims validateJwtToken(String jwtToken) {
-		
-		Claims claims = Jwts.parser()
-				.verifyWith(key)
-				.build()
-				.parseSignedClaims(jwtToken)
-				.getPayload();
-		
-		return claims;
-				
+		System.out.println("JWTUtils ke validateToken ke ander hu..:)");
+
+		try {
+			
+			Claims claims = Jwts.parser()
+					.verifyWith(key)
+					.build()
+					.parseSignedClaims(jwtToken)
+					.getPayload();
+			
+			return claims;
+			
+		} catch(Exception e) {
+			
+			log.error("JWT validation failed: {}", e.getMessage());
+			throw new JwtValidationException("Invalid or expired JWT token");
+
+		}		
 	}
     
 	private List<String> getAuthoritiesInString(Collection<? extends GrantedAuthority> authorities){
@@ -96,20 +108,23 @@ public class JwtUtils {
 		List<String> authorityNameFromJwt = (List<String>) claims.get("authorities");
 		List<GrantedAuthority> authorities = authorityNameFromJwt
 				.stream()
-				.map(SimpleGrantedAuthority::new)
+				.map(role -> new SimpleGrantedAuthority("ROLE_" + role))
 				.collect(Collectors.toList());
 		
 		return authorities;
 	}
 	
 	public Authentication populateAuthenticationTokenFromJWT(String jwt) {
-		
+		System.out.println("JWTUtils ke populateAuthenticationTokenFromJWT ke ander hu..:)");
 		Claims payloadClaims = validateJwtToken(jwt);
 		String email = getUserNameFromJwtToken(payloadClaims);
+		Long userId = getUserIdFromJwtToken(payloadClaims);
 		List<GrantedAuthority> authorities = getAuthoritiesFromClaims(payloadClaims);
-		
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email,null, authorities);
+
+		token.setDetails(userId);
 		
+
 		return token;
 	}
 	

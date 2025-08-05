@@ -25,7 +25,7 @@ public class Payment  extends BaseEntity{
 	
 	@Column(nullable = false , length = 30)
 	@Enumerated(EnumType.STRING)
-	private PaymentStatus status;
+	private PaymentStatus paymentStatus;
 	
 	@Column(length = 30, nullable = false)
 	@Enumerated(EnumType.STRING)

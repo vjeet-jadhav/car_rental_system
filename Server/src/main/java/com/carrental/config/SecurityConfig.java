@@ -25,7 +25,7 @@ public class SecurityConfig {
 	
 	@Bean
 	SecurityFilterChain configureFilterChain(HttpSecurity http) throws Exception{
-		
+		System.out.println("SecurityConfiguration ke ander hu..:)");
 		http.csrf( csrf -> csrf.disable());
 		
 		http.authorizeHttpRequests(
@@ -37,7 +37,13 @@ public class SecurityConfig {
 						"/user/signup").permitAll()
 				.requestMatchers(HttpMethod.OPTIONS).permitAll()
 				.requestMatchers(HttpMethod.GET, "/").permitAll()
-				.requestMatchers(HttpMethod.POST,"/admin/register").permitAll()
+
+				.requestMatchers(HttpMethod.POST,"/user/bookingCar").permitAll()
+
+				.requestMatchers(HttpMethod.POST,"/admin/register").hasRole("ADMIN")
+
+				.requestMatchers(HttpMethod.GET,"/admin/getagents").hasRole("ADMIN")
+
 				.anyRequest()
 				.authenticated()
 				);
