@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.carrental.config.JwtUtils;
+import com.carrental.dto.UserCarBookingDto;
 import com.carrental.dto.UserLoginRequestDto;
 import com.carrental.service.UserService;
 
@@ -39,8 +40,10 @@ public class UserController {
 				.body(userService.RegisterUser(userDto));
 	}
 	
-	@PutMapping("/{userId}")
+	@PutMapping("/editProfile/{userId}")
 	public ResponseEntity<?> updateUserDetails(@PathVariable Long userId, @RequestBody UserUpdateRequestDto userDto){
+		System.out.println(userDto.toString());
+//		System.out.println(jwtUtils.getFirstNameFromJwtToken());
 		return ResponseEntity.ok(userService.updateUser(userId, userDto));
 	}
 	
@@ -59,4 +62,14 @@ public class UserController {
 //		In case of success , generate JWT n send it to REST client
 		return jwtUtils.generateJwtToken(validAuthentication);
 	}
+	
+	
+	@PostMapping("/bookingCar")
+	public String userCarBooking(@RequestBody UserCarBookingDto dto)
+	{
+		System.out.println("sanket   "+dto.toString());
+		return userService.bookCar(dto);
+	}
+	
+	
 }

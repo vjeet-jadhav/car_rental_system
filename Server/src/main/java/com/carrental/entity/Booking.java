@@ -1,6 +1,10 @@
 package com.carrental.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,11 +30,11 @@ public class Booking extends BaseEntity{
 
 	@Future
 	@Column(name = "start_trip" , nullable = false)
-	private LocalDate startTrip;
+	private LocalDateTime startTrip;
 	
 	@Future
 	@Column(name = "end_trip" , nullable = false)
-	private LocalDate endTrip;
+	private LocalDateTime endTrip;
 	
 	@Column(name = "amount" , nullable = false)
 	private double amount;
