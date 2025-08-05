@@ -2,16 +2,20 @@ package com.carrental.service;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.carrental.config.JwtUtils;
 import com.carrental.dao.BookingDaoInterface;
 import com.carrental.dao.CarDaoInterface;
 import com.carrental.dao.UserDaoInterface;
 import com.carrental.dto.ApiResponse;
+import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
 import com.carrental.dto.UserRequestDto;
 import com.carrental.dto.UserResponseDto;
@@ -37,6 +41,7 @@ public class UserServiceImpl implements UserService{
 	private BookingDaoInterface bookingDao;
 	private ModelMapper modelMapper;
 	private PasswordEncoder password;
+	private JwtUtils jwtUtil;
 
 	@Override
 	public UserResponseDto RegisterUser(UserRequestDto userDto) {
@@ -72,6 +77,15 @@ public class UserServiceImpl implements UserService{
 		entity.setHost(host);
 		bookingDao.save(entity);
 		return "Booking successfully";
+	}
+
+	@Override
+	public List<UserBookingsDto> getAllBookings() {
+		Long id =(Long) SecurityContextHolder.getContext().getAuthentication().getDetails();
+		System.out.println("user id is"+id);
+		List<Booking> bookingList = userDaoInterface.fetchAllBooking(id);
+		System.out.println(bookingList.toString());
+		return null;
 	}
 	
 }
