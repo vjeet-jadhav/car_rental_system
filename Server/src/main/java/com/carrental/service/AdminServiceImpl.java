@@ -3,18 +3,25 @@ package com.carrental.service;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.carrental.dao.AdminDao;
+import com.carrental.dao.BookingDaoInterface;
+import com.carrental.dao.CarDaoInterface;
+import com.carrental.dao.PaymentDaoInterface;
 import com.carrental.dto.AgentResDTO;
 import com.carrental.dto.ApiResponse;
+import com.carrental.dto.BasicInfoDTO;
 import com.carrental.dto.RegisterAgentDTO;
 import com.carrental.dto.UserResponseDto;
+import com.carrental.entity.Car;
 import com.carrental.entity.User;
 import com.carrental.entity.UserRole;
 import com.carrental.entity.UserStatus;
 import com.carrental.exception.ApiException;
+import com.carrental.exception.ResourceNotFoundException;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -25,6 +32,9 @@ import lombok.AllArgsConstructor;
 public class AdminServiceImpl implements AdminService {
 	
 	private final AdminDao adminDao;
+	private final CarDaoInterface carDao;
+	private final BookingDaoInterface bookingDao;
+	private final PaymentDaoInterface paymentDao;
 	private ModelMapper mapper;
 	private PasswordEncoder passwordEncoder;
 
@@ -43,6 +53,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<UserResponseDto> getAgents() {
+//		System.out.println("here");
 		return adminDao.findByUserRole(UserRole.AGENT)
 				.stream()
 				.map(user -> mapper.map(user, UserResponseDto.class))
@@ -52,8 +63,24 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public ApiResponse assignAgentToCar(Long carId, Long agentId) {
 		
+		Car car = carDao.findById(carId).orElseThrow(() -> new ResourceNotFoundException("Car with given id is not found !"));
+		User agent = adminDao.findById(agentId).orElseThrow(() -> new ResourceNotFoundException("Agent with given id is not found !"));
+		car.setAgent(agent);
 		
-		return null;
+		return new ApiResponse("Agent Assigned to Car !");
+	}
+
+	@Override
+	public BasicInfoDTO getBasicInfo() {
+		// TODO Auto-generated method stub
+		BasicInfoDTO info = new BasicInfoDTO(0, 0, 0, 0, 0);
+		 info.setTotalCars((int)carDao.count()); 
+		 info.setTotalUsers((int)adminDao.count());
+		 info.setTotalBookings((int)bookingDao.count());
+		 info.setTotalRevenue((double)paymentDao.getTotalAmount());
+		 info.setTotalHosts((int)adminDao.findByUserRole(UserRole.HOST).size());
+//		 System.out.println(info);
+		return info;
 	}
 
 }
