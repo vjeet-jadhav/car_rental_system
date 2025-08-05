@@ -49,7 +49,7 @@ public class JwtUtils {
 	public String generateJwtToken(Authentication authentication) {
 		
 		log.info("generate jwt token "+ authentication);  //contains verified user details
-		
+		System.out.println("JWTUtils ke generateJwtToken ke ander hu..:)");
 		User userPrincipal = (User) authentication.getPrincipal();
 		return Jwts.builder()
 				.subject(userPrincipal.getEmail())
@@ -77,7 +77,8 @@ public class JwtUtils {
 
 
 	public Claims validateJwtToken(String jwtToken) {
-		
+		System.out.println("JWTUtils ke validateToken ke ander hu..:)");
+
 		try {
 			
 			Claims claims = Jwts.parser()
@@ -114,7 +115,7 @@ public class JwtUtils {
 	}
 	
 	public Authentication populateAuthenticationTokenFromJWT(String jwt) {
-		
+		System.out.println("JWTUtils ke populateAuthenticationTokenFromJWT ke ander hu..:)");
 		Claims payloadClaims = validateJwtToken(jwt);
 		String email = getUserNameFromJwtToken(payloadClaims);
 		Long userId = getUserIdFromJwtToken(payloadClaims);

@@ -24,7 +24,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(callSuper = true)
+@ToString(callSuper = true,exclude= {"car","client","host"})
 
 public class Booking extends BaseEntity{
 
