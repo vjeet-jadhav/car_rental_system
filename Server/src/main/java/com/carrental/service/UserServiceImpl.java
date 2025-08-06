@@ -15,10 +15,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.carrental.dao.BookingDaoInterface;
+import com.carrental.dao.CarDao;
 import com.carrental.dao.CarDaoInterface;
+
 import com.carrental.dao.PaymentDaoInterface;
 import com.carrental.dao.RatingDaoInterface;
+
+import com.carrental.dao.CarImgInterface;
+
 import com.carrental.dao.UserDaoInterface;
+import com.carrental.dao.UserImgInterface;
 import com.carrental.dto.ApiResponse;
 import com.carrental.dto.CarPaymentDto;
 import com.carrental.dto.CarReviewDto;
@@ -31,12 +37,16 @@ import com.carrental.dto.UserResponseDto;
 import com.carrental.dto.UserUpdateRequestDto;
 import com.carrental.entity.Booking;
 import com.carrental.entity.BookingStatus;
-import com.carrental.entity.Car;
+import com.carrental.entity.Car
 import com.carrental.entity.CarStatus;
 import com.carrental.entity.Payment;
 import com.carrental.entity.PaymentStatus;
 import com.carrental.entity.Rating;
+
+import com.carrental.entity.CarImgEntity;
+
 import com.carrental.entity.User;
+import com.carrental.entity.UserImgEntity;
 import com.carrental.entity.UserRole;
 import com.carrental.entity.UserStatus;
 import com.carrental.exception.ApiException;
@@ -56,7 +66,13 @@ public class UserServiceImpl implements UserService{
 	private RatingDaoInterface ratingDao;
 	private ModelMapper modelMapper;
 	private PasswordEncoder password;
+
 	private PaymentDaoInterface paymentDao;
+
+	private JwtUtils jwtUtil;
+	private final UserImgInterface userImgInterface;
+	private final CarImgInterface carImgInterface;
+
 
 	@Override
 	public UserResponseDto RegisterUser(UserRequestDto userDto) {
@@ -181,6 +197,50 @@ public class UserServiceImpl implements UserService{
 		return "Review Successfully Added";
 	}
 
+	public ApiResponse addImage(Long userId, String imgUrl) {
+		// TODO Auto-generated method stub
+		User user = userDaoInterface.getById(userId);
+		UserImgEntity entity = new UserImgEntity();
+		entity.setUser(user);
+		entity.setImgType("profile");
+		entity.setImgUrl(imgUrl);
+		userImgInterface.save(entity);
+		return new ApiResponse("Profile Uploaded Successfully !");
+	}
+
+	@Override
+	public ApiResponse addCarImg(Long carId, List<String> urls) {
+		// TODO Auto-generated method stub
+		Car car = carDao.findById(carId).orElseThrow(() -> new ResourceNotFoundException("Car not found for given id !"));
+		
+		for(int i = 0 ; i < urls.size(); i++) {
+			CarImgEntity entity1 = new CarImgEntity();
+			entity1.setCar(car);
+			
+			if(i == 0) {
+				entity1.setImgType("front");
+				entity1.setImgUrl(urls.get(i));
+			}else if (i == 1) {
+				entity1.setImgType("back");
+				entity1.setImgUrl(urls.get(i));
+			}else if (i == 2) {
+				entity1.setImgType("left");
+				entity1.setImgUrl(urls.get(i));
+			}else if (i == 3) {
+				entity1.setImgType("right");
+				entity1.setImgUrl(urls.get(i));
+			}else if (i == 4) {
+				entity1.setImgType("top");
+				entity1.setImgUrl(urls.get(i));
+			}
+			
+			carImgInterface.save(entity1);
+			
+		}
+		
+		return new ApiResponse("Car Images Added Successfully !");
+	}
+  
 	@Override
 	public Top5RatingResponseDto top5Reviews(Long carId) {
 		if(!carDao.existsById(carId)) {
@@ -201,32 +261,5 @@ public class UserServiceImpl implements UserService{
 	    dto.setFeedback(feedbacks);
 	    return dto;
 	}
-
-//	@Override
-//	public double top5Reviews(Long carId) {
-//		double avg = ratingDao.findAvgRatingOfCar(carId);
-//		return avg;
-//	}
-
-//	@Override
-//	public Top5RatingResponseDto top5Reviews(Long carId) {
-//		Double average = ratingDao.findAvgRatingOfCar(carId);
-//		
-//		Pageable pageable = PageRequest.of(0, 5);
-//		
-//		List<String> feedbacks = ratingDao.findTop5RatingsByCar(carId, pageable)
-//				.stream()
-//				.map(rating ->
-//					rating.getFeedback()
-//				)
-//				.collect(Collectors.toList());
-//		
-//		Top5RatingResponseDto dto = new Top5RatingResponseDto();
-//		dto.setRating(average);
-//		dto.setFeedback(feedbacks);
-//		return dto;
-//	}
-
-	
 	
 }
