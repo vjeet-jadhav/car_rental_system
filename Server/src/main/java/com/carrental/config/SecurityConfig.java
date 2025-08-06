@@ -41,6 +41,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.POST,"/user/bookingCar").permitAll()
 				.requestMatchers(HttpMethod.POST,"/user/upload/**").permitAll()
 				.requestMatchers(HttpMethod.POST,"/user/uploadMul/**").permitAll()
+				.requestMatchers(HttpMethod.GET, "/user/review/**").permitAll()
 
 
 				.requestMatchers(HttpMethod.GET,"/host").hasRole("HOST")
@@ -48,6 +49,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.POST, "/car/update").hasRole("HOST")
 				.requestMatchers(HttpMethod.GET, "/car/ratings").hasAnyRole("HOST", "USER")
 				
+
 				.requestMatchers(HttpMethod.POST,"/admin/register").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET,"/admin/getagents").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT, "/admin/assignAgent/**").hasRole("ADMIN")
