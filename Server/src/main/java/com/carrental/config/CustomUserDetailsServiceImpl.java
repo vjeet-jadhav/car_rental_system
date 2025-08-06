@@ -22,6 +22,7 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
+		System.out.println("CustomUserDetailsServiceImpl ke ander hu..:)");
 		User user = userDao.findByEmail(email)
 				.orElseThrow(() -> new UsernameNotFoundException("Invalid Email !!"));
 		return user;
