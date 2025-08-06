@@ -6,12 +6,14 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Future;
 import lombok.Getter;
@@ -24,7 +26,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(callSuper = true)
+@ToString(callSuper = true,exclude= {"car","client","host"})
 
 public class Booking extends BaseEntity{
 
@@ -57,4 +59,6 @@ public class Booking extends BaseEntity{
 	@ManyToOne
 	@JoinColumn(name="host_id", nullable = false)
 	private User host;
+	
+	
 }

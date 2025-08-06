@@ -86,6 +86,7 @@ public class Car extends BaseEntity{
 	@JoinColumn(name = "agent_id")
 	private User agent;
 	
+
 	@OneToOne(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Address address;
 	
