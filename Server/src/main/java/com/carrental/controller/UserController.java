@@ -3,6 +3,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.carrental.config.JwtUtils;
 import com.carrental.dto.BookingRequestComDto;
 import com.carrental.dto.CarPaymentDto;
+import com.carrental.dto.CarReviewDto;
+
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
 import com.carrental.dto.UserLoginRequestDto;
@@ -90,6 +93,7 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.OK).body(bookings);
 	}
 	
+
 	@GetMapping("/topCars")
 	public ResponseEntity<?> uiTopCars()
 	{
@@ -97,4 +101,12 @@ public class UserController {
 	}
 	
 	
+
+	@PostMapping("/review")
+	public String submitReview(@RequestBody CarReviewDto reviewDto) {
+		
+		return userService.addReview(reviewDto);
+	}
+
+
 }

@@ -154,7 +154,7 @@ public class UserServiceImpl implements UserService{
 					dto.setTransmissionType(rating.getCar().getTransmissionType());
 					dto.setDailyRate(rating.getCar().getDailyRate());
 					return dto;
-				}).toList();
+				}).toList(); 
 	}
 
 	

@@ -14,6 +14,5 @@ public interface RatingDaoInterface extends JpaRepository<Rating, Long> {
 	@Query("SELECT r FROM Rating r ORDER BY r.rating")
 	Optional<List<Rating>> getTopCarList(Pageable pageable);
 
-	
 
 }
