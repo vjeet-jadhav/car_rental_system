@@ -4,9 +4,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ import com.carrental.dao.UserImgInterface;
 import com.carrental.dto.ApiResponse;
 import com.carrental.dto.CarPaymentDto;
 import com.carrental.dto.CarReviewDto;
+import com.carrental.dto.Top5RatingResponseDto;
 import com.carrental.dto.TopCarsResponseDto;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
@@ -194,7 +197,6 @@ public class UserServiceImpl implements UserService{
 		return "Review Successfully Added";
 	}
 
-
 	public ApiResponse addImage(Long userId, String imgUrl) {
 		// TODO Auto-generated method stub
 		User user = userDaoInterface.getById(userId);
@@ -238,6 +240,26 @@ public class UserServiceImpl implements UserService{
 		
 		return new ApiResponse("Car Images Added Successfully !");
 	}
+  
+	@Override
+	public Top5RatingResponseDto top5Reviews(Long carId) {
+		if(!carDao.existsById(carId)) {
+			throw new ResourceNotFoundException("Car not found with id " + carId);
+//	        throw new CarNotFoundException("Car not found with id " + carId);
+	    }
 
+	    Double average = ratingDao.findAvgRatingOfCar(carId);
+	    Pageable pageable = PageRequest.of(0, 5);
+
+	    List<String> feedbacks = ratingDao.findTop5RatingsByCar(carId, pageable)
+	        .stream()
+	        .map(Rating::getFeedback)
+	        .collect(Collectors.toList());
+
+	    Top5RatingResponseDto dto = new Top5RatingResponseDto();
+	    dto.setRating(average);
+	    dto.setFeedback(feedbacks);
+	    return dto;
+	}
 	
 }

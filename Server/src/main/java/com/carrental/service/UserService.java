@@ -8,7 +8,7 @@ import com.carrental.dto.CarPaymentDto;
 import com.carrental.dto.TopCarsResponseDto;
 
 import com.carrental.dto.CarReviewDto;
-
+import com.carrental.dto.Top5RatingResponseDto;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
 import com.carrental.dto.UserRequestDto;
@@ -35,4 +35,6 @@ public interface UserService {
   ApiResponse addImage(Long userId, String imgUrl);
 
 	ApiResponse addCarImg(Long carId, List<String> urls);
+  
+	Top5RatingResponseDto top5Reviews(Long carId);
 }

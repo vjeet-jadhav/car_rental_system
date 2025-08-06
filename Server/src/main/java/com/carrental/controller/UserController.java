@@ -17,8 +17,8 @@ import com.carrental.config.JwtUtils;
 import com.carrental.dto.BookingRequestComDto;
 import com.carrental.dto.CarPaymentDto;
 import com.carrental.dto.CarReviewDto;
-
 import com.carrental.dto.ApiResponse;
+import com.carrental.dto.Top5RatingResponseDto;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
 import com.carrental.dto.UserLoginRequestDto;
@@ -115,7 +115,12 @@ public class UserController {
 		
 		return userService.addReview(reviewDto);
 	}
-
+	
+	@GetMapping("/review/{carId}")
+	public ResponseEntity<?> getTop(@PathVariable Long carId){
+		
+		return ResponseEntity.ok(userService.top5Reviews(carId));
+	}
 
 
 	
