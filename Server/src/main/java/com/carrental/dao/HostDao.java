@@ -12,6 +12,5 @@ import com.carrental.entity.User;
 @Repository
 public interface HostDao extends JpaRepository<User, Long> {
 	
-	@Query("select u from User u left join fetch u.hostedCars where u.id=:userId")
-	public Optional<User> getMyCars(Long userId);
+	
 }

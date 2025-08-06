@@ -5,6 +5,4 @@ import com.carrental.entity.Car;
 
 public class CarDao {
 
-	
-
 }
