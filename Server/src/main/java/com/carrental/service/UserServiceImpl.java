@@ -1,7 +1,7 @@
 package com.carrental.service;
 
 import java.time.LocalDate;
-
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -14,9 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.carrental.dao.BookingDaoInterface;
 import com.carrental.dao.CarDaoInterface;
+import com.carrental.dao.PaymentDaoInterface;
 import com.carrental.dao.RatingDaoInterface;
 import com.carrental.dao.UserDaoInterface;
 import com.carrental.dto.ApiResponse;
+import com.carrental.dto.CarPaymentDto;
 import com.carrental.dto.TopCarsResponseDto;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
@@ -24,7 +26,11 @@ import com.carrental.dto.UserRequestDto;
 import com.carrental.dto.UserResponseDto;
 import com.carrental.dto.UserUpdateRequestDto;
 import com.carrental.entity.Booking;
+import com.carrental.entity.BookingStatus;
 import com.carrental.entity.Car;
+import com.carrental.entity.CarStatus;
+import com.carrental.entity.Payment;
+import com.carrental.entity.PaymentStatus;
 import com.carrental.entity.Rating;
 import com.carrental.entity.User;
 import com.carrental.entity.UserRole;
@@ -46,6 +52,7 @@ public class UserServiceImpl implements UserService{
 	private RatingDaoInterface ratingDao;
 	private ModelMapper modelMapper;
 	private PasswordEncoder password;
+	private PaymentDaoInterface paymentDao;
 
 	@Override
 	public UserResponseDto RegisterUser(UserRequestDto userDto) {
@@ -66,20 +73,37 @@ public class UserServiceImpl implements UserService{
 		modelMapper.map(userDto, user);
 		return new ApiResponse("User Successfully Updated");
 	}
+	
+//	Booking a Car
 
 	@Override
-	public String bookCar(UserCarBookingDto dto) {
+	public void bookCar(UserCarBookingDto dto,CarPaymentDto pDto) {
 		
 		User user = userDaoInterface.findById(dto.getClient()).orElseThrow(()-> new ResourceNotFoundException("Invaild User ID...:)"));
 		Car car = carDao.findById(dto.getCar()).orElseThrow(()-> new ResourceNotFoundException("Invaild Car ID...:)"));
 		User host = userDaoInterface.findById(dto.getHost()).orElseThrow(()-> new ResourceNotFoundException("Invaild Host ID...:)"));
+		
+//		Adding booking details
+		
 		Booking entity = modelMapper.map(dto, Booking.class);
 		entity.setBookingdate(LocalDate.now());
 		entity.setCar(car);
 		entity.setClient(user);
 		entity.setHost(host);
+		entity.setBookingStatus(BookingStatus.CONFIRMED);
 		bookingDao.save(entity);
-		return "Booking successfully";
+//		on successful booking car status need to update
+		car.setStatus(CarStatus.BOOKED);
+		
+//	    storing the payment details
+		
+		Payment pEntity = modelMapper.map(pDto, Payment.class);
+		
+		pEntity.setBookingId(entity);
+		pEntity.setPaymentStatus(PaymentStatus.COMPLETED);
+		pEntity.setPaymentTime(LocalDateTime.now());
+		
+		paymentDao.save(pEntity);
 	}
 
 	@Override
@@ -98,7 +122,13 @@ public class UserServiceImpl implements UserService{
 					dto.setCarModel(booking.getCar().getCarModel());
 					dto.setDailyRate(booking.getCar().getDailyRate());
 					dto.setBookingStatus(booking.getBookingStatus());
-//					payment status remaining
+					
+//					getting the payment status
+					Long bookingId = booking.getId();
+					Payment obj = paymentDao.findByBookingId(bookingId).orElseThrow(()-> new ResourceNotFoundException("payment not done"));
+					System.out.println("payment obj"+obj);
+					dto.setPaymentStatus(obj.getPaymentStatus());
+					
 					dto.setStartTrip(booking.getStartTrip());
 					dto.setEndTrip(booking.getEndTrip());
 					return dto;

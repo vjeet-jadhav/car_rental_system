@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.carrental.config.JwtUtils;
+import com.carrental.dto.BookingRequestComDto;
+import com.carrental.dto.CarPaymentDto;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
 import com.carrental.dto.UserLoginRequestDto;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.carrental.dto.UserRequestDto;
 import com.carrental.dto.UserUpdateRequestDto;
+import com.carrental.entity.Booking;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -66,10 +69,16 @@ public class UserController {
 	
 	
 	@PostMapping("/bookingCar")
-	public ResponseEntity<?> userCarBooking(@RequestBody UserCarBookingDto dto)
+	public ResponseEntity<?> userCarBooking(@RequestBody BookingRequestComDto requestBookingDto)
 	{
+		UserCarBookingDto bDto = requestBookingDto.getBookingDto();
+		CarPaymentDto pDto = requestBookingDto.getPaymentDto();
+		System.out.println(bDto.toString());
+		System.out.println(pDto.toString());
+		userService.bookCar(bDto,pDto);
+//		Booking entity = 
 //		System.out.println("sanket   "+dto.toString());
-		return ResponseEntity.ok(userService.bookCar(dto));
+		return ResponseEntity.ok("Booking and payment in process");
 	}
 	
 	
