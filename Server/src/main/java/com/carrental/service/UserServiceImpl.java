@@ -19,6 +19,7 @@ import com.carrental.dao.RatingDaoInterface;
 import com.carrental.dao.UserDaoInterface;
 import com.carrental.dto.ApiResponse;
 import com.carrental.dto.CarPaymentDto;
+import com.carrental.dto.CarReviewDto;
 import com.carrental.dto.TopCarsResponseDto;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
@@ -155,6 +156,26 @@ public class UserServiceImpl implements UserService{
 					dto.setDailyRate(rating.getCar().getDailyRate());
 					return dto;
 				}).toList(); 
+	}
+
+	@Override
+	public String addReview(CarReviewDto reviewDto) {
+		
+		Long userId =(Long) SecurityContextHolder.getContext().getAuthentication().getDetails();
+		
+		User user = userDaoInterface.findById(userId).orElseThrow();
+		
+		Car car = carDao.findById(reviewDto.getCar()).orElseThrow();
+		
+		Rating rating = modelMapper.map(reviewDto, Rating.class);
+		
+		rating.setCar(car);
+		
+		rating.setClient(user);
+		
+		ratingDao.save(rating);
+		
+		return "Review Successfully Added";
 	}
 
 	
