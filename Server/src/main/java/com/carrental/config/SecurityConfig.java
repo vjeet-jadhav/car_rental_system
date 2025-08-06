@@ -25,7 +25,7 @@ public class SecurityConfig {
 	
 	@Bean
 	SecurityFilterChain configureFilterChain(HttpSecurity http) throws Exception{
-		
+		System.out.println("SecurityConfiguration ke ander hu..:)");
 		http.csrf( csrf -> csrf.disable());
 		
 		http.authorizeHttpRequests(
@@ -37,12 +37,18 @@ public class SecurityConfig {
 						"/user/signup").permitAll()
 				.requestMatchers(HttpMethod.OPTIONS).permitAll()
 				.requestMatchers(HttpMethod.GET, "/").permitAll()
-
+				.requestMatchers(HttpMethod.GET, "/user/topCars").permitAll()
 				.requestMatchers(HttpMethod.POST,"/user/bookingCar").permitAll()
+				.requestMatchers(HttpMethod.POST,"/user/upload/**").permitAll()
+				.requestMatchers(HttpMethod.POST,"/user/uploadMul/**").permitAll()
+
 
 				.requestMatchers(HttpMethod.POST,"/admin/register").hasRole("ADMIN")
-
-				.requestMatchers(HttpMethod.GET,"/admin/getagents").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.PUT, "/admin/assignAgent/**").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET,"/admin/getAgents").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET,"/admin/getInfo").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.PUT,"/restrictCar/**").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.PUT,"/restrictUser/**").hasRole("ADMIN")
 
 				.anyRequest()
 				.authenticated()

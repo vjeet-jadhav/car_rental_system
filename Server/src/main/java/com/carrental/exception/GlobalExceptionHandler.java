@@ -20,4 +20,11 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<?> handelResourceNotFoundException(ResourceNotFoundException e){
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse(e.getMessage()));
 	}
+	
+//	to handle global exception
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<?> handleException(Exception e)
+	{
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiException(e.getMessage()));
+	}
 }

@@ -1,6 +1,15 @@
 package com.carrental.service;
 
+import java.util.List;
+
 import com.carrental.dto.ApiResponse;
+
+import com.carrental.dto.CarPaymentDto;
+import com.carrental.dto.TopCarsResponseDto;
+
+import com.carrental.dto.CarReviewDto;
+
+import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
 import com.carrental.dto.UserRequestDto;
 import com.carrental.dto.UserResponseDto;
@@ -13,5 +22,17 @@ public interface UserService {
 	
 	ApiResponse updateUser(Long Id, UserUpdateRequestDto userDto);
 
-	String bookCar(UserCarBookingDto dto);
+	void bookCar(UserCarBookingDto dto,CarPaymentDto pDto);
+
+	List<UserBookingsDto> getAllBookings();
+
+
+	List<TopCarsResponseDto> getTopCars();
+
+	
+	String addReview(CarReviewDto reviewDto);
+
+  ApiResponse addImage(Long userId, String imgUrl);
+
+	ApiResponse addCarImg(Long carId, List<String> urls);
 }
