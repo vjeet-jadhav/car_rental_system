@@ -19,4 +19,9 @@ public interface CarDaoInterface extends JpaRepository<Car, Long> {
 	
 	boolean existsByRcNumber(String rcNumber);
 
+	@Query("SELECT c FROM Car c JOIN FETCH c.address a JOIN FETCH c.host h WHERE LOWER(a.serviceArea) = LOWER(:city)")
+	List<Car> findByServiceArea(String city);
+	
+
+
 }
