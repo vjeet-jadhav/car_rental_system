@@ -42,7 +42,7 @@ public class HostServiceImpl implements HostService {
 			           CarResponseDTO dto = mapper.map(car, CarResponseDTO.class);
 
 			           // 2) Compute the average rating (0 if no ratings)
-			           double avg = car.getRatings()
+			           double avg = car.getRatingList()
 			                           .stream()
 			                           .mapToInt(Rating::getRating)
 			                           .average()

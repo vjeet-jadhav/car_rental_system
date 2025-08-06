@@ -55,7 +55,7 @@ public class CarController {
 				.body(carService.updateCar(car));
 	}
 	
-	@GetMapping("/ratings")
+	@GetMapping("/ratings/{carId}")
 	public ResponseEntity<?> getRatings(@PathVariable Long carId)
 	{
 		System.out.println("CarController ke getRatings ke under hu padul saheb...");
