@@ -13,8 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.carrental.config.JwtUtils;
 import com.carrental.dao.BookingDaoInterface;
 import com.carrental.dao.CarDaoInterface;
+import com.carrental.dao.RatingDaoInterface;
 import com.carrental.dao.UserDaoInterface;
 import com.carrental.dto.ApiResponse;
+import com.carrental.dto.CarReviewDto;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
 import com.carrental.dto.UserRequestDto;
@@ -22,6 +24,7 @@ import com.carrental.dto.UserResponseDto;
 import com.carrental.dto.UserUpdateRequestDto;
 import com.carrental.entity.Booking;
 import com.carrental.entity.Car;
+import com.carrental.entity.Rating;
 import com.carrental.entity.User;
 import com.carrental.entity.UserRole;
 import com.carrental.entity.UserStatus;
@@ -39,6 +42,7 @@ public class UserServiceImpl implements UserService{
 	private final UserDaoInterface userDaoInterface;
 	private CarDaoInterface carDao;
 	private BookingDaoInterface bookingDao;
+	private RatingDaoInterface ratingDao;
 	private ModelMapper modelMapper;
 	private PasswordEncoder password;
 	private JwtUtils jwtUtil;
@@ -99,5 +103,25 @@ public class UserServiceImpl implements UserService{
 		
 		return list.stream().map(booking -> modelMapper.map(booking, UserBookingsDto.class)).toList();
 	}
+
+	@Override
+	public String addReview(CarReviewDto reviewDto) {
+		
+		Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getDetails();
+		
+		User user = userDaoInterface.findById(userId).orElseThrow();
+		
+		Car car = carDao.findById(reviewDto.getCar()).orElseThrow();
+		
+		Rating rating = modelMapper.map(reviewDto, Rating.class);
+		
+		rating.setCar(car);
+		rating.setClient(user);
+		
+		ratingDao.save(rating);
+		return "Successfully Rated!!!";
+	}
+	
+	
 	
 }
