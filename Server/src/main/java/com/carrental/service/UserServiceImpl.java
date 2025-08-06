@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.carrental.config.JwtUtils;
 import com.carrental.dao.BookingDaoInterface;
 import com.carrental.dao.CarDao;
 import com.carrental.dao.CarDaoInterface;
@@ -37,7 +38,7 @@ import com.carrental.dto.UserResponseDto;
 import com.carrental.dto.UserUpdateRequestDto;
 import com.carrental.entity.Booking;
 import com.carrental.entity.BookingStatus;
-import com.carrental.entity.Car
+import com.carrental.entity.Car;
 import com.carrental.entity.CarStatus;
 import com.carrental.entity.Payment;
 import com.carrental.entity.PaymentStatus;
