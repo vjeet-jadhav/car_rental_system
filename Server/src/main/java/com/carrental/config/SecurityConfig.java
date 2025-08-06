@@ -43,12 +43,18 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.POST,"/user/uploadMul/**").permitAll()
 
 
+				.requestMatchers(HttpMethod.GET,"/host").hasRole("HOST")
+				.requestMatchers(HttpMethod.POST, "/car/validate", "/car/registration").hasAnyRole("HOST","USER")
+				.requestMatchers(HttpMethod.POST, "/car/update").hasRole("HOST")
+				.requestMatchers(HttpMethod.GET, "/user/review/**").permitAll
 				.requestMatchers(HttpMethod.POST,"/admin/register").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET,"/admin/getagents").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT, "/admin/assignAgent/**").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET,"/admin/getAgents").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET,"/admin/getInfo").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT,"/restrictCar/**").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT,"/restrictUser/**").hasRole("ADMIN")
+
 
 				.anyRequest()
 				.authenticated()
