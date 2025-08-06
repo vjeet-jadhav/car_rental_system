@@ -66,7 +66,7 @@ public class Car extends BaseEntity{
 	@Column(name="seat_capacity", nullable = false )
 	private int seatCapacity;
 	
-	@Column(name="approved_at", nullable = false)
+	@Column(name="approved_at")
 	private LocalDate approvedAt;
 	
 	@ManyToOne
@@ -74,10 +74,10 @@ public class Car extends BaseEntity{
 	private User host;
 	
 	@ManyToOne
-	@JoinColumn(name = "agent_id", nullable = false)
+	@JoinColumn(name = "agent_id")
 	private User agent;
 	
 	@OneToOne(mappedBy = "car")
-	@JoinColumn(name = "addrress_id", nullable = false)
+	
 	private Address address;
 }
