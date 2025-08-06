@@ -70,7 +70,7 @@ public class Car extends BaseEntity{
 	private LocalDate approvedAt;
 	
 	@ManyToOne
-	@JoinColumn(name = "host_id", nullable = false)
+	@JoinColumn(name = "host_id")
 	private User host;
 	
 	@ManyToOne
