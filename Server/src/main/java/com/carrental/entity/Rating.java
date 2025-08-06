@@ -2,6 +2,7 @@ package com.carrental.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -17,7 +18,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(callSuper = true)
+@ToString(callSuper = true,exclude= {"car"})
 
 public class Rating extends BaseEntity{
 	
@@ -33,7 +34,7 @@ public class Rating extends BaseEntity{
 	@JoinColumn(name="client_id", nullable = false)
 	private User client;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="car_id", nullable = false)
 	private Car car;
 	
