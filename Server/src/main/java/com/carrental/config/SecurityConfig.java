@@ -39,6 +39,9 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.GET, "/").permitAll()
 
 				.requestMatchers(HttpMethod.POST,"/user/bookingCar").permitAll()
+				.requestMatchers(HttpMethod.POST,"/user/upload/**").permitAll()
+				.requestMatchers(HttpMethod.POST,"/user/uploadMul/**").permitAll()
+
 
 				.requestMatchers(HttpMethod.POST,"/admin/register").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT, "/admin/assignAgent/**").hasRole("ADMIN")

@@ -7,14 +7,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.carrental.config.JwtUtils;
+import com.carrental.dto.ApiResponse;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
 import com.carrental.dto.UserLoginRequestDto;
+import com.carrental.service.ImageService;
 import com.carrental.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -34,6 +39,7 @@ import lombok.AllArgsConstructor;
 public class UserController {
 	
 	private final UserService userService;
+	private final ImageService imageService;
 	private AuthenticationManager authenticationManager;
 	private JwtUtils jwtUtils;
 	
@@ -82,5 +88,51 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.OK).body(bookings);
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	@PostMapping("/upload/{userId}")
+	public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file , @PathVariable Long userId){
+		
+		try {
+		String imgUrl = imageService.uploadImage(file);
+		ApiResponse msg = userService.addImage(userId, imgUrl);
+		return ResponseEntity.status(HttpStatus.CREATED).body(imgUrl);
+		} catch (Exception e) {
+			
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Upload failed :"+e.getMessage());
+		}
+	}
+	
+	
+	
+	@PostMapping("/uploadMul/{carId}")
+	public ResponseEntity<?> uploadMulImages(@RequestParam("files") MultipartFile[] files, @PathVariable Long carId){
+		
+		List<String> urls = new ArrayList<>();
+		
+		for(MultipartFile file: files ) {
+			
+			try {
+				
+				String url = imageService.uploadCarImage(file);
+				urls.add(url);
+			} catch(Exception e) {
+				
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Upload failed :"+e.getMessage());
+
+			}
+		}
+		
+		ApiResponse msg = userService.addCarImg(carId,urls);
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(urls);
+
+	}
 	
 }

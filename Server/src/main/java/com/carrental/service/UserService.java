@@ -19,4 +19,8 @@ public interface UserService {
 	String bookCar(UserCarBookingDto dto);
 
 	List<UserBookingsDto> getAllBookings();
+
+    ApiResponse addImage(Long userId, String imgUrl);
+
+	ApiResponse addCarImg(Long carId, List<String> urls);
 }
