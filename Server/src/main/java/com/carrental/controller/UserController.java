@@ -18,12 +18,10 @@ import com.carrental.service.UserService;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.carrental.dto.UserRequestDto;
 import com.carrental.dto.UserUpdateRequestDto;
-import com.carrental.service.UserServiceImpl;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -47,7 +45,6 @@ public class UserController {
 	@PutMapping("/editProfile/{userId}")
 	public ResponseEntity<?> updateUserDetails(@PathVariable Long userId, @RequestBody UserUpdateRequestDto userDto){
 		System.out.println(userDto.toString());
-//		System.out.println(jwtUtils.getFirstNameFromJwtToken());
 		return ResponseEntity.ok(userService.updateUser(userId, userDto));
 	}
 	
@@ -69,17 +66,25 @@ public class UserController {
 	
 	
 	@PostMapping("/bookingCar")
-	public String userCarBooking(@RequestBody UserCarBookingDto dto)
+	public ResponseEntity<?> userCarBooking(@RequestBody UserCarBookingDto dto)
 	{
-		System.out.println("sanket   "+dto.toString());
-		return userService.bookCar(dto);
+//		System.out.println("sanket   "+dto.toString());
+		return ResponseEntity.ok(userService.bookCar(dto));
 	}
+	
+	
 	
 	@GetMapping("/myBooking")
 	public ResponseEntity<?> userBookings()
 	{
 		List<UserBookingsDto> bookings = userService.getAllBookings();
 		return ResponseEntity.status(HttpStatus.OK).body(bookings);
+	}
+	
+	@GetMapping("/topCars")
+	public ResponseEntity<?> uiTopCars()
+	{
+		return ResponseEntity.ok(userService.getTopCars());
 	}
 	
 	

@@ -3,6 +3,7 @@ package com.carrental.service;
 import java.util.List;
 
 import com.carrental.dto.ApiResponse;
+import com.carrental.dto.TopCarsResponseDto;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
 import com.carrental.dto.UserRequestDto;
@@ -19,4 +20,8 @@ public interface UserService {
 	String bookCar(UserCarBookingDto dto);
 
 	List<UserBookingsDto> getAllBookings();
+
+	List<TopCarsResponseDto> getTopCars();
+
+	
 }
