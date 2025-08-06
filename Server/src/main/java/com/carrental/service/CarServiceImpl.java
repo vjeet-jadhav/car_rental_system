@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.carrental.dao.CarDaoInterface;
+import com.carrental.dao.RatingDaoInterface;
 import com.carrental.dao.UserDaoInterface;
 import com.carrental.dao.VahanDaoInterface;
 import com.carrental.dto.ApiResponse;
@@ -16,6 +17,7 @@ import com.carrental.dto.CarRegistrationDTO;
 import com.carrental.dto.RatingResponseDTO;
 import com.carrental.entity.Car;
 import com.carrental.entity.CarStatus;
+import com.carrental.entity.Rating;
 import com.carrental.entity.User;
 import com.carrental.entity.Vahan;
 import com.carrental.exception.ApiException;
@@ -33,6 +35,7 @@ public class CarServiceImpl implements CarService{
 	private final CarDaoInterface carDao;
 	private final VahanDaoInterface vahanDao;
 	private final UserDaoInterface userDao;
+	private final RatingDaoInterface ratingDao;
 	private final ModelMapper mapper;
 	
 	public CarRegistrationDTO validateCar(String rcNumber) {
@@ -83,9 +86,15 @@ public class CarServiceImpl implements CarService{
 
 	public List<RatingResponseDTO> getRatings(Long carId) {
 		
+		System.out.println("CarServiceImpl ke getRatings ke under hu Sanket dada...");
+		List<Rating> ratings = ratingDao.findByCarId(carId)
+									.orElseThrow(() -> new ResourceNotFoundException("No ratings for this car are given..."));
 		
+		System.out.println(ratings.getFirst());
 		
-		return null;
+		return ratings.stream()
+				.map(rating -> mapper.map(rating, RatingResponseDTO.class))
+				.toList();
 	}
 	
 	

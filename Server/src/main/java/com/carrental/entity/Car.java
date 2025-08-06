@@ -91,7 +91,7 @@ public class Car extends BaseEntity{
 	private Address address;
 	
 	@OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Rating> ratings;
+	private List<Rating> ratingList;
 	
 	
 //	helpers methods that helps
