@@ -10,12 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.carrental.dao.BookingDaoInterface;
 import com.carrental.dao.CarDaoInterface;
 import com.carrental.dao.HostDao;
+import com.carrental.dto.ApiResponse;
+import com.carrental.dto.CarBookingHistoryDTO;
 import com.carrental.dto.CarRegistrationDTO;
 import com.carrental.dto.CarResponseDTO;
 import com.carrental.dto.HostTotalEarningDTO;
+import com.carrental.dto.CarSheduleDTO;
 import com.carrental.entity.Car;
 import com.carrental.entity.Rating;
 import com.carrental.entity.User;
+import com.carrental.exception.ApiException;
 import com.carrental.exception.ResourceNotFoundException;
 
 import lombok.AllArgsConstructor;
@@ -28,8 +32,9 @@ public class HostServiceImpl implements HostService {
 
 	private final HostDao hostDao;
 	private final CarDaoInterface carDao;
-	private final ModelMapper mapper;
 	private final BookingDaoInterface bookingDao;
+	private final ModelMapper mapper;
+	
 
 	
 	public List<CarResponseDTO> getMyCars(Long userId) {
@@ -47,7 +52,7 @@ public class HostServiceImpl implements HostService {
 			           // 2) Compute the average rating (0 if no ratings)
 			           double avg = car.getRatingList()
 			                           .stream()
-			                           .mapToInt(Rating::getRating)
+			                           .mapToInt(rating -> rating.getRating())
 			                           .average()
 			                           .orElse(0.0);
 			           
@@ -65,6 +70,44 @@ public class HostServiceImpl implements HostService {
 		return bookingDao.getTotalEarnings(id);
 	}
 
+	public ApiResponse sheduleCar(Long carId, CarSheduleDTO carShedule) 
+	{
+		System.out.println("HostService Implimentation ke sheduleCar ke under hu padul saheb...");
+		
+		Car car = carDao.findById(carId)
+					.orElseThrow(()-> new ApiException("car id is invalid..."));
+		
+		car.setSheduledFrom(carShedule.getSheduledFrom());
+		car.setSheduledTill(carShedule.getSheduledTill());
+		
+		return new ApiResponse("Car Sheduled successfully !");
+	}
+
+
+	@Override
+	public ApiResponse unsheduleCar(Long carId) {
+		
+		System.out.println("HostService Implimentation ke unsheduleCar ke under hu padul saheb...");
+		
+		Car car = carDao.findById(carId)
+					.orElseThrow(()-> new ApiException("car id is invalid..."));
+		
+		car.setSheduledFrom(null);
+		car.setSheduledTill(null);
+		
+		return new ApiResponse("Car Unsheduled Successfully");
+	}
+
+
+	@Override
+	public List<CarBookingHistoryDTO> getBookingHistory(Long userId) {
+		
+		List<CarBookingHistoryDTO> bookings = bookingDao.findHistoryByClientId(userId)
+												.orElseThrow(()-> new ResourceNotFoundException("No bookings for this car till now"));
+		
+		return bookings;
+	}
+	
 	
 	
 }

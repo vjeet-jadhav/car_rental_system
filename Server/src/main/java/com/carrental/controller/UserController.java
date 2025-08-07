@@ -3,7 +3,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,8 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.carrental.config.JwtUtils;
 
 import com.carrental.dto.BookingRequestComDto;
+import com.carrental.dto.CarFilterRequestDto;
 import com.carrental.dto.CarPaymentDto;
 import com.carrental.dto.CarReviewDto;
+import com.carrental.dto.ImgResponseDTO;
 import com.carrental.dto.ApiResponse;
 import com.carrental.dto.Top5RatingResponseDto;
 import com.carrental.dto.UserBookingsDto;
@@ -33,7 +35,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.carrental.dto.UserRequestDto;
 import com.carrental.dto.UserUpdateRequestDto;
+
 import com.carrental.entity.Booking;
+import com.carrental.entity.UserImgEntity;
+
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -88,7 +93,7 @@ public class UserController {
 		userService.bookCar(bDto,pDto);
 //		Booking entity = 
 //		System.out.println("sanket   "+dto.toString());
-		return ResponseEntity.ok("Booking and payment in process");
+		return ResponseEntity.ok("Booking and payment executed successfully...)");
 	}
 	
 	
@@ -116,6 +121,15 @@ public class UserController {
 		return userService.addReview(reviewDto);
 	}
 	
+
+	@GetMapping("/applyFilters")
+	public ResponseEntity<?> getCarsByFilter(@RequestBody CarFilterRequestDto dto)
+	{
+		
+		return ResponseEntity.status(HttpStatus.OK).body(userService.allCarsByFilter(dto));
+	}
+	
+	
 	@GetMapping("/review/{carId}")
 	public ResponseEntity<?> getTop(@PathVariable Long carId){
 		
@@ -125,7 +139,10 @@ public class UserController {
 
 	
 	
-	
+	@GetMapping("getNearByCars/{city}")
+	public ResponseEntity<?> getNearByCars(@PathVariable String city){
+		return  ResponseEntity.ok(userService.getNearByCars(city));
+	}
 	
 	
 	
@@ -134,37 +151,44 @@ public class UserController {
 	public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file , @PathVariable Long userId){
 		
 		try {
-		String imgUrl = imageService.uploadImage(file);
-		ApiResponse msg = userService.addImage(userId, imgUrl);
-		return ResponseEntity.status(HttpStatus.CREATED).body(imgUrl);
+		ImgResponseDTO obj = imageService.uploadImage(file);
+		ApiResponse msg = userService.addImage(userId, obj.getUrl(), obj.getPublicId() , obj.getFormat());
+		return ResponseEntity.status(HttpStatus.CREATED).body(obj.getUrl());
 		} catch (Exception e) {
 			
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Upload failed :"+e.getMessage());
 		}
 	}
 	
-	
+	@PutMapping("/updateImg/{userId}")
+	public ResponseEntity<?> updateUserImage( @PathVariable Long userId, @RequestParam MultipartFile file) {
+
+		try {
+		ImgResponseDTO obj = imageService.updateImage(file,userId);
+		return ResponseEntity.status(HttpStatus.CREATED).body(obj);
+		
+		}
+		catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Update failed :"+e.getMessage());
+		}
+		
+	}
+
 	
 	@PostMapping("/uploadMul/{carId}")
 	public ResponseEntity<?> uploadMulImages(@RequestParam("files") MultipartFile[] files, @PathVariable Long carId){
 		
-		List<String> urls = new ArrayList<>();
-		
+		List<ImgResponseDTO> urls = new ArrayList<>();
 		for(MultipartFile file: files ) {
 			
 			try {
-				
-				String url = imageService.uploadCarImage(file);
-				urls.add(url);
+				ImgResponseDTO obj = imageService.uploadCarImage(file);
+				urls.add(obj);
 			} catch(Exception e) {
-				
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Upload failed :"+e.getMessage());
-
 			}
 		}
-		
 		ApiResponse msg = userService.addCarImg(carId,urls);
-		
 		return ResponseEntity.status(HttpStatus.CREATED).body(urls);
 
 	}

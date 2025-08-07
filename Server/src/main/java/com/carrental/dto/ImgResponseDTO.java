@@ -9,13 +9,10 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @ToString(callSuper = true)
-public class BasicInfoDTO {
+public class ImgResponseDTO {
 	
-	private int totalUsers;
-	private int totalCars;
-	private int totalHosts;
-	private double totalRevenue;
-	private int totalBookings;
-	private double totalRating;
+	private  String url;
+	private String publicId;
+	private String format;
 
 }

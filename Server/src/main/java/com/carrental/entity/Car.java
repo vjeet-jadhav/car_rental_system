@@ -1,6 +1,9 @@
 package com.carrental.entity;
 
 import java.time.LocalDate;
+
+import java.util.ArrayList;
+
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -23,12 +26,10 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "Cars")
-
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(callSuper = true)
-
+@ToString(callSuper = true,exclude={"ratingList","host","agent"})
 public class Car extends BaseEntity{
 
 	@Column(name="car_brand", nullable = false)
@@ -90,8 +91,9 @@ public class Car extends BaseEntity{
 	@OneToOne(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Address address;
 	
-	@OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Rating> ratingList;
+	
+	@OneToMany(mappedBy = "car",cascade = CascadeType.ALL)
+	private List<Rating> ratingList = new ArrayList<>();
 	
 	
 //	helpers methods that helps
