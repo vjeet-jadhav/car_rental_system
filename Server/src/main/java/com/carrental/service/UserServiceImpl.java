@@ -1,8 +1,11 @@
 package com.carrental.service;
 
 import java.time.LocalDate;
+
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,8 +30,12 @@ import com.carrental.dao.CarImgInterface;
 import com.carrental.dao.UserDaoInterface;
 import com.carrental.dao.UserImgInterface;
 import com.carrental.dto.ApiResponse;
+import com.carrental.dto.CarFilterRequestDto;
 import com.carrental.dto.CarPaymentDto;
 import com.carrental.dto.CarReviewDto;
+import com.carrental.dto.CarResponseDTO;
+import com.carrental.dto.CarReviewDto;
+import com.carrental.dto.ImgResponseDTO;
 import com.carrental.dto.Top5RatingResponseDto;
 import com.carrental.dto.TopCarsResponseDto;
 import com.carrental.dto.UserBookingsDto;
@@ -39,7 +46,9 @@ import com.carrental.dto.UserUpdateRequestDto;
 import com.carrental.entity.Booking;
 import com.carrental.entity.BookingStatus;
 import com.carrental.entity.Car;
+import com.carrental.entity.CarFuelType;
 import com.carrental.entity.CarStatus;
+import com.carrental.entity.CarTransmissionType;
 import com.carrental.entity.Payment;
 import com.carrental.entity.PaymentStatus;
 import com.carrental.entity.Rating;
@@ -158,24 +167,42 @@ public class UserServiceImpl implements UserService{
 		return list.stream().map(booking -> modelMapper.map(booking, UserBookingsDto.class)).toList();
 	}
 
+//	top cars
 	@Override
 	public List<TopCarsResponseDto> getTopCars() {
 		
-		List<Rating> list =ratingDao.getTopCarList(PageRequest.of(0, 3)).orElseThrow(()-> new ResourceNotFoundException("empty feedback table"));
+		List<TopCarsResponseDto> responseList = new ArrayList<>();
 		
-		return list.stream()
-				.map(rating -> {
-					TopCarsResponseDto dto = new TopCarsResponseDto();
-					dto.setBrand(rating.getCar().getBrand());
-					dto.setCarModel(rating.getCar().getCarModel());
-					dto.setFuelType(rating.getCar().getFuelType());
-					dto.setRating(rating.getRating());
-					dto.setSeatCapacity(rating.getCar().getSeatCapacity());
-					dto.setStatus(rating.getCar().getStatus());
-					dto.setTransmissionType(rating.getCar().getTransmissionType());
-					dto.setDailyRate(rating.getCar().getDailyRate());
-					return dto;
-				}).toList(); 
+		List<Car> carList = carDao.findAllCarsByStatus();
+		for(Car list:carList)
+		{
+//			System.out.println(list.getRatingList().toString());
+			double rating = generateAverageRating(list.getRatingList());
+//			System.out.println("car "+list.getId()+" rating"+ rating);
+			TopCarsResponseDto obj = new TopCarsResponseDto();
+			obj = modelMapper.map(list, TopCarsResponseDto.class);
+			obj.setRating(rating);
+			obj.setCarId(list.getId());
+			obj.setHostId(list.getHost().getId());
+			responseList.add(obj);
+		}
+//		sorting according to rating 
+		responseList.sort((x,y) -> (int)y.getRating()-(int)x.getRating());
+		return responseList;
+	}
+	
+//	getting the average rating of each car
+	public double generateAverageRating(List<Rating> list)
+	{
+		double sum=0.0;
+		int count = list.size();
+		for(Rating r:list)
+		{
+			sum += r.getRating();
+		}
+		if(count!=0)
+			return (sum/count);
+		return sum;
 	}
 
 	@Override
@@ -198,19 +225,21 @@ public class UserServiceImpl implements UserService{
 		return "Review Successfully Added";
 	}
 
-	public ApiResponse addImage(Long userId, String imgUrl) {
+	public ApiResponse addImage(Long userId, String imgUrl , String publicId, String format) {
 		// TODO Auto-generated method stub
-		User user = userDaoInterface.getById(userId);
+		User user = userDaoInterface.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found for given id !"));;
 		UserImgEntity entity = new UserImgEntity();
 		entity.setUser(user);
 		entity.setImgType("profile");
 		entity.setImgUrl(imgUrl);
+		entity.setFormat(format);
+		entity.setPublicId(publicId);
 		userImgInterface.save(entity);
 		return new ApiResponse("Profile Uploaded Successfully !");
 	}
 
 	@Override
-	public ApiResponse addCarImg(Long carId, List<String> urls) {
+	public ApiResponse addCarImg(Long carId, List<ImgResponseDTO> urls) {
 		// TODO Auto-generated method stub
 		Car car = carDao.findById(carId).orElseThrow(() -> new ResourceNotFoundException("Car not found for given id !"));
 		
@@ -218,21 +247,32 @@ public class UserServiceImpl implements UserService{
 			CarImgEntity entity1 = new CarImgEntity();
 			entity1.setCar(car);
 			
+			
 			if(i == 0) {
 				entity1.setImgType("front");
-				entity1.setImgUrl(urls.get(i));
+				entity1.setImgUrl(urls.get(i).getUrl());
+				entity1.setFormat(urls.get(i).getFormat());
+				entity1.setPublicId(urls.get(i).getPublicId());
 			}else if (i == 1) {
 				entity1.setImgType("back");
-				entity1.setImgUrl(urls.get(i));
+				entity1.setImgUrl(urls.get(i).getUrl());
+				entity1.setFormat(urls.get(i).getFormat());
+				entity1.setPublicId(urls.get(i).getPublicId());
 			}else if (i == 2) {
 				entity1.setImgType("left");
-				entity1.setImgUrl(urls.get(i));
+				entity1.setImgUrl(urls.get(i).getUrl());
+				entity1.setFormat(urls.get(i).getFormat());
+				entity1.setPublicId(urls.get(i).getPublicId());
 			}else if (i == 3) {
 				entity1.setImgType("right");
-				entity1.setImgUrl(urls.get(i));
+				entity1.setImgUrl(urls.get(i).getUrl());
+				entity1.setFormat(urls.get(i).getFormat());
+				entity1.setPublicId(urls.get(i).getPublicId());
 			}else if (i == 4) {
 				entity1.setImgType("top");
-				entity1.setImgUrl(urls.get(i));
+				entity1.setImgUrl(urls.get(i).getUrl());
+				entity1.setFormat(urls.get(i).getFormat());
+				entity1.setPublicId(urls.get(i).getPublicId());
 			}
 			
 			carImgInterface.save(entity1);
@@ -262,5 +302,62 @@ public class UserServiceImpl implements UserService{
 	    dto.setFeedback(feedbacks);
 	    return dto;
 	}
+
+	@Override
+	public ApiResponse updateImage(Long userId, ImgResponseDTO obj) {
+		// TODO Auto-generated method stub
+		UserImgEntity user = userImgInterface.findByUserId(userId);
+		user.toString();
+		return null;
+	}
+
+	@Override
+	public List<CarResponseDTO> getNearByCars(String city) {
+		
+		return carDao.findByServiceArea(city)
+				.stream()
+				.map(car -> modelMapper.map(car, CarResponseDTO.class))
+				.toList();
+	}
+	
+//	getting cars by applying filters
+	
+	@Override
+	public List<TopCarsResponseDto> allCarsByFilter(CarFilterRequestDto dto) {
+		
+		List<CarFuelType> fuelType = dto.getFuelType();
+		
+		List<CarTransmissionType> transmissionType=dto.getTransmissionType();
+		
+		List<Integer> seatCapacity=dto.getSeatCapacity();
+		
+//		response dto
+		List<TopCarsResponseDto> responseEnity = new ArrayList<>();
+		
+		List<Car> listCars = carDao.getAllCarsByFilter(fuelType,transmissionType,seatCapacity);
+		for(Car c:listCars)
+		{
+			TopCarsResponseDto obj = new TopCarsResponseDto();
+			double rating = generateAverageRating(c.getRatingList());
+			if(rating>=dto.getRating())
+			{
+				obj = modelMapper.map(c, TopCarsResponseDto.class);
+				obj.setRating(rating);
+				obj.setCarId(c.getId());
+				obj.setHostId(c.getHost().getId());
+				responseEnity.add(obj);
+			}
+				
+		}
+		return responseEnity;
+	}
+
+	
+	
+
+	
 	
 }
+
+
+

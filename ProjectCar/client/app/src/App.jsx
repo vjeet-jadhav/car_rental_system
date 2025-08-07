@@ -25,6 +25,7 @@ import HostRegistrationForm from "./Screens/Host/HostRegistrationForm";
 import HostHomePage from "./Screens/Host/HostHomePage";
 import ClientCarReview from "./Screens/Client/ClientCarReview";
 import HostCarInformation from "./Screens/Host/HostCarInformation"
+import { ToastContainer } from "react-toastify";
 
 
 
@@ -65,10 +66,11 @@ function App() {
           <Route path="user-signup" element={<Signup />} />
           <Route path="user-booking" element={<ClientBooking />} />
           <Route  path="review-car"  element={<ClientCarReview />} />
-
+          
         </Route>
 
       </Routes>
+      <ToastContainer />
     </>
   );
 }
