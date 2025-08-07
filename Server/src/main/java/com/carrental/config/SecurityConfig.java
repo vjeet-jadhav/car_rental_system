@@ -1,5 +1,7 @@
 package com.carrental.config;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,6 +13,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import lombok.AllArgsConstructor;
 
@@ -26,7 +31,10 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain configureFilterChain(HttpSecurity http) throws Exception{
 		System.out.println("SecurityConfiguration ke ander hu..:)");
+		
 		http.csrf( csrf -> csrf.disable());
+		
+		http.cors().and();
 		
 		http.authorizeHttpRequests(
 				request -> request 
@@ -85,6 +93,18 @@ public class SecurityConfig {
 		return config.getAuthenticationManager();
 	}
 	
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+	    CorsConfiguration config = new CorsConfiguration();
+	    config.setAllowedOrigins(List.of("http://localhost:5173")); // your frontend origin
+	    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+	    config.setAllowedHeaders(List.of("*"));
+	    config.setAllowCredentials(true); // important if you're using cookies or Authorization header
+
+	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	    source.registerCorsConfiguration("/**", config);
+	    return source;
+	}
 
 	
 }
