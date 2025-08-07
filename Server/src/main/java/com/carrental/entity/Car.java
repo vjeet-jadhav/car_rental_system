@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import java.util.ArrayList;
 
+import java.util.ArrayList;
+
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -91,10 +93,12 @@ public class Car extends BaseEntity{
 	@OneToOne(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Address address;
 	
+
 	
-	@OneToMany(mappedBy = "car",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "car",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Rating> ratingList = new ArrayList<>();
 	
+
 	
 //	helpers methods that helps
 	
@@ -111,4 +115,5 @@ public class Car extends BaseEntity{
 		this.setAddress(null);
 		obj.setCar(null);
 	}
+
 }

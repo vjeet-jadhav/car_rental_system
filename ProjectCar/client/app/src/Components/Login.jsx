@@ -1,12 +1,62 @@
-
+import { loginUser } from '../Services/user';
+import {jwtDecode }from "jwt-decode";
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
 
-  const[loginInfo,setLoginInfo]=useState([]);
+  const navigate = useNavigate();
 
-  
+  const [loginInfo , setLoginInfo] = useState({
+    email :"",
+    password:"",
+    city:""
+  });
+
+  const onLogin = async () =>{
+
+    
+    
+    console.log(loginInfo);
+
+    const {email , password , city} = loginInfo;
+
+    if (loginInfo.email.length == 0) {
+      toast.warn('Please enter the email')
+    } else if (loginInfo.password.length == 0) {
+      toast.warn('Please enter the password')
+    } else {
+      // console.log("called login")
+
+      const result = await loginUser(email, password, city)
+      // const token = localStorage.settItem("result");
+      const decoded = jwtDecode(result);
+      console.log(decoded);
+
+      const authorities = decoded.authorities;
+
+      if (authorities == 'ADMIN') {
+       
+        navigate("/admin");
+       
+      }else if(authorities == 'AGENT'){
+
+        navigate("/agent");
+      }else if(authorities == 'USER'){
+
+        navigate("/");
+      }else if(authorities == 'HOST'){
+        navigate("/host");
+      }
+
+      else {
+        toast.error(result.error)
+      }
+    }
+  }
+
+
 
   return (
     <div style={{ backgroundColor: '#fb8500' }} className="container  app-background mt-3 w-75">
@@ -34,22 +84,28 @@ function Login() {
                 Email :
               </label>
 
-              <input type="email" id='email' className="form-control mb-4" placeholder="Email" />
+              <input type="email" id='email' className="form-control mb-4" placeholder="Email" onChange={(e) =>
+              setLoginInfo({ ...loginInfo, email: e.target.value })
+            }/>
 
               <label className="form-check-label ms-2 mb-3 fw-bold" htmlFor="pass">
                 Password :
               </label>
 
-              <input type="password" id='pass' className="form-control mb-4" placeholder="Password" />
+              <input type="password" id='pass' className="form-control mb-4" placeholder="Password" onChange={(e) =>
+              setLoginInfo({ ...loginInfo, password: e.target.value })
+            } />
 
               <label className="form-check-label ms-2 mb-3 fw-bold" htmlFor="location">
                 Location :
               </label>
 
-              <select name="" id="location" className='form-control mb-4'>
-                <option value="">Pune</option>
-                <option value="">Mumbai</option>
-                <option value="">Sambhajinagar</option>
+              <select name="" id="location" className='form-control mb-4' onChange={(e) =>
+              setLoginInfo({ ...loginInfo, city: e.target.value })
+            }>
+                <option value="Pune">Pune</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Sambhajinagar">Sambhajinagar</option>
               </select>
              
              
@@ -60,7 +116,7 @@ function Login() {
                 </label>
               </div>
 
-              <button style={{ backgroundColor: '#fb8500', color: '#fff' }} className="btn  w-100 mb-2 fw-bold">Log-In</button>
+              <button style={{ backgroundColor: '#fb8500', color: '#fff' }} className="btn  w-100 mb-2 fw-bold" onClick={() => onLogin(loginInfo)}>Log-In</button>
               {/* <p className="text-center" d-flex justify-content-center gap-3>or</p> */}
               <Link to="/user-signup" style={{ backgroundColor: '#fb8500', color: '#fff' }} className="btn  w-100 mb-1 fw-bold">Sign-Up</Link>
 
