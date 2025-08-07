@@ -8,18 +8,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.carrental.config.JwtUtils;
+
 import com.carrental.dto.BookingRequestComDto;
 import com.carrental.dto.CarPaymentDto;
 import com.carrental.dto.CarReviewDto;
-
+import com.carrental.dto.ImgResponseDTO;
+import com.carrental.dto.ApiResponse;
+import com.carrental.dto.Top5RatingResponseDto;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
 import com.carrental.dto.UserLoginRequestDto;
+import com.carrental.service.ImageService;
 import com.carrental.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -28,6 +35,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.carrental.dto.UserRequestDto;
 import com.carrental.dto.UserUpdateRequestDto;
 import com.carrental.entity.Booking;
+import com.carrental.entity.UserImgEntity;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -38,6 +46,7 @@ import lombok.AllArgsConstructor;
 public class UserController {
 	
 	private final UserService userService;
+	private final ImageService imageService;
 	private AuthenticationManager authenticationManager;
 	private JwtUtils jwtUtils;
 	
@@ -102,11 +111,75 @@ public class UserController {
 	
 	
 
+
 	@PostMapping("/review")
 	public String submitReview(@RequestBody CarReviewDto reviewDto) {
 		
 		return userService.addReview(reviewDto);
 	}
+	
+	@GetMapping("/review/{carId}")
+	public ResponseEntity<?> getTop(@PathVariable Long carId){
+		
+		return ResponseEntity.ok(userService.top5Reviews(carId));
+	}
 
+
+	
+	
+	@GetMapping("getNearByCars/{city}")
+	public ResponseEntity<?> getNearByCars(@PathVariable String city){
+		return  ResponseEntity.ok(userService.getNearByCars(city));
+	}
+	
+	
+	
+	
+	@PostMapping("/upload/{userId}")
+	public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file , @PathVariable Long userId){
+		
+		try {
+		ImgResponseDTO obj = imageService.uploadImage(file);
+		ApiResponse msg = userService.addImage(userId, obj.getUrl(), obj.getPublicId() , obj.getFormat());
+		return ResponseEntity.status(HttpStatus.CREATED).body(obj.getUrl());
+		} catch (Exception e) {
+			
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Upload failed :"+e.getMessage());
+		}
+	}
+	
+	@PutMapping("/updateImg/{userId}")
+	public ResponseEntity<?> updateUserImage( @PathVariable Long userId, @RequestParam MultipartFile file) {
+
+		try {
+		ImgResponseDTO obj = imageService.updateImage(file,userId);
+		return ResponseEntity.status(HttpStatus.CREATED).body(obj);
+		
+		}
+		catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Update failed :"+e.getMessage());
+		}
+		
+	}
+
+	
+	@PostMapping("/uploadMul/{carId}")
+	public ResponseEntity<?> uploadMulImages(@RequestParam("files") MultipartFile[] files, @PathVariable Long carId){
+		
+		List<ImgResponseDTO> urls = new ArrayList<>();
+		for(MultipartFile file: files ) {
+			
+			try {
+				ImgResponseDTO obj = imageService.uploadCarImage(file);
+				urls.add(obj);
+			} catch(Exception e) {
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Upload failed :"+e.getMessage());
+			}
+		}
+		ApiResponse msg = userService.addCarImg(carId,urls);
+		return ResponseEntity.status(HttpStatus.CREATED).body(urls);
+
+	}
+	
 
 }

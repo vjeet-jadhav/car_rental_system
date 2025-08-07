@@ -15,6 +15,7 @@ import com.carrental.dto.AgentResDTO;
 import com.carrental.dto.ApiResponse;
 import com.carrental.dto.BasicInfoDTO;
 import com.carrental.dto.RegisterAgentDTO;
+import com.carrental.dto.TopCarsResponseDto;
 import com.carrental.dto.UserResponseDto;
 import com.carrental.entity.Car;
 import com.carrental.entity.CarStatus;
@@ -38,6 +39,7 @@ public class AdminServiceImpl implements AdminService {
 	private final PaymentDaoInterface paymentDao;
 	private ModelMapper mapper;
 	private PasswordEncoder passwordEncoder;
+	private final UserService userService;
 
 	@Override
 	public AgentResDTO register(RegisterAgentDTO dto) {
@@ -73,20 +75,33 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public BasicInfoDTO getBasicInfo() {
-		// TODO Auto-generated method stub
-		BasicInfoDTO info = new BasicInfoDTO(0, 0, 0, 0, 0);
+
+		BasicInfoDTO info = new BasicInfoDTO(0, 0, 0, 0, 0, 0);
 		 info.setTotalCars((int)carDao.count()); 
 		 info.setTotalUsers((int)adminDao.count());
 		 info.setTotalBookings((int)bookingDao.count());
 		 info.setTotalRevenue((double)paymentDao.getTotalAmount());
 		 info.setTotalHosts((int)adminDao.findByUserRoleAndUserStatus(UserRole.HOST,UserStatus.ACTIVE).size());
-//		 System.out.println(info);
+		 
+		 List<TopCarsResponseDto> list = userService.getTopCars();
+		 int cnt = 0;
+		 int sumOfRatings = 0;
+		 for(TopCarsResponseDto car: list) {
+			 
+			 if(car.getRating() > 0) {
+				 
+				 sumOfRatings += car.getRating();
+				 cnt += 1;
+			 }
+		 }
+		 info.setTotalRating((double)sumOfRatings/cnt);
+
 		return info;
 	}
 
 	@Override
 	public ApiResponse restrictCarById(Long carId) {
-		// TODO Auto-generated method stu
+
 		Car car = carDao.findById(carId).orElseThrow(() -> new ResourceNotFoundException("Car with given id is not found !"));
 		car.setStatus(CarStatus.DELETED);
 		return new ApiResponse("Car Restricted By Admin");
