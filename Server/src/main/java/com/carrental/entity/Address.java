@@ -29,6 +29,9 @@ public class Address extends BaseEntity{
 	@Column(name = "service_area", length = 100)
 	private String serviceArea;
 	
+	@Column(name="pin_code", length = 6, nullable = false)
+	private long pinCode;
+	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "car_id", nullable = false, unique = true)
 	private Car car;

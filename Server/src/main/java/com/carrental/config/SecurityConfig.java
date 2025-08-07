@@ -40,12 +40,37 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.GET, "/user/topCars").permitAll()
 //				.requestMatchers(HttpMethod.POST,"/user/bookingCar").permitAll() 
 				.requestMatchers(HttpMethod.GET, "/user/applyFilters").permitAll()
+				.requestMatchers(HttpMethod.POST,"/user/bookingCar").permitAll()
+				.requestMatchers(HttpMethod.POST,"/user/upload/**").permitAll()
+				.requestMatchers(HttpMethod.POST,"/user/uploadMul/**").permitAll()
+				.requestMatchers(HttpMethod.GET, "/user/review/**").permitAll()
+				.requestMatchers(HttpMethod.PUT,"/user/updateImg/**").permitAll()
+				.requestMatchers(HttpMethod.GET,"/user/getNearByCars/**").permitAll()
+
+
+				.requestMatchers(HttpMethod.GET,"/host").hasRole("HOST")
+				.requestMatchers(HttpMethod.POST, "/car/validate", "/car/registration").hasAnyRole("HOST","USER")
+				.requestMatchers(HttpMethod.POST, "/car/update").hasRole("HOST")
+
+				.requestMatchers(HttpMethod.GET, "/user/review/**").permitAll()
+
+				.requestMatchers(HttpMethod.GET, "/car/ratings").hasAnyRole("HOST", "USER")
+				.requestMatchers(HttpMethod.GET, "/car/bookings").hasRole("HOST")
+				.requestMatchers(HttpMethod.PUT, "/host/shedule-car/{carId}").hasRole("HOST")
+				.requestMatchers(HttpMethod.PUT, "/host/unschedule-car/{carId}").hasRole("HOST")
+				.requestMatchers(HttpMethod.GET, "/host/get-booking-history").hasRole("HOST")
+
 				.requestMatchers(HttpMethod.POST,"/admin/register").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET,"/admin/getagents").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT, "/admin/assignAgent/**").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET,"/admin/getAgents").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET,"/admin/getInfo").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT,"/restrictCar/**").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT,"/restrictUser/**").hasRole("ADMIN")
+				
+				.requestMatchers(HttpMethod.GET, "/agent").hasRole("AGENT")
+				.requestMatchers(HttpMethod.GET, "/agent/*").hasRole("AGENT")
+
 
 				.anyRequest()
 				.authenticated()
