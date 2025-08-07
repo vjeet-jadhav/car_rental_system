@@ -355,12 +355,34 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	public List<TopCarsResponseDto> getAllCars() {
+		
+        List<TopCarsResponseDto> responseList = new ArrayList<>();
+		
+		List<Car> carList = carDao.findAll();
+		for(Car list:carList)
+		{
+
+			double rating = generateAverageRating(list.getRatingList());
+
+			TopCarsResponseDto obj = new TopCarsResponseDto();
+			obj = modelMapper.map(list, TopCarsResponseDto.class);
+			obj.setRating(rating);
+			obj.setCarId(list.getId());
+			obj.setHostId(list.getHost().getId());
+			responseList.add(obj);
+		}
+
+//		responseList.sort((x,y) -> (int)y.getRating()-(int)x.getRating());
+		return responseList;
+
 	public UserInfoDto getUserDetail(Long id) {
 
 		
 		User user = userDaoInterface.findById(id).orElseThrow(() -> new UserNotFoundException("Sorry the User Cannot be Found ....."));
 		
 		return modelMapper.map(user, UserInfoDto.class);
+
 	}
 
 	

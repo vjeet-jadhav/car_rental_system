@@ -14,7 +14,7 @@ public interface AdminService {
 
 	AgentResDTO register(RegisterAgentDTO dto);
 
-	List<UserResponseDto> getAgents();
+	List<AgentResDTO> getAgents();
 
 	ApiResponse assignAgentToCar(Long carId, Long agentId);
 
