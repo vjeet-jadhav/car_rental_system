@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.carrental.dto.CarRegistrationDTO;
-import com.carrental.service.CarServiceImpl;
+import com.carrental.service.CarService;
+
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -24,7 +26,7 @@ import lombok.AllArgsConstructor;
 
 public class CarController {
 
-	private final CarServiceImpl carService;
+	private final CarService carService;
 	
 	@PostMapping("/validate")
 	public ResponseEntity<?> validateCar(@RequestBody String rcNumber)
@@ -55,11 +57,21 @@ public class CarController {
 				.body(carService.updateCar(car));
 	}
 	
-	@GetMapping("/ratings")
+	@GetMapping("/ratings/{carId}")
 	public ResponseEntity<?> getRatings(@PathVariable Long carId)
 	{
 		System.out.println("CarController ke getRatings ke under hu padul saheb...");
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(carService.getRatings(carId));
+	}
+	
+	
+	@GetMapping("/bookings/{carId}")
+	public ResponseEntity<?> getBookingsDetails(@PathVariable Long carId)
+	{
+		System.out.println("CarController ke getBookingsDetails ke under hu padul saheb...");
+		
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(carService.getBookingsDetails(carId));
 	}
 }

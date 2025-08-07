@@ -17,5 +17,12 @@ public class ImageEntity extends BaseEntity {
 	
 	@Column(nullable = false, length = 100, name = "url")
 	private String imgUrl;
+	
+	@Column(nullable = false, length = 100, name = "publicId")
+	private String publicId;
+	
+	@Column(nullable = false, length = 100, name = "format")
+	private String format;
+	
 
 }
