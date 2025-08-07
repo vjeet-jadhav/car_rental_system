@@ -7,10 +7,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.carrental.dao.BookingDaoInterface;
 import com.carrental.dao.CarDaoInterface;
 import com.carrental.dao.HostDao;
 import com.carrental.dto.CarRegistrationDTO;
 import com.carrental.dto.CarResponseDTO;
+import com.carrental.dto.HostTotalEarningDTO;
 import com.carrental.entity.Car;
 import com.carrental.entity.Rating;
 import com.carrental.entity.User;
@@ -27,6 +29,7 @@ public class HostServiceImpl implements HostService {
 	private final HostDao hostDao;
 	private final CarDaoInterface carDao;
 	private final ModelMapper mapper;
+	private final BookingDaoInterface bookingDao;
 
 	
 	public List<CarResponseDTO> getMyCars(Long userId) {
@@ -55,7 +58,13 @@ public class HostServiceImpl implements HostService {
 			       })
 			       .collect(Collectors.toList());
 	}
-	
+
+
+	@Override
+	public List<HostTotalEarningDTO> getTotalEarnings(Long id) {
+		return bookingDao.getTotalEarnings(id);
+	}
+
 	
 	
 }

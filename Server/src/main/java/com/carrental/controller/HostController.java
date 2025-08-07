@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.carrental.entity.User;
+import com.carrental.service.HostService;
 import com.carrental.service.HostServiceImpl;
 
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class HostController {
 
-	private final HostServiceImpl hostService;
+	private final HostService hostService;
 	
 	@GetMapping()
 	public ResponseEntity<?> getMyCars()
@@ -29,4 +30,14 @@ public class HostController {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(hostService.getMyCars(userId));
 	}
+	
+	@GetMapping("/earning")
+	public ResponseEntity<?> getTotalEarnings(){
+		Long id = (Long) SecurityContextHolder.getContext().getAuthentication().getDetails();
+		System.out.println(id);
+		
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(hostService.getTotalEarnings(id));
+	}
+	
 }
