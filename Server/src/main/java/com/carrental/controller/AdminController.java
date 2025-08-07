@@ -74,5 +74,10 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.restrictUserById(userId));
 		
 	}
+	
+	@GetMapping("/getPendingCars")
+	public ResponseEntity<?> getPendingCars(){
+		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.getPendingCars());
+	}
 
 }

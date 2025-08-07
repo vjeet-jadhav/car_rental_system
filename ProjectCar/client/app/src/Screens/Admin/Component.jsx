@@ -73,7 +73,7 @@ export const Component = () => {
   const getBasicInfo = async () =>{
 
     const result = await getAllBasicInfo();
-    console.log(result.data)
+
     setInfo(result.data)
     
   }

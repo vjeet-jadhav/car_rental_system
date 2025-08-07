@@ -38,6 +38,9 @@ public interface CarDaoInterface extends JpaRepository<Car, Long> {
 	@Query("SELECT c FROM Car c JOIN FETCH c.address a JOIN FETCH c.host h WHERE LOWER(a.serviceArea) = LOWER(:city)")
 	List<Car> findByServiceArea(String city);
 
+	@Query("SELECT c FROM Car c WHERE c.status IN (CarStatus.PENDING)")
+	List<Car> getByStatus();
+
 	
 
 
