@@ -38,8 +38,8 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.OPTIONS).permitAll()
 				.requestMatchers(HttpMethod.GET, "/").permitAll()
 				.requestMatchers(HttpMethod.GET, "/user/topCars").permitAll()
-				.requestMatchers(HttpMethod.POST,"/user/bookingCar").permitAll()
-
+//				.requestMatchers(HttpMethod.POST,"/user/bookingCar").permitAll() 
+				.requestMatchers(HttpMethod.GET, "/user/applyFilters").permitAll()
 				.requestMatchers(HttpMethod.POST,"/admin/register").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT, "/admin/assignAgent/**").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET,"/admin/getAgents").hasRole("ADMIN")

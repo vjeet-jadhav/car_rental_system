@@ -1,13 +1,17 @@
 package com.carrental.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
@@ -20,12 +24,10 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "Cars")
-
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(callSuper = true)
-
+@ToString(callSuper = true,exclude={"ratingList","host","agent"})
 public class Car extends BaseEntity{
 
 	@Column(name="car_brand", nullable = false)
@@ -80,4 +82,9 @@ public class Car extends BaseEntity{
 	@OneToOne(mappedBy = "car")
 	
 	private Address address;
+	
+	
+	@OneToMany(mappedBy = "car",cascade = CascadeType.ALL)
+	private List<Rating> ratingList = new ArrayList<>();
+	
 }

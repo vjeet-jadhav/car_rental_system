@@ -17,7 +17,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(callSuper = true,exclude= {"car"})
+@ToString(callSuper = true,exclude= {"car","client"})
 
 public class Rating extends BaseEntity{
 	
