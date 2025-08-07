@@ -1,4 +1,3 @@
-
 import axios from "axios"
 import { config } from "./config";
 
@@ -25,5 +24,40 @@ export async function loginUser(email, password,city) {
     return response.data;
   } catch (ex) {
     console.log(`Exception :`, ex);
+  }
+}
+
+export async function getUser(){
+  try {
+    const token = localStorage.getItem('token');
+    const url = `${config.serverUrl}/user/info`
+
+    const response = await axios.get(url, {
+      headers : {
+        Authorization: `Bearer ${token}`
+      },
+    })
+    return response;
+  }
+  catch (ex) {
+    console.log(`exception: `, ex)
+  }
+}
+
+export async function updateUserInfo(firstName, lastName, email, mob_num){
+  try {
+    const body = {firstName, lastName, email, mob_num};
+    const token = localStorage.getItem('token');
+    const url = `${config.serverUrl}/user/editProfile`
+
+    const response = await axios.put(url, body, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    return response;
+  }
+  catch (ex) {
+    console.log(`exception: `, ex)
   }
 }
