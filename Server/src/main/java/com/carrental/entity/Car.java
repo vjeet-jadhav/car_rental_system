@@ -1,10 +1,7 @@
 package com.carrental.entity;
 
 import java.time.LocalDate;
-<<<<<<< HEAD
 import java.util.ArrayList;
-=======
->>>>>>> 573bf2369864355e9cfaf2d796243bee3382ce3b
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -92,14 +89,11 @@ public class Car extends BaseEntity{
 	@OneToOne(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Address address;
 	
-<<<<<<< HEAD
+
 	
-	@OneToMany(mappedBy = "car",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "car",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Rating> ratingList = new ArrayList<>();
 	
-=======
-	@OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Rating> ratingList;
 	
 	
 //	helpers methods that helps
@@ -117,5 +111,5 @@ public class Car extends BaseEntity{
 		this.setAddress(null);
 		obj.setCar(null);
 	}
->>>>>>> 573bf2369864355e9cfaf2d796243bee3382ce3b
+
 }
