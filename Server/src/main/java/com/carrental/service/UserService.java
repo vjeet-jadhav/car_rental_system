@@ -2,10 +2,12 @@ package com.carrental.service;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.data.jpa.repository.Query;
 
 import com.carrental.dto.ApiResponse;
-
+import com.carrental.dto.ApiResponse;
+import com.carrental.dto.CarFilterRequestDto;
 import com.carrental.dto.CarPaymentDto;
 import com.carrental.dto.CarResponseDTO;
 import com.carrental.dto.TopCarsResponseDto;
@@ -35,6 +37,8 @@ public interface UserService {
 
 	String addReview(CarReviewDto reviewDto);
 
+	List<TopCarsResponseDto> allCarsByFilter(CarFilterRequestDto dto);
+	
     ApiResponse addImage(Long userId, String imgUrl, String string, String string2);
 
 	ApiResponse addCarImg(Long carId, List<ImgResponseDTO> urls);
@@ -44,6 +48,6 @@ public interface UserService {
 	ApiResponse updateImage(Long userId, ImgResponseDTO obj);
 
 	// CarRepository.java
-	@Query("SELECT c FROM Car c JOIN FETCH c.address a WHERE LOWER(a.serviceArea) = LOWER(:city)")
+//	@Query("SELECT c FROM Car c JOIN FETCH c.address a WHERE LOWER(a.serviceArea) = LOWER(:city)")
 	List<CarResponseDTO> getNearByCars(String city);
 }
