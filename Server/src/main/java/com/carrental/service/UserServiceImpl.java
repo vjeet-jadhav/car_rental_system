@@ -375,6 +375,7 @@ public class UserServiceImpl implements UserService{
 
 //		responseList.sort((x,y) -> (int)y.getRating()-(int)x.getRating());
 		return responseList;
+	}
 
 	public UserInfoDto getUserDetail(Long id) {
 
