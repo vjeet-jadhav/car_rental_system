@@ -1,9 +1,67 @@
-import React from 'react';
+import React, {useEffect,  useState} from 'react';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { getUser, updateUserInfo } from '../Services/User';
 
 export default function Profile() {
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
+
+  const[user, setUser] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    mob_num: ""
+  })
+
+    const loadUserDetails = async () => {
+    try {
+      const result = await getUser();
+      console.log(result)
+
+      if (result.status === 200) {
+
+        setUser({
+          firstName: result.data.firstName || "",
+          lastName: result.data.lastName  || "",
+          email: result.data.email        || "",
+          mob_num: result.data.mob_num     || ""
+        });
+      } else {
+        toast.error(result.error || 'Failed to load user');
+      }
+    } catch (err) {
+      toast.error('Error while loading user details');
+      console.error(err);
+    }
+  };
+
+  const handleSave = async () => {
+
+    
+    try {
+      const result = await updateUserInfo(
+        user.firstName,
+        user.lastName,
+        user.email,
+        user.mob_num
+      );
+
+      if (result.status === 200) {
+        toast.success('Profile updated successfully');
+        navigate(-1);
+      } else {
+        toast.error(result.error || 'Update failed');
+      }
+    } catch (err) {
+      toast.error('Something went wrong while updating');
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+  loadUserDetails();
+  }, []); 
 
   // go back to previous page
 
@@ -51,27 +109,32 @@ export default function Profile() {
 
             <div className="row">
               <div className="col-6 mb-3">
-                <input type="text" className="form-control" placeholder="First Name" />
+                <input type="text" value={user.firstName} className="form-control" placeholder="First Name" 
+                onChange={e => setUser({ ...user, firstName: e.target.value})} />
               </div>
               <div className="col-6 mb-3">
-                <input type="text" className="form-control" placeholder="Last Name" />
+                <input type="text" value={user.lastName} className="form-control" placeholder="Last Name" 
+                onChange={(e) => setUser(prev => ({ ...user, lastName: e.target.value}))}/>
               </div>
             </div>
 
-            <input type="email" className="form-control mb-3" placeholder="Email" />
-            <input type="tel" className="form-control mb-3" placeholder="Mob No." />
+            <input type="email" value={user.email} className="form-control mb-3" placeholder="Email" 
+            onChange={(e) => setUser({ ...user, email: e.target.value})}/>
+            <input type="tel" value={user.mob_num} className="form-control mb-3" placeholder="Mob No." 
+            onChange={(e) => setUser({ ...user, mob_num: e.target.value})}/>
 
             <div className="d-flex justify-content-center">
                <button  className="btn btn-secondary w-50 m-1" onClick={handleCancel} style={{ backgroundColor: '#ff5e00ff', border: 'none' }}>
                 Cancel
               </button>
 
-              <button className="btn btn-primary w-50 m-1" style={{ backgroundColor: '#ff5e00ff', border: 'none' }}>
+              <button className="btn btn-primary w-50 m-1" style={{ backgroundColor: '#ff5e00ff', border: 'none' }}
+              onClick={handleSave}>
                 Save
               </button>
             </div>
           </div>
-        </div>
+        </div>  
       </div>
     </div>
     </>

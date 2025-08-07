@@ -27,4 +27,9 @@ public class GlobalExceptionHandler {
 	{
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiException(e.getMessage()));
 	}
+	
+	@ExceptionHandler(UserNotFoundException.class)
+	public ResponseEntity<?> handelUserNotFoundException(UserNotFoundException e){
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse(e.getMessage()));
+	}
 }

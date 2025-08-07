@@ -1,57 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getAllAgents } from "../../Services/admin";
+import { getPendingCars , assignAgent} from "../../Services/admin";
+import { toast } from "react-toastify";
 
-const hostings = [
-  {
-    id: 1,
-    date: "2025-07-20",
-    userId: "USR001",
-    carId: "CAR1001",
-  },
-  {
-    id: 2,
-    date: "2025-07-21",
-    userId: "USR002",
-    carId: "CAR1002",
-  
-  },
-  {
-    id: 3,
-    date: "2025-07-22",
-    userId: "USR003",
-    carId: "CAR1003",
 
-  },
-  {
-    id: 4,
-    date: "2025-07-23",
-    userId: "USR004",
-    carId: "CAR1004",
-
-  },
-  {
-    id: 5,
-    date: "2025-07-24",
-    userId: "USR005",
-    carId: "CAR1005",
-
-  },
-];
-
-const agents = [
-  "Ravi Kumar",
-  "Sunita Yadav",
-  "Ashok Verma",
-  "Deepak Rana",
-  "Anjali Nair",
-  "Kiran Joshi",
-  "Neeraj Singh",
-  "Pooja Sharma",
-  "Amit Bansal",
-  "Meena Patel"
-];
 
 
 function ScheduleAgenet() {
+
+  const [agents, setAgents] = useState([]);
+  const [cars, setCars] = useState([]);
+  const [agentId, setAgentId] = useState({
+    agentId:0
+  })
+
+  // console.log(cars);
+
+  const onAssign = async (carId, agentId) =>{
+
+    // console.log(carId,agentId);
+
+    const result = await assignAgent(carId,agentId)
+
+    // console.log(result)
+    toast.success(result.data.message);
+    await loadCars();
+  }
+
+  const loadCars = async () => {
+
+    const carResult = await getPendingCars();
+    setCars(carResult.data);
+  }
+  const getAgents = async () => {
+
+    const agentsResult = await getAllAgents();
+    setAgents(agentsResult.data);
+  }
+
+  useEffect(() => {
+    getAgents();
+    loadCars();
+  },[agentId])
+
   return (
     <div className="container mt-4">
       <h1 className="mb-3">Schedule Agents</h1>
@@ -60,29 +51,35 @@ function ScheduleAgenet() {
           <tr>
             <th>Sr. No.</th>
             <th>Date</th>
-            <th>User</th>
-            <th>Car</th>
+            <th>Number</th>
+            <th>RC-Number</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Car-Id</th>
             <th>Assign Agent</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {hostings.map((hosting, index) => (
-            <tr>
+          {cars.map((car, index) => (
+            <tr key={car.id}>
               <td>{index + 1}</td>
-              <td>{hosting.date}</td>
-              <td>{hosting.userId}</td>
-              <td>{hosting.carId}</td>
+              <td>{car.creationDate}</td>
+              <td>{car.carNumber}</td>
+              <td>{car.rcNumber}</td>
+              <td>{car.brand}</td>
+              <td>{car.carModel}</td>
+              <td>{car.id}</td>
               <td>
-               <select>
+               <select onChange={(e) => setAgentId(e.target.value)}>
                 <option value="">--Assign Agent--</option>
-                { agents.map((agent , index) =>(
-                  <option key={index} value={agent}> {agent}</option>
+                { agents.map((agent ) =>(
+                  <option key={agent.id} value={agent.id}> {agent.firstName} {agent.lastName}</option>
                 )) }
                </select>
               </td>
               <td>
-                <button className="btn btn-success"> Assign</button>
+                <button className="btn btn-success" onClick={() => onAssign(car.id, agentId)}> Assign</button>
               </td>
             </tr>
           ))}
