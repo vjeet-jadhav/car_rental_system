@@ -1,3 +1,4 @@
+
 import axios from "axios"
 import { config } from "./config";
 
@@ -13,4 +14,16 @@ export async function userSignUp({firstName,lastName,email,password,city,state,z
     {
         console.log(e);
     }
+}
+
+export async function loginUser(email, password,city) {
+  try {
+    const body = { email, password , city};
+    const url = `${config.serverUrl}/user/signin`;
+    const response = await axios.post(url, body);
+    console.log(response)
+    return response.data;
+  } catch (ex) {
+    console.log(`Exception :`, ex);
+  }
 }
