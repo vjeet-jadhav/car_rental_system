@@ -30,7 +30,7 @@ function Login() {
       // console.log("called login")
 
       const result = await loginUser(email, password, city)
-      // const token = localStorage.settItem("result");
+      const token = localStorage.setItem("token",result);
       const decoded = jwtDecode(result);
       console.log(decoded);
 
