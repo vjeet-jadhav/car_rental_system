@@ -3,7 +3,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.carrental.config.JwtUtils;
 
 import com.carrental.dto.BookingRequestComDto;
+import com.carrental.dto.CarFilterRequestDto;
 import com.carrental.dto.CarPaymentDto;
 import com.carrental.dto.CarReviewDto;
 import com.carrental.dto.ImgResponseDTO;
@@ -34,8 +35,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.carrental.dto.UserRequestDto;
 import com.carrental.dto.UserUpdateRequestDto;
+
 import com.carrental.entity.Booking;
 import com.carrental.entity.UserImgEntity;
+
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -90,7 +93,7 @@ public class UserController {
 		userService.bookCar(bDto,pDto);
 //		Booking entity = 
 //		System.out.println("sanket   "+dto.toString());
-		return ResponseEntity.ok("Booking and payment in process");
+		return ResponseEntity.ok("Booking and payment executed successfully...)");
 	}
 	
 	
@@ -117,6 +120,15 @@ public class UserController {
 		
 		return userService.addReview(reviewDto);
 	}
+	
+
+	@GetMapping("/applyFilters")
+	public ResponseEntity<?> getCarsByFilter(@RequestBody CarFilterRequestDto dto)
+	{
+		
+		return ResponseEntity.status(HttpStatus.OK).body(userService.allCarsByFilter(dto));
+	}
+	
 	
 	@GetMapping("/review/{carId}")
 	public ResponseEntity<?> getTop(@PathVariable Long carId){
