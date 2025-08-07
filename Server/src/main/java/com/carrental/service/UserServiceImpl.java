@@ -40,6 +40,7 @@ import com.carrental.dto.Top5RatingResponseDto;
 import com.carrental.dto.TopCarsResponseDto;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
+import com.carrental.dto.UserInfoDto;
 import com.carrental.dto.UserRequestDto;
 import com.carrental.dto.UserResponseDto;
 import com.carrental.dto.UserUpdateRequestDto;
@@ -61,6 +62,7 @@ import com.carrental.entity.UserRole;
 import com.carrental.entity.UserStatus;
 import com.carrental.exception.ApiException;
 import com.carrental.exception.ResourceNotFoundException;
+import com.carrental.exception.UserNotFoundException;
 
 import lombok.AllArgsConstructor;
 
@@ -96,9 +98,9 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public ApiResponse updateUser(Long Id, UserUpdateRequestDto userDto) {
+	public ApiResponse updateUser(Long id, UserUpdateRequestDto userDto) {
 		
-		User user = userDaoInterface.findById(Id)
+		User user = userDaoInterface.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Invaild User ID : Update Failed"));
 		modelMapper.map(userDto, user);
 		return new ApiResponse("User Successfully Updated");
@@ -350,6 +352,15 @@ public class UserServiceImpl implements UserService{
 				
 		}
 		return responseEnity;
+	}
+
+	@Override
+	public UserInfoDto getUserDetail(Long id) {
+
+		
+		User user = userDaoInterface.findById(id).orElseThrow(() -> new UserNotFoundException("Sorry the User Cannot be Found ....."));
+		
+		return modelMapper.map(user, UserInfoDto.class);
 	}
 
 	
