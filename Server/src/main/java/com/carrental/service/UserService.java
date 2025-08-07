@@ -17,6 +17,7 @@ import com.carrental.dto.ImgResponseDTO;
 import com.carrental.dto.Top5RatingResponseDto;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
+import com.carrental.dto.UserInfoDto;
 import com.carrental.dto.UserRequestDto;
 import com.carrental.dto.UserResponseDto;
 import com.carrental.dto.UserUpdateRequestDto;
@@ -27,7 +28,7 @@ public interface UserService {
 
 	UserResponseDto RegisterUser(UserRequestDto userDto);
 	
-	ApiResponse updateUser(Long Id, UserUpdateRequestDto userDto);
+	ApiResponse updateUser(Long id, UserUpdateRequestDto userDto);
 
 	void bookCar(UserCarBookingDto dto,CarPaymentDto pDto);
 
@@ -50,4 +51,10 @@ public interface UserService {
 	// CarRepository.java
 //	@Query("SELECT c FROM Car c JOIN FETCH c.address a WHERE LOWER(a.serviceArea) = LOWER(:city)")
 	List<CarResponseDTO> getNearByCars(String city);
+
+
+	List<TopCarsResponseDto> getAllCars();
+
+	UserInfoDto getUserDetail(Long id);
+
 }

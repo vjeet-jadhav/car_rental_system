@@ -5,23 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AgentResDTO {
-
-    private int id;
-    
+public class UserInfoDto {
 	private String firstName;
-	
 	private String lastName;
-
 	private String email;
-	
 	private String mob_num;
-	
-	private String city;
-	
-	private String state;
-	
-	private int zipCode;
-	
-
 }
