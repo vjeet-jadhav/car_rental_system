@@ -8,11 +8,13 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import com.carrental.dao.BookingDaoInterface;
 import com.carrental.dao.CarDaoInterface;
 import com.carrental.dao.RatingDaoInterface;
 import com.carrental.dao.UserDaoInterface;
 import com.carrental.dao.VahanDaoInterface;
 import com.carrental.dto.ApiResponse;
+import com.carrental.dto.CarBookingsDTO;
 import com.carrental.dto.CarRegistrationDTO;
 import com.carrental.dto.RatingResponseDTO;
 import com.carrental.entity.Car;
@@ -36,6 +38,7 @@ public class CarServiceImpl implements CarService{
 	private final VahanDaoInterface vahanDao;
 	private final UserDaoInterface userDao;
 	private final RatingDaoInterface ratingDao;
+	private final BookingDaoInterface bookingDao;
 	private final ModelMapper mapper;
 	
 	public CarRegistrationDTO validateCar(String rcNumber) {
@@ -95,6 +98,15 @@ public class CarServiceImpl implements CarService{
 		return ratings.stream()
 				.map(rating -> mapper.map(rating, RatingResponseDTO.class))
 				.toList();
+	}
+
+
+	@Override
+	public List<CarBookingsDTO> getBookingsDetails(Long carId) {
+		
+		List<CarBookingsDTO> bookings = bookingDao.findActiveBookingsByCarId(carId)
+											.orElseThrow(()-> new ResourceNotFoundException("No current Bookings found..."));
+		return bookings;
 	}
 	
 	
