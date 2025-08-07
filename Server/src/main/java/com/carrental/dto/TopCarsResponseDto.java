@@ -12,6 +12,11 @@ import lombok.ToString;
 @Getter
 @ToString
 public class TopCarsResponseDto {
+	
+	private Long carId;
+	
+	private Long hostId;
+	
 	private String brand;
 	
 	private String carModel;
@@ -24,7 +29,7 @@ public class TopCarsResponseDto {
 	
 	private int seatCapacity;
 	
-	private int rating;
+	private double rating;
 	
 	private double dailyRate;
 }
