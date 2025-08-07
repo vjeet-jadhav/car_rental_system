@@ -14,6 +14,8 @@ import com.carrental.dao.PaymentDaoInterface;
 import com.carrental.dto.AgentResDTO;
 import com.carrental.dto.ApiResponse;
 import com.carrental.dto.BasicInfoDTO;
+import com.carrental.dto.CarResponseDTO;
+import com.carrental.dto.PendingCarDto;
 import com.carrental.dto.RegisterAgentDTO;
 import com.carrental.dto.TopCarsResponseDto;
 import com.carrental.dto.UserResponseDto;
@@ -76,7 +78,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public BasicInfoDTO getBasicInfo() {
 
-		BasicInfoDTO info = new BasicInfoDTO(0, 0, 0, 0, 0, 0);
+		BasicInfoDTO info = new BasicInfoDTO(0, 0, 0, 0, 0, 0.0);
 		 info.setTotalCars((int)carDao.count()); 
 		 info.setTotalUsers((int)adminDao.count());
 		 info.setTotalBookings((int)bookingDao.count());
@@ -84,16 +86,17 @@ public class AdminServiceImpl implements AdminService {
 		 info.setTotalHosts((int)adminDao.findByUserRoleAndUserStatus(UserRole.HOST,UserStatus.ACTIVE).size());
 		 
 		 List<TopCarsResponseDto> list = userService.getTopCars();
+
 		 int cnt = 0;
 		 int sumOfRatings = 0;
 		 for(TopCarsResponseDto car: list) {
-			 
 			 if(car.getRating() > 0) {
 				 
 				 sumOfRatings += car.getRating();
 				 cnt += 1;
 			 }
 		 }
+		
 		 info.setTotalRating((double)sumOfRatings/cnt);
 
 		return info;
@@ -114,6 +117,15 @@ public class AdminServiceImpl implements AdminService {
 		user.setUserStatus(UserStatus.INACTIVE);
 
 		return new ApiResponse("User Restricted By Admin");
+	}
+
+	@Override
+	public List<PendingCarDto> getPendingCars() {
+		// TODO Auto-generated method stub
+		return carDao.getByStatus()
+				.stream()
+				.map(car -> mapper.map(car, PendingCarDto.class))
+				.toList();
 	}
 
 }
