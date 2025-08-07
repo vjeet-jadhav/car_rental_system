@@ -7,7 +7,8 @@ import lombok.Setter;
 @Setter
 public class AgentResDTO {
 
-
+    private int id;
+    
 	private String firstName;
 	
 	private String lastName;

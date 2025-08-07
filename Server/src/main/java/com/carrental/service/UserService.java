@@ -50,4 +50,6 @@ public interface UserService {
 	// CarRepository.java
 //	@Query("SELECT c FROM Car c JOIN FETCH c.address a WHERE LOWER(a.serviceArea) = LOWER(:city)")
 	List<CarResponseDTO> getNearByCars(String city);
+
+	List<TopCarsResponseDto> getAllCars();
 }
