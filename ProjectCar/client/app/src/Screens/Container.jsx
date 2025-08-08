@@ -29,7 +29,7 @@ function Container() {
     < >
       <div className="d-flex flex-column min-vh-100">
 
-        <div>{renderNavbar()}</div>
+        {/* <div>{renderNavbar()}</div> */}
 
         <div className="flex-grow-1">
           <Outlet />

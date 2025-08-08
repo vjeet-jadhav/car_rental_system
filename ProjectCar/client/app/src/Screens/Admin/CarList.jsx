@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import '../../assets/Admin.css'
 import { getCarsInfoApi } from "../../Services/admin";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { restrictCarApi } from "../../Services/admin";
 
 
 const carsData = [
@@ -14,6 +17,7 @@ const CarList = () => {
   const [search, setSearch] = useState("");
   const [sortOption, setSortOption] = useState("");
   const [cars, setCars] = useState([]);
+  const navigate = useNavigate();
 
   const handleSortChange = (e) => {
     const option = e.target.value;
@@ -48,7 +52,6 @@ const CarList = () => {
     setCars(sorted);
   };
 
-  // console.log(cars)
 
   const filteredCars = cars.filter(
     (car) =>
@@ -58,10 +61,18 @@ const CarList = () => {
 
   const getCarsInfo = async () => {
     const result = await getCarsInfoApi();
-    // console.log(result.data);
+
     setCars(result.data)
   }
 
+  const restrictCar = async (id) =>{
+    const result = await restrictCarApi(id);
+    if(result){
+      toast.success("Car restricted Successfully !")
+      // navigate("/admin");
+      getCarsInfo();
+    }
+  }
   useEffect(() =>{
     getCarsInfo();
   },[])
@@ -124,12 +135,14 @@ const CarList = () => {
               <td>{car.bookings}</td>
               <td>{car.income}</td>
               <td className="">
-                <button className="btn btn-danger">Restrict</button>
+                <button className="btn btn-danger" onClick={() => restrictCar(car.id)}>Restrict</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      
     </div>
   );
 };
