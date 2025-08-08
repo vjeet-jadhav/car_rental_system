@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getTheBookingAndPaymentStatus } from "../Services/User";
+import { getTheBookingAndPaymentStatus } from "../Services/user";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
