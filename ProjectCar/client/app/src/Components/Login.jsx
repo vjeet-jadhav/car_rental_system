@@ -28,7 +28,7 @@ function Login() {
     } else {
 
       const result = await loginUser(email, password, city)
-      const token = localStorage.setItem("token",result);
+      const token = sessionStorage.setItem("token",result);
       const decoded = jwtDecode(result);
       console.log(decoded);
       setUser(decoded);
