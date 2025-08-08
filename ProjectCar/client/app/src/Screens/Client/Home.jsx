@@ -3,6 +3,7 @@ import './Home.css'
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { getAllCarCities, getAvailableCars } from '../../Services/User';
+import Navbar from '../../Components/Navbar';
 function Home() {
 
   const navigate = useNavigate();
@@ -92,6 +93,7 @@ function Home() {
   return (
     <div>
       {/* hero section div1*/}
+      <Navbar></Navbar>
       <div className="container mt-5 home-hero-section">
         {/* <h1 className="mb-4">Welcome to Home Section</h1> */}
 
