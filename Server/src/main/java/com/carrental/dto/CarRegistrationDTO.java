@@ -34,15 +34,12 @@ public class CarRegistrationDTO {
 
     @NotBlank
     private String carNumber;
-
+    
     @NotBlank
     private String rcNumber;
 
     @NotNull
     private Double dailyRate;
-    
-    @NotNull
-    private CarStatus status;
 
     @NotNull
     private CarFuelType fuelType;

@@ -63,6 +63,7 @@ public interface UserService {
 	List<String> getServiceAreaOfCars();
 	List<TopCarsResponseDto> getAllCars();
 
+
 	UserInfoDto getUserDetail(Long id);
 
 }

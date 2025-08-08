@@ -1,5 +1,6 @@
 package com.carrental.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -19,8 +20,10 @@ import com.carrental.dto.PendingCarDto;
 import com.carrental.dto.RegisterAgentDTO;
 import com.carrental.dto.TopCarsResponseDto;
 import com.carrental.dto.UserResponseDto;
+import com.carrental.entity.Booking;
 import com.carrental.entity.Car;
 import com.carrental.entity.CarStatus;
+import com.carrental.entity.Rating;
 import com.carrental.entity.User;
 import com.carrental.entity.UserRole;
 import com.carrental.entity.UserStatus;
@@ -87,7 +90,7 @@ public class AdminServiceImpl implements AdminService {
 		 info.setTotalHosts((int)adminDao.findByUserRoleAndUserStatus(UserRole.HOST,UserStatus.ACTIVE).size());
 		 
 //		 List<TopCarsResponseDto> list = userService.getTopCars();
-		 List<TopCarsResponseDto> allCars = userService.getAllCars();
+		 List<TopCarsResponseDto> allCars = getAllCars();
 
 		 int cnt = 0;
 		 int sumOfRatings = 0;
@@ -128,6 +131,72 @@ public class AdminServiceImpl implements AdminService {
 				.stream()
 				.map(car -> mapper.map(car, PendingCarDto.class))
 				.toList();
+	}
+	
+	@Override
+	public List<TopCarsResponseDto> getAllCars() {
+		
+        List<TopCarsResponseDto> responseList = new ArrayList<>();
+		
+		List<Car> carList = carDao.findAll();
+		for(Car car:carList)
+		{
+
+			double rating = generateAverageRating(car.getRatingList());
+
+			TopCarsResponseDto obj = new TopCarsResponseDto();
+			obj = mapper.map(car, TopCarsResponseDto.class);
+			obj.setRating(rating);
+			obj.setCarId(car.getId());
+			obj.setHostId(car.getHost().getId());
+			responseList.add(obj);
+		}
+
+		return responseList;
+	}
+	
+	public double generateAverageRating(List<Rating> list)
+	{
+		double sum=0.0;
+		int count = list.size();
+		for(Rating r:list)
+		{
+			sum += r.getRating();
+		}
+		if(count!=0)
+			return (sum/count);
+		return sum;
+	}
+
+	@Override
+	public List<PendingCarDto> getEntireCarInfo() {
+
+		List<PendingCarDto> result = new ArrayList();
+		
+//		List<Car> carList = carDao.findAll();
+		List<Car> carList = carDao.getCarsToRestrict();
+
+		
+		for(Car car:carList){
+
+     		double income = car.getBookingList().stream().mapToDouble(booking -> booking.getAmount()).sum();
+
+
+			PendingCarDto obj = new PendingCarDto();
+			obj = mapper.map(car, PendingCarDto.class);
+			obj.setRating(generateAverageRating(car.getRatingList()));
+			obj.setBookings(car.getBookingList().size() );
+            obj.setIncome(income);
+			result.add(obj);
+		}
+		
+		return result;
+	}
+
+	@Override
+	public AgentResDTO getUserByEmail(String email) {
+		// TODO Auto-generated method stub
+		return mapper.map(adminDao.findByEmail(email), AgentResDTO.class) ;
 	}
 
 }

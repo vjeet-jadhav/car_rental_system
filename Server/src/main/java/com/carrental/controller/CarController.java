@@ -1,6 +1,8 @@
 // CarController.java - placeholder
 package com.carrental.controller;
 
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.carrental.dto.CarRegistrationDTO;
+import com.carrental.dto.RcValidationResponce;
 import com.carrental.service.CarService;
 
 
@@ -29,13 +32,22 @@ public class CarController {
 	private final CarService carService;
 	
 	@PostMapping("/validate")
-	public ResponseEntity<?> validateCar(@RequestBody String rcNumber)
+    public ResponseEntity<RcValidationResponce<CarRegistrationDTO>> validate(@RequestBody Map<String,String> body) 
 	{
-		System.out.println("CarController ke validateCar ke under hu padul saheb...");
+		System.out.println("CarController ke validate ke under hu padul saheb...");
 		
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(carService.validateCar(rcNumber));
-	}
+        String rcNumber = body.get("rcNumber");
+        
+        RcValidationResponce<CarRegistrationDTO> resp = carService.validateCar(rcNumber);
+        
+        System.out.println(resp.getStatus());
+        
+        HttpStatus status = resp.getStatus().equals("success")
+                          ? HttpStatus.OK
+                          : HttpStatus.BAD_REQUEST;
+                          
+        return ResponseEntity.status(status).body(resp);
+    }
 	
 	
 	@PostMapping("/registration")

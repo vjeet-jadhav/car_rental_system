@@ -8,6 +8,7 @@ import com.carrental.dto.BasicInfoDTO;
 import com.carrental.dto.CarResponseDTO;
 import com.carrental.dto.PendingCarDto;
 import com.carrental.dto.RegisterAgentDTO;
+import com.carrental.dto.TopCarsResponseDto;
 import com.carrental.dto.UserResponseDto;
 
 public interface AdminService {
@@ -25,5 +26,11 @@ public interface AdminService {
 	ApiResponse restrictUserById(Long carId);
 
 	List<PendingCarDto> getPendingCars();
+
+	List<TopCarsResponseDto> getAllCars();
+
+	List<PendingCarDto> getEntireCarInfo();
+
+	AgentResDTO getUserByEmail(String email);
 
 }

@@ -97,3 +97,75 @@ export async function agentSignup(data)  {
      console.log(`Exception :` ,error);
   }
 }
+
+
+
+export async function getCarsInfoApi() {
+
+  const url = `${config.serverUrl}/admin/getCarsInfo`
+  try {
+    const response = await axios.get(url,{headers:
+      {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    // console.log(response);
+    return response;
+
+  } catch (error) {
+    console.log(`Exception :`, error);
+  }
+  
+}
+
+export async function getUserApi(email) {
+  const url = `${config.serverUrl}/admin/getUserByEmail/${email}`
+
+  try {
+    const response = await axios.get(url,{
+    headers:{
+      Authorization:`Bearer ${token}`
+    }
+  })
+  return response;
+    
+  } catch (error) {
+    console.log(`Exception :`, error)
+  }
+}
+
+
+export async function restrictUserApi(remark,id) {
+  const url = `${config.serverUrl}/admin/restrictUser/${id}`
+  const body = remark;
+  try {
+    const response = await axios.put(url,body,{
+      headers:{
+        Authorization:`Bearer ${token}`
+      }
+    })
+
+    return response;
+
+  } catch (error) {
+    console.log(`Exception :`, error)
+  }
+}
+
+export async function restrictCarApi(id) {
+  const url = `${config.serverUrl}/admin/restrictCar/${id}`
+
+  try {
+    const response = await axios.put(url,{},{
+      headers:{
+        Authorization:`Bearer ${token}`
+      }
+    })
+
+    return response;
+    
+  } catch (error) {
+    console.log(`Exception :`, error)
+  }
+}

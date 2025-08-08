@@ -60,7 +60,8 @@ public class SecurityConfig {
 
 
 				.requestMatchers(HttpMethod.GET,"/host").hasRole("HOST")
-				.requestMatchers(HttpMethod.POST, "/car/validate", "/car/registration").hasAnyRole("HOST","USER")
+				.requestMatchers(HttpMethod.POST, "/car/validate").hasAnyRole("HOST","USER")
+				.requestMatchers(HttpMethod.POST, "/car/registration").hasAnyRole("HOST","USER")
 				.requestMatchers(HttpMethod.POST, "/car/update").hasRole("HOST")
 
 				.requestMatchers(HttpMethod.GET, "/user/review/**").permitAll()
@@ -79,6 +80,8 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.PUT,"/restrictCar/**").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT,"/restrictUser/**").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET,"/admin/getPendingCars").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET,"/admin/getCarsInfo").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET,"/admin/getUserByEmail/**").hasRole("ADMIN")
 				
 				.requestMatchers(HttpMethod.GET, "/agent").hasRole("AGENT")
 				.requestMatchers(HttpMethod.GET, "/agent/*").hasRole("AGENT")

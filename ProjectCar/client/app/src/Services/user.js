@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from "axios";
 import { config } from "./config";
 
 // USER SIGNUP
@@ -25,7 +25,7 @@ export async function loginUser(email, password, city) {
   }
 }
 
-<<<<<<< HEAD
+
 export async function getAvailableCars({ startTrip, endTrip }) {
   const body = { startTrip, endTrip };
   const url = `${config.serverUrl}/user/serachCar`;
@@ -83,7 +83,9 @@ export async function getCarsAfterFilter( filters,tripInfo) {
   }
   catch (e) {
     console.log(e);
-=======
+
+  }}
+
 export async function getUser(){
   try {
     const token = localStorage.getItem('token');
@@ -116,6 +118,6 @@ export async function updateUserInfo(firstName, lastName, email, mob_num){
   }
   catch (ex) {
     console.log(`exception: `, ex)
->>>>>>> 255123cc74834bb6521caf9a35b2d41f981e004c
+
   }
 }
