@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./CarInfo.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { getCarsAfterFilter, getServiceAreaJS } from '../../Services/User';
+import { getCarsAfterFilter, getServiceAreaJS } from '../../Services/user';
 function CarInfo() {
 
   const location = useLocation();
