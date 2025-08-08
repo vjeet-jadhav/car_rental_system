@@ -3,13 +3,13 @@ import { Outlet } from 'react-router-dom'
 
 
 
-// import AgentNavbar from './AgentNavbar'
+import AgentNavbar from './AgentNavbar'
 
 
 function AgentContainer() {
   return (
     <div>
-      {/* <AgentNavbar/> */}
+      <AgentNavbar/>
       <Outlet/>
     </div>
   )
