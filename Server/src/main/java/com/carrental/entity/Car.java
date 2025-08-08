@@ -27,7 +27,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(callSuper = true,exclude={"ratingList","host","agent"})
+@ToString(callSuper = true,exclude={"ratingList","host","agent","address"})
 public class Car extends BaseEntity{
 
 	@Column(name="car_brand", nullable = false)

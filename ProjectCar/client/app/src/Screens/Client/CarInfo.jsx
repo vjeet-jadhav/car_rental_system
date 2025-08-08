@@ -1,237 +1,320 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./CarInfo.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { getCarsAfterFilter, getServiceAreaJS } from '../../Services/User';
 function CarInfo() {
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  // derefference the content of previous component
+  let { data = [], tripInfo = {}, city = "" } = location.state || {};
+  // console.log(data);
+  // console.log(tripInfo);
+  // console.log(city);
+
+  // GET THE ALL SERVICES FROM PARTICULAR CITY
+  const [getServiceArea, setServiceArea] = useState([]);
+
+  // STORE FILTER DATA 
+  const [carData, setCarData] = useState(data);
+
+  // GET ALL THE FILTERS
+  const [getFilters, setFilters] = useState({
+    serviceArea: "",
+    rating: 0.0,
+    seatCapacity: [],
+    transmissionType: [],
+    fuelType: []
+  });
+
+
+
+
+  const getAllServiceArea = async () => {
+    const result = await getServiceAreaJS(city);
+    if (result.status === 200) {
+      setServiceArea(result.data);
+    }
+  }
+
+  useEffect(() => {
+    getAllServiceArea();
+  }, [])
+
+
+  useEffect(() => {
+  }, [carData]);
+
+
+  // FUNCTION TO STORE THE VALUE IN THE ARRAY FROM THE CHECKED BOXES
+  const handleCheckboxChange = (event, filterKey) => {
+    const { value, checked } = event.target;
+    setFilters((prevFilters) => {
+      const updatedArray = checked
+        ? [...prevFilters[filterKey], value]
+        : prevFilters[filterKey].filter((item) => item !== value);
+
+      return {
+        ...prevFilters,
+        [filterKey]: updatedArray,
+      };
+    });
+  };
+
+
+  // AFTER FILTER INCOMING NEW DATA
+  const getAllTheFilters = async () => {
+    console.log("All filterts");
+    console.log(getFilters);
+    const result = await getCarsAfterFilter(getFilters, tripInfo);
+    if (result.status === 200) {
+      setCarData(result.data);
+    }
+  }
+
+  // NAVIGATE TO BOOKING CAR
+  const navigateToBookingCar = (car)=>{
+    console.log(car);
+    navigate("/carbooking",{
+      state:{
+        "carInfo":car,
+        "tripData":tripInfo,
+        "getCity":city
+      }
+    });
+  }
+
+
+
   return (
     <div>
       {/* top section */}
       <div className="d-flex mt-5  p-2 gap-1">
         {/* left-section */}
-        <div className="col-3 border border-2 border-danger">
+        <div className="col-3 d-flex align-items-center justify-content-center">
           <div>
             <h3 className="text-center p-2">Find Your Perfect Ride</h3>
           </div>
         </div>
         {/* rigth-section */}
-        <div className="col-9 border border-2 border-danger">
-          <div>
-            <h3 className="text-center p-2">Applied filter will be shown</h3>
-          </div>
-        </div>
-      </div>
-      {/* middle section */}
-      <div className="d-flex mt-2 p-2 gap-1">
-        {/* left-section */}
-        <div className="col-3  border-danger p-3 ">
-          <form action="">
-            {/* car type */}
-            <div className="px-3 py-2 mt-2 border mx-2 rounded">
-              <h5>Filter By Car Type</h5>
-              <div className="d-flex flex-column gap-3 px-3 mt-3">
-                <div>
-                  <input type="checkbox" style={{ transform: "scale(1.3)" }} />{" "}
-                  <span className=" px-2">SUV</span>
-                </div>
-                <div>
-                  <input type="checkbox" style={{ transform: "scale(1.3)" }} />{" "}
-                  <span className=" px-2">Tata Nexon</span>
-                </div>
-                <div>
-                  <input type="checkbox" style={{ transform: "scale(1.3)" }} />{" "}
-                  <span className=" px-2">Hyundai i20</span>
-                </div>
-                <div>
-                  <input type="checkbox" style={{ transform: "scale(1.3)" }} />{" "}
-                  <span className=" px-2">Mahindra XUV700</span>
-                </div>
-              </div>
+
+        {/* updated by sanket-main */}
+        <div className="col-9 p-3">
+          <div className="d-flex justify-content-around" style={{ margin: "0px 200px" }}>
+            <div className="mb-3">
+              <label htmlFor="startTime" className="form-label fw-bold">Start Time</label>
+              <input
+                type="datetime-local"
+                id="startTime"
+                className="form-control"
+                value={tripInfo.startTrip}  // pass this as a prop or state variable
+                readOnly
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="startTime" className="form-label fw-bold">City</label>
+              <input
+                type="text"
+                id="startTime"
+                className="form-control"
+                value={city}  // pass this as a prop or state variable
+                readOnly
+              />
             </div>
 
-            {/* Transmission */}
+            <div className="mb-3">
+              <label htmlFor="endTime" className="form-label fw-bold">End Time</label>
+              <input
+                type="datetime-local"
+                id="endTime"
+                className="form-control"
+                value={tripInfo.endTrip}    // pass this as a prop or state variable
+                readOnly
+              />
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {/* middle section */}
+      <div className="d-flex  p-2 gap-1">
+        {/* left-section */}
+        <div className="col-3  border-danger p-3 ">
+          <div>
+
+            {/* Select Service area */}
             <div className="px-3 py-2 mt-2 border mx-2 rounded">
               <h5>Filter By Transmission</h5>
               <div className="d-flex flex-column gap-3 px-3 mt-3">
                 <div>
-                  <input type="checkbox" style={{ transform: "scale(1.3)" }} />{" "}
-                  <span className=" px-2">Manual</span>
-                </div>
-                <div>
-                  <input type="checkbox" style={{ transform: "scale(1.3)" }} />{" "}
-                  <span className=" px-2">Automatic</span>
+                  <label htmlFor="serviceArea" className="form-label text-secondary mb-1">Select Area</label>
+                  <select id="serviceArea" className="form-select"
+                    onChange={(e) => setFilters({ ...getFilters, serviceArea: e.target.value })}
+                  >
+                    <option value="">Service Area</option>
+                    {getServiceArea.map((area, index) => {
+                      return <>
+                        <option key={index} value={area}>{area}</option>
+                      </>
+                    })}
+                  </select>
                 </div>
               </div>
             </div>
 
+
+
+            {/* Transmission */}
+
+            <div className="px-3 py-2 mt-2 border mx-2 rounded">
+              <h5>Filter By Transmission</h5>
+              <div className="d-flex flex-column gap-3 px-3 mt-3">
+                {["MANUAL", "AUTOMATIC"].map((type) => (
+                  <div key={type}>
+                    <input
+                      type="checkbox"
+                      value={type}
+                      checked={getFilters.transmissionType.includes(type)}
+                      onChange={(e) => handleCheckboxChange(e, "transmissionType")}
+                      style={{ transform: "scale(1.3)" }}
+                    />
+                    <span className="px-2">{type}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+
             {/* Fuel Type */}
+
             <div className="px-3 py-2 mt-2 border mx-2 rounded">
               <h5>Filter By Fuel Type</h5>
               <div className="d-flex flex-column gap-3 px-3 mt-3">
-                <div>
-                  <input type="checkbox" style={{ transform: "scale(1.3)" }} />{" "}
-                  <span className=" px-2">Petrol</span>
-                </div>
-                <div>
-                  <input type="checkbox" style={{ transform: "scale(1.3)" }} />{" "}
-                  <span className=" px-2">Diesel</span>
-                </div>
-                <div>
-                  <input type="checkbox" style={{ transform: "scale(1.3)" }} />{" "}
-                  <span className=" px-2">Electric</span>
-                </div>
+                {["PETROL", "DIESEL", "ELECTRICAL", "CNG"].map((fuel) => (
+                  <div key={fuel}>
+                    <input
+                      type="checkbox"
+                      value={fuel}
+                      checked={getFilters.fuelType.includes(fuel)}
+                      onChange={(e) => handleCheckboxChange(e, "fuelType")}
+                      style={{ transform: "scale(1.3)" }}
+                    />
+                    <span className="px-2">{fuel}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
             {/* Seats */}
+
             <div className="px-3 py-2 mt-2 border mx-2 rounded">
               <h5>Filter By Seats</h5>
               <div className="d-flex flex-column gap-3 px-3 mt-3">
-                <div>
-                  <input type="checkbox" style={{ transform: "scale(1.3)" }} />{" "}
-                  <span className=" px-2">4/5 Seaters</span>
-                </div>
-                <div>
-                  <input type="checkbox" style={{ transform: "scale(1.3)" }} />{" "}
-                  <span className=" px-2">6/7 Seaters</span>
-                </div>
+                {["4", "5", "6", "7"].map((seat) => (
+                  <div key={seat}>
+                    <input
+                      type="checkbox"
+                      value={seat}
+                      checked={getFilters.seatCapacity.includes(seat)}
+                      onChange={(e) => handleCheckboxChange(e, "seatCapacity")}
+                      style={{ transform: "scale(1.3)" }}
+                    />
+                    <span className="px-2">{seat}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
+
             {/* Rating */}
             <div className="px-3 py-2 mt-2 border mx-2 rounded">
-              <h5>Filter By Rating</h5>
+              <h5>Filter By Transmission</h5>
               <div className="d-flex flex-column gap-3 px-3 mt-3">
                 <div>
-                  <input type="radio" style={{ transform: "scale(1.3)" }} />{" "}
-                  <span className=" px-2">4.5+ Rated</span>
-                </div>
-                <div>
-                  <input type="radio" style={{ transform: "scale(1.3)" }} />{" "}
-                  <span className=" px-2">4.0+ Rated</span>
-                </div>
-                <div>
-                  <input type="radio" style={{ transform: "scale(1.3)" }} />{" "}
-                  <span className=" px-2">3.5+ Rated</span>
-                </div>
-                <div>
-                  <input type="radio" style={{ transform: "scale(1.3)" }} />{" "}
-                  <span className=" px-2">All</span>
+                  <label htmlFor="rating" className="form-label text-secondary mb-1">Select Area</label>
+                  <select id="rating" className="form-select"
+                    onChange={(e) => setFilters({ ...getFilters, rating: e.target.value })}
+                  >
+                    <option value="">Rating</option>
+                    {[3.0, 3.5, 4.0, 4.5].map((rate, index) => {
+                      return <>
+                        <option key={index} value={rate}>{rate}</option>
+                      </>
+                    })}
+                  </select>
                 </div>
               </div>
             </div>
 
             {/* Submit button or apply filter */}
             <div className="px-3 py-2 mt-2 border mx-2 d-flex justify-content-center align-content-center">
-              <input
+              <button
                 type="submit"
                 value="Apply Filter"
                 className="btn btn-success fw-bold"
-              />
+                onClick={getAllTheFilters}
+              >Apply</button>
             </div>
-          </form>
+          </div>
         </div>
 
         {/* rigth-section */}
 
+        {/* rendering data from privious component */}
         <div className="col-9  border-danger">
           <div className="d-flex justify-content-evenly mt-5">
             {/* cards */}
+            {
+              (carData.length === 0) 
+              ? 
+              <div class="alert alert-warning text-center mt-4" role="alert">
+                <h4 class="alert-heading">No Cars Available</h4>
+                <p>Currently, cars are not available for your selected trip time zone. To continue, please adjust the time and try again.</p>
+              </div> 
+              : 
+              
+              carData.map((car) => {
+                return <>
+                  <div
+                    className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none"
+                    onClick={()=>navigateToBookingCar(car)}
+                  >
+                    <img
+                      src="/Image/carBg1.jpg" // Corrected path for React
+                      className=""
+                      alt="Car"
+                      style={{ height: "70%" }}
+                    />
 
-            <Link
-              to="/carbooking"
-              className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none"
-            >
-              <img
-                src="/Image/carBg1.jpg" // Corrected path for React
-                className=""
-                alt="Car"
-                style={{ height: "70%" }}
-              />
+                    <div className="card-body" style={{ height: "20%" }}>
+                      <h5 className="card-title mb-2">{car.brand} : {car.carModel}</h5>
 
-              <div className="card-body" style={{ height: "20%" }}>
-                <h5 className="card-title mb-2">Model: TATA</h5>
+                      <div className="d-flex justify-content-between text-muted small mb-2">
+                        <div>
+                          <span>{car.transmissionType}</span> | <span>{car.fuelType}</span> |{" "}
+                          <span>{car.seatCapacity} seats</span>
+                        </div>
+                        <div>
+                          <span>{car.rating}⭐</span>
+                        </div>
+                      </div>
 
-                <div className="d-flex justify-content-between text-muted small mb-2">
-                  <div>
-                    <span>Manual</span> | <span>Petrol</span> |{" "}
-                    <span>7 seats</span>
+                      <div className="d-flex justify-content-between">
+                        <span className="text-success">{car.status}</span>
+                        <span className="fw-bold">₹{car.dailyRate}/hr</span>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <span>4.5⭐</span>
-                  </div>
-                </div>
+                </>
+              })
+            }
 
-                <div className="d-flex justify-content-between">
-                  <span className="text-success">Delivery Available</span>
-                  <span className="fw-bold">₹196/hr</span>
-                </div>
-              </div>
-            </Link>
 
-            <Link
-              to="/carbooking"
-              className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none"
-            >
-              <img
-                src="/Image/carBg2.jpg" // Corrected path for React
-                className=""
-                alt="Car"
-                style={{ height: "70%" }}
-              />
-
-              <div className="card-body " style={{ height: "20%" }}>
-                <h5 className="card-title mb-2">Model: TATA</h5>
-
-                <div className="d-flex justify-content-between text-muted small mb-2">
-                  <div>
-                    <span>Manual</span> | <span>Petrol</span> |{" "}
-                    <span>7 seats</span>
-                  </div>
-                  <div>
-                    <span>4.5⭐</span>
-                  </div>
-                </div>
-
-                <div className="d-flex justify-content-between">
-                  <span className="text-success">Delivery Available</span>
-                  <span className="fw-bold">₹196/hr</span>
-                </div>
-              </div>
-            </Link>
-
-            <Link
-              to="/carbooking"
-              className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none"
-            >
-              <img
-                src="/Image/carBg3.jpg" // Corrected path for React
-                className=""
-                alt="Car"
-                style={{ height: "70%" }}
-              />
-
-              <div className="card-body" style={{ height: "20%" }}>
-                <h5 className="card-title mb-2">Model: TATA</h5>
-
-                <div className="d-flex justify-content-between text-muted small mb-2">
-                  <div>
-                    <span>Manual</span> | <span>Petrol</span> |{" "}
-                    <span>7 seats</span>
-                  </div>
-                  <div>
-                    <span>4.5⭐</span>
-                  </div>
-                </div>
-
-                <div className="d-flex justify-content-between">
-                  <span className="text-success">Delivery Available</span>
-                  <span className="fw-bold">₹196/hr</span>
-                </div>
-              </div>
-            </Link>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 
