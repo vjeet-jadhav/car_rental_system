@@ -120,6 +120,7 @@ public class JwtUtils {
 		String email = getUserNameFromJwtToken(payloadClaims);
 		Long userId = getUserIdFromJwtToken(payloadClaims);
 		List<GrantedAuthority> authorities = getAuthoritiesFromClaims(payloadClaims);
+		System.out.println("Role of User" + authorities.get(0));
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email,null, authorities);
 
 		token.setDetails(userId);
