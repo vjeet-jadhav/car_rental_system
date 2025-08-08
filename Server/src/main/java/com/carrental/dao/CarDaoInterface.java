@@ -38,6 +38,7 @@ public interface CarDaoInterface extends JpaRepository<Car, Long> {
 	@Query("SELECT c FROM Car c JOIN FETCH c.address a JOIN FETCH c.host h WHERE LOWER(a.serviceArea) = LOWER(:city)")
 	List<Car> findByServiceArea(String city);
 
+	
 //	get available slot cars
 	@Query("SELECT c FROM Car c WHERE "
 		    + "(c.status IN(CarStatus.AVAILABLE)) AND "
@@ -45,6 +46,11 @@ public interface CarDaoInterface extends JpaRepository<Car, Long> {
 		    + "(c.sheduledTill IS NULL OR c.sheduledTill >= :endTrip)) AND "
 		    + "(c.id NOT IN :listCarId)")
 		Optional<List<Car>> getAvailableCars(List<Integer> listCarId, LocalDate startTrip, LocalDate endTrip);
+
+
+	@Query("SELECT c FROM Car c WHERE c.status IN (CarStatus.PENDING)")
+	List<Car> getByStatus();
+
 
 	
 

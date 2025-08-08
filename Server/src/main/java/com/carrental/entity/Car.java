@@ -1,7 +1,11 @@
 package com.carrental.entity;
 
 import java.time.LocalDate;
+
 import java.util.ArrayList;
+
+import java.util.ArrayList;
+
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -94,7 +98,7 @@ public class Car extends BaseEntity{
 	@OneToMany(mappedBy = "car",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Rating> ratingList = new ArrayList<>();
 	
-	
+
 	
 //	helpers methods that helps
 	

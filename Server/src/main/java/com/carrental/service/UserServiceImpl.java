@@ -42,6 +42,7 @@ import com.carrental.dto.Top5RatingResponseDto;
 import com.carrental.dto.TopCarsResponseDto;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
+import com.carrental.dto.UserInfoDto;
 import com.carrental.dto.UserRequestDto;
 import com.carrental.dto.UserRequestForAvilableCarsForBooking;
 import com.carrental.dto.UserResponseDto;
@@ -64,6 +65,7 @@ import com.carrental.entity.UserRole;
 import com.carrental.entity.UserStatus;
 import com.carrental.exception.ApiException;
 import com.carrental.exception.ResourceNotFoundException;
+import com.carrental.exception.UserNotFoundException;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -100,9 +102,9 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public ApiResponse updateUser(Long Id, UserUpdateRequestDto userDto) {
+	public ApiResponse updateUser(Long id, UserUpdateRequestDto userDto) {
 		
-		User user = userDaoInterface.findById(Id)
+		User user = userDaoInterface.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Invaild User ID : Update Failed"));
 		modelMapper.map(userDto, user);
 		return new ApiResponse("User Successfully Updated");
@@ -362,7 +364,39 @@ public class UserServiceImpl implements UserService{
 	}
 
 //	AVAILABLE CARS LIST
-	
+	@Override
+	public List<TopCarsResponseDto> getAllCars() {
+		
+        List<TopCarsResponseDto> responseList = new ArrayList<>();
+		
+		List<Car> carList = carDao.findAll();
+		for(Car list:carList)
+		{
+
+			double rating = generateAverageRating(list.getRatingList());
+
+			TopCarsResponseDto obj = new TopCarsResponseDto();
+			obj = modelMapper.map(list, TopCarsResponseDto.class);
+			obj.setRating(rating);
+			obj.setCarId(list.getId());
+			obj.setHostId(list.getHost().getId());
+			responseList.add(obj);
+		}
+
+//		responseList.sort((x,y) -> (int)y.getRating()-(int)x.getRating());
+		return responseList;
+	}
+
+	public UserInfoDto getUserDetail(Long id) {
+
+		
+		User user = userDaoInterface.findById(id).orElseThrow(() -> new UserNotFoundException("Sorry the User Cannot be Found ....."));
+		
+		return modelMapper.map(user, UserInfoDto.class);
+
+	}
+
+
 	@Override
 	public List<TopCarsResponseDto> getAllAvailableCarsForBooking(@Valid UserRequestForAvilableCarsForBooking dto) {
 		
