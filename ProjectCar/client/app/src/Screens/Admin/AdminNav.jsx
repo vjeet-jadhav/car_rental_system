@@ -5,7 +5,8 @@ function AdminNav() {
   const navigate = useNavigate();
 
   function onLogout(){
-   localStorage.removeItem("token");
+   sessionStorage.removeItem("token");
+   sessionStorage.removeItem("user");
    navigate("/");
   }
   
