@@ -1,8 +1,9 @@
-import { loginUser } from '../Services/user';
+
 import {jwtDecode }from "jwt-decode";
 import React, { useState } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
+import { loginUser } from "../Services/User";
 
 function Login() {
 
@@ -37,14 +38,10 @@ function Login() {
       const authorities = decoded.authorities;
 
       if (authorities == 'ADMIN') {
-       
         navigate("/admin");
-       
       }else if(authorities == 'AGENT'){
-
         navigate("/agent");
       }else if(authorities == 'USER'){
-
         navigate("/");
       }else if(authorities == 'HOST'){
         navigate("/host");

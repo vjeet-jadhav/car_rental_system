@@ -34,6 +34,16 @@ public class HostController {
 				.body(hostService.getMyCars(userId));
 	}
 	
+
+	@GetMapping("/earning")
+	public ResponseEntity<?> getTotalEarnings(){
+		Long id = (Long) SecurityContextHolder.getContext().getAuthentication().getDetails();
+		System.out.println(id);
+		
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(hostService.getTotalEarnings(id));
+	}
+	
 	
 	@PutMapping("/shedule-car/{carId}")
 	public ResponseEntity<?> sheduleCar(@PathVariable Long carId,@RequestBody CarSheduleDTO carShedule)
@@ -62,5 +72,5 @@ public class HostController {
 				.body(hostService.getBookingHistory(userId));
 	}
 	
-	
+
 }
