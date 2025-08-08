@@ -1,13 +1,18 @@
+
+
+import {jwtDecode }from "jwt-decode";
+import React, { useContext, useState } from 'react';
 import { loginUser } from "../Services/user";
-import {jwtDecode } from "jwt-decode";
-import React, { useState } from 'react';
+
 
 import { Link, useNavigate } from 'react-router-dom';
 import { loginUser } from "../Services/user";
+import { AuthContext } from "../App";
 
 function Login() {
 
   const navigate = useNavigate();
+  const {setUser} = useContext(AuthContext);
 
   const [loginInfo , setLoginInfo] = useState({
     email :"",
@@ -17,10 +22,6 @@ function Login() {
 
   const onLogin = async () =>{
 
-    
-    
-    console.log(loginInfo);
-
     const {email , password , city} = loginInfo;
 
     if (loginInfo.email.length == 0) {
@@ -28,13 +29,12 @@ function Login() {
     } else if (loginInfo.password.length == 0) {
       toast.warn('Please enter the password')
     } else {
-      // console.log("called login")
 
       const result = await loginUser(email, password, city)
       const token = localStorage.setItem("token",result);
       const decoded = jwtDecode(result);
       console.log(decoded);
-
+      setUser(decoded);
       const authorities = decoded.authorities;
 
       if (authorities == 'ADMIN') {
