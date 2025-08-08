@@ -1,4 +1,3 @@
-import { loginUser } from "../Services/user";
 import {jwtDecode } from "jwt-decode";
 import React, { useState } from 'react';
 

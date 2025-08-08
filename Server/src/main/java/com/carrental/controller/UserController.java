@@ -170,6 +170,7 @@ public class UserController {
 	@PostMapping("/uploadMul/{carId}")
 	public ResponseEntity<?> uploadMulImages(@RequestParam("files") MultipartFile[] files, @PathVariable Long carId){
 		
+		System.out.println("UserController ke uploadMulImages ke under hu Sanket dada...");
 		List<ImgResponseDTO> urls = new ArrayList<>();
 		for(MultipartFile file: files ) {
 			
