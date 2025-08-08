@@ -38,5 +38,8 @@ public class Payment  extends BaseEntity{
     @OneToOne(optional = false)
     @JoinColumn(name = "booking_id", nullable = false )
     private Booking bookingId;
+    
+    @Column(name="razor_pay_id",nullable=false)
+    private String razorPayId;
 		
 }

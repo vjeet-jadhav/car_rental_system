@@ -128,13 +128,10 @@ public class UserServiceImpl implements UserService{
 		entity.setHost(host);
 		entity.setBookingStatus(BookingStatus.CONFIRMED);
 		bookingDao.save(entity);
-//		on successful booking car status need to update
-		car.setStatus(CarStatus.BOOKED);
-		
+
 //	    storing the payment details
 		
 		Payment pEntity = modelMapper.map(pDto, Payment.class);
-		
 		pEntity.setBookingId(entity);
 		pEntity.setPaymentStatus(PaymentStatus.COMPLETED);
 		pEntity.setPaymentTime(LocalDateTime.now());

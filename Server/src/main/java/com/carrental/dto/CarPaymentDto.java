@@ -1,6 +1,7 @@
 package com.carrental.dto;
 
 import com.carrental.entity.PaymentMethod;
+import com.carrental.entity.PaymentStatus;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class CarPaymentDto {
-	
+	private String razorPayId;
 	private double amount;
-	private PaymentMethod paymentMethod;
+	private String paymentMethod;
 }

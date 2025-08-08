@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import PaymentButton from '../../Components/PaymentButton';
 
 function CarBooking() {
 
@@ -9,6 +10,24 @@ function CarBooking() {
     console.log("Trip Info:", tripData);
     console.log("City:", getCity);
 
+    // Calculate total hours (rounding up)
+    const start = new Date(tripData.startTrip);
+    const end = new Date(tripData.endTrip);
+    const diffMs = end - start;
+    const totalHours = Math.ceil(diffMs / (1000 * 60 * 60));
+
+    // Calculate amounts
+    const amountBeforeDiscount = totalHours * carInfo.dailyRate;
+
+    const finalAmount = amountBeforeDiscount;
+    const body = {
+        "startTrip": tripData.startTrip,
+        "endTrip": tripData.endTrip,
+        "amount": finalAmount,
+        "car": carInfo.carId,
+        "client": 8, //geting from the token
+        "host": carInfo.hostId
+    }
     return (
         <div>
             <div className=' d-flex flex-row gap-3 m-4'>
@@ -60,9 +79,8 @@ function CarBooking() {
                         </div>
 
 
-                        <button type="submit" className="btn btn-success" >
-                            Pay ₹
-                        </button>
+                        <PaymentButton amount={finalAmount} booking={body} />
+
                     </div>
                 </div>
 
@@ -108,10 +126,10 @@ function CarBooking() {
                             <div>
                                 <span className='fw-bold' style={{ fontSize: '2rem' }}>{carInfo.rating}⭐</span>
                             </div>
-                            <br/>
+                            <br />
                             <div className='px-3 py-1'>
                                 <pre>
-                                    <span className='fw-bold'>Location</span><br/>
+                                    <span className='fw-bold'>Location</span><br />
                                     {carInfo.address}
                                 </pre>
                             </div>
