@@ -1,7 +1,7 @@
 import React, {useEffect,  useState} from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { getUser, updateUserInfo } from '../Services/User';
+import { getUser, updateUserInfo } from '../Services/user';
 
 export default function Profile() {
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import "./App.css";
 import Signup from './Screens/Client/Signup'
 import Home from './Screens/Client/Home'
@@ -25,33 +25,57 @@ import HostRegistrationForm from "./Screens/Host/HostRegistrationForm";
 import HostHomePage from "./Screens/Host/HostHomePage";
 import ClientCarReview from "./Screens/Client/ClientCarReview";
 import HostCarInformation from "./Screens/Host/HostCarInformation"
+import HostHistory from "./Screens/Host/HostHistory";
+import HostEarning from "./Screens/Host/HostEarning";
 import { ToastContainer } from "react-toastify";
+import { UserDetails } from "./Screens/Admin/UserDetails";
 
-
+export const AuthContext = createContext();
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const savedUser = sessionStorage.getItem("user");
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      sessionStorage.setItem("user", JSON.stringify(user));
+    } else {
+      sessionStorage.removeItem("user");
+    }
+  }, [user]);
+
 
   return (
     <>
+    <AuthContext.Provider value={{user, setUser}}>
       <Routes>
         <Route path="/" element={<Container></Container>}>
-          <Route path="admin" element={<AdminContainer></AdminContainer>}>
-            <Route path="restrict" element={<CarList />}></Route>
+          <Route path="admin" element={user ? <AdminContainer></AdminContainer> : <Home></Home>}>
+            <Route path="restrictCar" element={<CarList/>}></Route>
+            <Route path="restrictUser" element={<UserDetails></UserDetails>}> </Route>
             <Route path="edit" element={<Profile />} />
             <Route index element={<ScheduleAgenet />} />
             <Route path="register" element={<RegisterAgent></RegisterAgent>}></Route>
           </Route>
 
-          <Route path="host" element={<HostContainer></HostContainer>}>
+          <Route path="host" element={user ? <HostContainer></HostContainer> : <Home></Home>}>
             <Route path="carregistration" element={<HostRegistration></HostRegistration>}></Route>
             <Route path="registrationform" element={<HostRegistrationForm></HostRegistrationForm>}></Route>
             <Route index element={<HostHomePage></HostHomePage>}></Route>
             <Route path="carinformation" element={<HostCarInformation></HostCarInformation>}></Route>
+            <Route path="history" element={<HostHistory></HostHistory>}></Route>
+            <Route path="earning" element={<HostEarning></HostEarning>}></Route>
           </Route>
 
-          <Route path="agent" element={<AgentContainer></AgentContainer>}>
+          <Route path="agent" element={user ? <AgentContainer></AgentContainer> : <Home></Home>}>
             <Route path="history" element={<AgentHistory></AgentHistory>}></Route>
+            <Route path="edit" element={<Profile />} />
             <Route path="" element={<PendingRequests></PendingRequests>}></Route>
           </Route>
 
@@ -70,7 +94,8 @@ function App() {
         </Route>
 
       </Routes>
-      <ToastContainer />
+    </AuthContext.Provider>
+    <ToastContainer />
     </>
   );
 }

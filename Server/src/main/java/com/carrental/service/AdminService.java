@@ -31,4 +31,6 @@ public interface AdminService {
 
 	List<PendingCarDto> getEntireCarInfo();
 
+	AgentResDTO getUserByEmail(String email);
+
 }
