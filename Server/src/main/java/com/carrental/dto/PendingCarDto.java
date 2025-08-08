@@ -35,5 +35,7 @@ public class PendingCarDto {
     private double rating;
     
     private int bookings;
+    
+    private double income;
 	
 }

@@ -139,16 +139,16 @@ public class AdminServiceImpl implements AdminService {
         List<TopCarsResponseDto> responseList = new ArrayList<>();
 		
 		List<Car> carList = carDao.findAll();
-		for(Car list:carList)
+		for(Car car:carList)
 		{
 
-			double rating = generateAverageRating(list.getRatingList());
+			double rating = generateAverageRating(car.getRatingList());
 
 			TopCarsResponseDto obj = new TopCarsResponseDto();
-			obj = mapper.map(list, TopCarsResponseDto.class);
+			obj = mapper.map(car, TopCarsResponseDto.class);
 			obj.setRating(rating);
-			obj.setCarId(list.getId());
-			obj.setHostId(list.getHost().getId());
+			obj.setCarId(car.getId());
+			obj.setHostId(car.getHost().getId());
 			responseList.add(obj);
 		}
 
@@ -170,20 +170,25 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<PendingCarDto> getEntireCarInfo() {
-		// TODO Auto-generated method s
+
 		List<PendingCarDto> result = new ArrayList();
 		
-		List<TopCarsResponseDto> responseList = getAllCars();
+		List<Car> carList = carDao.findAll();
 		
-		for(TopCarsResponseDto car : responseList) {
-			
-//			List<Booking> booking = bookingDao.findByCar(car));
+		for(Car car:carList){
+
+     		double income = car.getBookingList().stream().mapToDouble(booking -> booking.getAmount()).sum();
+
+
 			PendingCarDto obj = new PendingCarDto();
 			obj = mapper.map(car, PendingCarDto.class);
-//			obj.setBookings();
+			obj.setRating(generateAverageRating(car.getRatingList()));
+			obj.setBookings(car.getBookingList().size() );
+            obj.setIncome(income);
+			result.add(obj);
 		}
 		
-		return null;
+		return result;
 	}
 
 }

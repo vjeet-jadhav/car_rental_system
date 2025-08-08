@@ -3,7 +3,7 @@ import {jwtDecode }from "jwt-decode";
 import React, { useState } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
-import { loginUser } from "../Services/User";
+import { loginUser } from "../Services/user";
 
 function Login() {
 
