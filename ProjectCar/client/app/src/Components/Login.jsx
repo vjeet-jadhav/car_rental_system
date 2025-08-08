@@ -1,9 +1,6 @@
 
-
 import {jwtDecode }from "jwt-decode";
 import React, { useContext, useState } from 'react';
-import { loginUser } from "../Services/user";
-
 
 import { Link, useNavigate } from 'react-router-dom';
 import { loginUser } from "../Services/user";
@@ -38,15 +35,14 @@ function Login() {
       const authorities = decoded.authorities;
 
       if (authorities == 'ADMIN') {
-        navigate("/admin");
+        setTimeout(() => navigate("/admin"), 1000);
       }else if(authorities == 'AGENT'){
-        navigate("/agent");
+        setTimeout(() => navigate("/agent"), 1000);
       }else if(authorities == 'USER'){
-        navigate("/");
+        setTimeout(() => navigate("/"), 1000);
       }else if(authorities == 'HOST'){
-        navigate("/host");
+        setTimeout(() => navigate("/host"), 1000);
       }
-
       else {
         toast.error(result.error)
       }
