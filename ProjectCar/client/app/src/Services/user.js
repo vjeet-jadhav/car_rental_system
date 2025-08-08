@@ -135,15 +135,15 @@ export async function getTheBookingAndPaymentStatus(getData) {
   }
 }
 
-export async function getBooking()
-{
-  const url = `${config.serverUrl}/user/myBooking`;
-  // const token =
-  try{
-    const result = await axios.get(url,{
-      headers:{
-        token:
-      }
-    })
-  }
-}
+// export async function getBooking()
+// {
+//   const url = `${config.serverUrl}/user/myBooking`;
+//   // const token =
+//   try{
+//     const result = await axios.get(url,{
+//       headers:{
+//         token:
+//       }
+//     })
+//   }
+// }

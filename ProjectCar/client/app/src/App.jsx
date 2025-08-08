@@ -1,4 +1,6 @@
+
 import { createContext, useContext, useEffect, useState } from "react";
+
 import "./App.css";
 import Signup from './Screens/Client/Signup'
 import Home from './Screens/Client/Home'
@@ -37,6 +39,7 @@ export const AuthContext = createContext();
 function App() {
   const [user, setUser] = useState(null);
 
+
   // const [trip, setTrip] = useState(() => {
   //   const storedTrip = sessionStorage.getItem("trip");
   //   return storedTrip ? JSON.parse(storedTrip) : null;
@@ -49,6 +52,22 @@ function App() {
   //     sessionStorage.setItem("trip", JSON.stringify(trip));
   //   }
   // }, [trip]);
+
+
+  useEffect(() => {
+    const savedUser = sessionStorage.getItem("user");
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      sessionStorage.setItem("user", JSON.stringify(user));
+    } else {
+      sessionStorage.removeItem("user");
+    }
+  }, [user]);
 
 
 
