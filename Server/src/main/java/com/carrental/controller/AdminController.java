@@ -87,5 +87,10 @@ public class AdminController {
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.getEntireCarInfo());
 	}
+	
+	@GetMapping("/getUserByEmail/{email}")
+	public ResponseEntity<?> getUserByEmail(@PathVariable String email){
+		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.getUserByEmail(email));
+	}
 
 }
