@@ -25,6 +25,8 @@ import HostRegistrationForm from "./Screens/Host/HostRegistrationForm";
 import HostHomePage from "./Screens/Host/HostHomePage";
 import ClientCarReview from "./Screens/Client/ClientCarReview";
 import HostCarInformation from "./Screens/Host/HostCarInformation"
+import HostHistory from "./Screens/Host/HostHistory";
+import HostEarning from "./Screens/Host/HostEarning";
 import { ToastContainer } from "react-toastify";
 
 
@@ -48,6 +50,8 @@ function App() {
             <Route path="registrationform" element={<HostRegistrationForm></HostRegistrationForm>}></Route>
             <Route index element={<HostHomePage></HostHomePage>}></Route>
             <Route path="carinformation" element={<HostCarInformation></HostCarInformation>}></Route>
+            <Route path="history" element={<HostHistory></HostHistory>}></Route>
+            <Route path="earning" element={<HostEarning></HostEarning>}></Route>
           </Route>
 
           <Route path="agent" element={<AgentContainer></AgentContainer>}>

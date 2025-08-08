@@ -30,6 +30,7 @@ public class CustomJWTFilter extends OncePerRequestFilter {
 		// TODO Auto-generated method stub
 		System.out.println("CustomJWTFilter ke ander hu..:)");
 		String headerValue = request.getHeader("Authorization");
+		System.out.println(headerValue);
 		
 		if (headerValue != null && headerValue.startsWith("Bearer ")) {
             
