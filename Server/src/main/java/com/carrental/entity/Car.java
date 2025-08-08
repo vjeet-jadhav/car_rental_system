@@ -1,7 +1,11 @@
 package com.carrental.entity;
 
 import java.time.LocalDate;
+
 import java.util.ArrayList;
+
+import java.util.ArrayList;
+
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -27,7 +31,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(callSuper = true,exclude={"ratingList","host","agent"})
+@ToString(callSuper = true,exclude={"ratingList","host","agent","address"})
 public class Car extends BaseEntity{
 
 	@Column(name="car_brand", nullable = false)
@@ -94,7 +98,9 @@ public class Car extends BaseEntity{
 	@OneToMany(mappedBy = "car",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Rating> ratingList = new ArrayList<>();
 	
-	
+
+	@OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Booking> bookingList = new ArrayList<>();
 	
 //	helpers methods that helps
 	

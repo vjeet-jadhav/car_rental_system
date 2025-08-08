@@ -14,6 +14,8 @@ import lombok.ToString;
 @ToString
 public class UserBookingsDto {
 	
+	private Long carId;
+	
 	private String firstName;
 	
 	private String lastName;

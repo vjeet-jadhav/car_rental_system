@@ -1,17 +1,20 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { agentSignup } from '../../Services/admin';
 
 function RegisterAgent() {
 
-    const [formData, setFormData] = useState({
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    street: "",
-    street2: "",
+    password: "",
+    confirmPassword: "",
     city: "",
     state: "",
-    zip: "",
-    phone: "",
+    zipCode: "",
+    mob_num: "",
     email: "",
   });
 
@@ -19,23 +22,30 @@ function RegisterAgent() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted Data:", formData);
+    // console.log("Submitted Data:", formData);
+    const result = await agentSignup(formData);
+    // console.log(result)
+    if(result.status == 201){
+      toast.success("Agent Added Successfully !");
+      navigate("/admin");
+    }else{
+      toast.error("Agent Registration Failed !")
+    }
   };
 
- const navigate = useNavigate();
 
   const handleCancel = () => {
     setFormData({
       firstName: "",
       lastName: "",
-      street: "",
-      street2: "",
+      password: "",
+      confirmPassword: "",
       city: "",
       state: "",
-      zip: "",
-      phone: "",
+      zipCode: "",
+      mob_num: "",
       email: "",
     });
 
@@ -75,23 +85,6 @@ function RegisterAgent() {
 
         <div className="mb-4">
           <label className="form-label">Address *</label>
-          <input
-            type="text"
-            className="form-control mb-2"
-            name="street"
-            placeholder="Address Line 1"
-            value={formData.street}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            className="form-control mb-2"
-            name="street2"
-            placeholder="Address Line 2"
-            value={formData.street2}
-            onChange={handleChange}
-          />
           <div className="row">
             <div className="col">
               <input
@@ -107,9 +100,9 @@ function RegisterAgent() {
               <input
                 type="text"
                 className="form-control mb-2"
-                name="state"
-                placeholder="State"
-                value={formData.state}
+                name="zipCode"
+                placeholder="ZipCode"
+                value={formData.zipCode}
                 onChange={handleChange}
               />
             </div>
@@ -117,9 +110,9 @@ function RegisterAgent() {
           <input
             type="text"
             className="form-control"
-            name="zip"
-            placeholder="Postal Code"
-            value={formData.zip}
+            name="state"
+            placeholder="State"
+            value={formData.state}
             onChange={handleChange}
           />
         </div>
@@ -130,9 +123,9 @@ function RegisterAgent() {
             <input
               type="tel"
               className="form-control"
-              name="phone"
+              name="mob_num"
               placeholder="000-000-0000"
-              value={formData.phone}
+              value={formData.mob_num}
               onChange={handleChange}
               required
             />
@@ -145,6 +138,33 @@ function RegisterAgent() {
               name="email"
               placeholder="abc@gmail.com"
               value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="mb-4 row ">
+          <div className="col">
+            <label className="form-label">Password *</label>
+            <input
+              type="text"
+              className="form-control"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="col">
+            <label className="form-label">Confirm Password *</label>
+            <input
+              type="text"
+              className="form-control"
+              name="confirmPassword"
+              placeholder="Confirm password"
+              value={formData.confirmPassword}
               onChange={handleChange}
               required
             />

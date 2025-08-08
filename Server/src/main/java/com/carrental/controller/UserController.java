@@ -3,6 +3,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 //import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,9 +19,9 @@ import com.carrental.dto.BookingRequestComDto;
 import com.carrental.dto.CarFilterRequestDto;
 import com.carrental.dto.CarPaymentDto;
 import com.carrental.dto.CarReviewDto;
+import com.carrental.dto.CombineRequestFilterForFilter;
 import com.carrental.dto.ImgResponseDTO;
 import com.carrental.dto.ApiResponse;
-import com.carrental.dto.Top5RatingResponseDto;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
 import com.carrental.dto.UserLoginRequestDto;
@@ -30,14 +31,13 @@ import com.carrental.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.carrental.dto.UserRequestDto;
+import com.carrental.dto.UserRequestForAvilableCarsForBooking;
 import com.carrental.dto.UserUpdateRequestDto;
-
-import com.carrental.entity.Booking;
-import com.carrental.entity.UserImgEntity;
 
 
 import jakarta.validation.Valid;
@@ -60,10 +60,11 @@ public class UserController {
 				.body(userService.RegisterUser(userDto));
 	}
 	
-	@PutMapping("/editProfile/{userId}")
-	public ResponseEntity<?> updateUserDetails(@PathVariable Long userId, @RequestBody UserUpdateRequestDto userDto){
+	@PutMapping("/editProfile")
+	public ResponseEntity<?> updateUserDetails(@RequestBody UserUpdateRequestDto userDto){
 		System.out.println(userDto.toString());
-		return ResponseEntity.ok(userService.updateUser(userId, userDto));
+		Long id = (Long) SecurityContextHolder.getContext().getAuthentication().getDetails();
+		return ResponseEntity.ok(userService.updateUser(id, userDto));
 	}
 	
 	
@@ -95,9 +96,7 @@ public class UserController {
 //		System.out.println("sanket   "+dto.toString());
 		return ResponseEntity.ok("Booking and payment executed successfully...)");
 	}
-	
-	
-	
+
 	@GetMapping("/myBooking")
 	public ResponseEntity<?> userBookings()
 	{
@@ -111,9 +110,6 @@ public class UserController {
 	{
 		return ResponseEntity.ok(userService.getTopCars());
 	}
-	
-	
-
 
 	@PostMapping("/review")
 	public String submitReview(@RequestBody CarReviewDto reviewDto) {
@@ -122,11 +118,12 @@ public class UserController {
 	}
 	
 
-	@GetMapping("/applyFilters")
-	public ResponseEntity<?> getCarsByFilter(@RequestBody CarFilterRequestDto dto)
+	@PostMapping("/applyFilters")
+	public ResponseEntity<?> getCarsByFilter(@RequestBody CombineRequestFilterForFilter combineDto)
 	{
-		
-		return ResponseEntity.status(HttpStatus.OK).body(userService.allCarsByFilter(dto));
+		CarFilterRequestDto carFilter = combineDto.getCarFilter();
+		UserRequestForAvilableCarsForBooking availableCars = combineDto.getAvailableCars();
+		return ResponseEntity.status(HttpStatus.OK).body(userService.allCarsByFilter(carFilter,availableCars));
 	}
 	
 	
@@ -136,17 +133,13 @@ public class UserController {
 		return ResponseEntity.ok(userService.top5Reviews(carId));
 	}
 
-
 	
-	
+//	APPLYING FILTER ON THE ONLY AVAILABEL CARS
 	@GetMapping("getNearByCars/{city}")
 	public ResponseEntity<?> getNearByCars(@PathVariable String city){
 		return  ResponseEntity.ok(userService.getNearByCars(city));
 	}
-	
-	
-	
-	
+
 	@PostMapping("/upload/{userId}")
 	public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file , @PathVariable Long userId){
 		
@@ -174,7 +167,6 @@ public class UserController {
 		
 	}
 
-	
 	@PostMapping("/uploadMul/{carId}")
 	public ResponseEntity<?> uploadMulImages(@RequestParam("files") MultipartFile[] files, @PathVariable Long carId){
 		
@@ -193,5 +185,31 @@ public class UserController {
 
 	}
 	
+//	GET ALL CARS WHICH ARE AVAILABLE FOR BOOKING
+	@PostMapping("/serachCar")
+	public ResponseEntity<?> getCarForBooking(@RequestBody @Valid UserRequestForAvilableCarsForBooking dto)
+	{
+		System.out.println(dto.toString());
+		return ResponseEntity.ok(userService.getAllAvailableCarsForBooking(dto));
+	}
+	
+//	GET ALL CITY OF CARS
+	@GetMapping("/getCarCity")
+	public ResponseEntity<?> getCarCity()
+	{
+		return ResponseEntity.ok(userService.getCityOfCars());
+	}
+	
+	@GetMapping("/getCarServiceArea")
+	public ResponseEntity<?> getCarServiceArea(@RequestParam String city)
+	{
+		System.out.println(city+"city");
+		return ResponseEntity.ok(userService.getServiceAreaOfCars());
+	}
 
+	@GetMapping("/info")
+	public ResponseEntity<?> getUser(){
+		Long userId =(Long) SecurityContextHolder.getContext().getAuthentication().getDetails();
+		return ResponseEntity.status(HttpStatus.OK).body(userService.getUserDetail(userId));
+	}
 }

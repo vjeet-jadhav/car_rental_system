@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.carrental.dto.AgentResDTO;
 import com.carrental.dto.RegisterAgentDTO;
 import com.carrental.dto.UserResponseDto;
 import com.carrental.entity.UserRole;
@@ -43,7 +44,7 @@ public class AdminController {
 	@GetMapping("/getAgents")
 	public ResponseEntity<?>  getAgents(){
 		
-		List<UserResponseDto> agents = adminService.getAgents();
+		List<AgentResDTO> agents = adminService.getAgents();
 		
 		if(agents.isEmpty())
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -54,6 +55,7 @@ public class AdminController {
 	
 	@PutMapping("/assignAgent/{carId}/{agentId}")
 	public ResponseEntity<?> assignAgent(@PathVariable Long carId, @PathVariable Long agentId ){
+		System.out.println(carId+agentId);
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(adminService.assignAgentToCar(carId, agentId));
 	}
@@ -78,6 +80,12 @@ public class AdminController {
 	@GetMapping("/getPendingCars")
 	public ResponseEntity<?> getPendingCars(){
 		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.getPendingCars());
+	}
+	
+	@GetMapping("/getCarsInfo")           //get cars with rating and total bookings 
+	public ResponseEntity<?> getCarsInfo(){
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.getEntireCarInfo());
 	}
 
 }

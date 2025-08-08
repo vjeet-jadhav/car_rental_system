@@ -55,7 +55,66 @@ export async function getPendingCars() {
   return response;
     
   } catch (error) {
+     console.log(`Exception :` ,error);
+  }
+}
+
+export async function assignAgent(carId,agentId)  {
+
+  try {
+
+    const url = `${config.serverUrl}/admin/assignAgent/${carId}/${agentId}`
+    // console.log(carId,agentId)
+    const response = await axios.put(url,{}, { 
+      headers:{
+        Authorization:`Bearer ${token}`
+      }
+    })
+    // console.log(response)
+  return response;
     
+  } catch (error) {
+     console.log(`Exception :` ,error);
+  }
+  
+}
+
+export async function agentSignup(data)  {
+
+  try {
+
+    const url = `${config.serverUrl}/admin/register`
+    const body = data
+    const response = await axios.post(url,body, { 
+      headers:{
+        Authorization:`Bearer ${token}`
+      }
+    })
+    // console.log(response)
+  return response;
+    
+  } catch (error) {
+     console.log(`Exception :` ,error);
+  }
+}
+
+
+
+export async function getCarsInfoApi() {
+
+  const url = `${config.serverUrl}/admin/getCarsInfo`
+  try {
+    const response = await axios.get(url,{headers:
+      {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    // console.log(response);
+    return response;
+
+  } catch (error) {
+    console.log(`Exception :`, error);
   }
   
 }
