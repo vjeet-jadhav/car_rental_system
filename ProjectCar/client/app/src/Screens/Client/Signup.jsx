@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../../assets/Signup.css";
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { userSignUp } from "../../Services/User";
+import { userSignUp } from "../../Services/user";
 
 function Signup() {
 
@@ -71,7 +71,7 @@ function Signup() {
     else {
 
       const result = await userSignUp(signInInfo);
-
+      console.log(result);
       toast.success("Register successfully...:)");
     }
 

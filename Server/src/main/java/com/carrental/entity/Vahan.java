@@ -24,9 +24,6 @@ public class Vahan extends BaseEntity {
 
     @Column(name = "rc_number", nullable = false, unique = true)
     private String rcNumber;
-    
-    @Column(name = "car_number", nullable = false, unique = true)
-    private String carNumber;
 
     @Column(name = "car_brand", nullable = false)
     private String brand;

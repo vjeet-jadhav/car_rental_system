@@ -2,12 +2,13 @@ package com.carrental.service;
 
 import com.carrental.dto.ApiResponse;
 import com.carrental.dto.CarRegistrationDTO;
+import com.carrental.dto.RcValidationResponce;
 
 import jakarta.validation.Valid;
 
 public interface CarService {
 	
-	public CarRegistrationDTO validateCar(String rcNumber);
+	public RcValidationResponce<CarRegistrationDTO> validateCar(String rcNumber);
 	
 	public ApiResponse registerCar(Long userId, @Valid CarRegistrationDTO car);
 	

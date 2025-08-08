@@ -8,7 +8,7 @@ import HostNav from './HostNav'
 function HostContainer() {
   return (
     <div>
-        
+        <HostNav></HostNav>
     <div>
         <Outlet></Outlet>
     </div>
