@@ -1,11 +1,27 @@
 import React from "react";
 // import "./style.css"; // Keep if you have custom styles
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { getAllBasicInfo } from "../../Services/admin";
+
 
 export const Component = () => {
+
+  
+  const [info ,setInfo] = useState(
+    {
+    totalUsers: 0,
+    totalCars: 0,
+    totalHosts: 0,
+    totalRevenue: 0.0,
+    totalBookings: 0,
+    totalRating: 0.0
+
+  });
   const cards = [
     {
       title: "Total Cars",
-      value: "254",
+      value: `${info.totalCars}`,
       color: "primary",
       percent: "12%",
       note: "since last month",
@@ -13,7 +29,7 @@ export const Component = () => {
     },
     {
       title: "Total Users",
-      value: "1,523",
+      value:  `${info.totalUsers}`,
       color: "indigo",
       percent: "8.3%",
       note: "since last month",
@@ -21,7 +37,7 @@ export const Component = () => {
     },
     {
       title: "Total Hosts",
-      value: "86",
+      value:  `${info.totalHosts}`,
       color: "warning",
       percent: "5.4%",
       note: "since last month",
@@ -29,7 +45,7 @@ export const Component = () => {
     },
     {
       title: "Total Revenue",
-      value: "$42,580",
+      value: `$${info.totalRevenue}`,
       color: "success",
       percent: "16.2%",
       note: "since last month",
@@ -37,7 +53,7 @@ export const Component = () => {
     },
     {
       title: "Active Bookings",
-      value: "968",
+      value:  `${info.totalBookings}`,
       color: "danger",
       percent: "4.7%",
       note: "since last month",
@@ -45,13 +61,26 @@ export const Component = () => {
     },
     {
       title: "Average Rating",
-      value: "4.8",
+      value:  `${info.totalRating.toFixed(2)}`,
       color: "info",
       percent: "628 reviews",
       note: "based on",
       icon: "⭐",
     },
   ];
+
+
+  const getBasicInfo = async () =>{
+
+    const result = await getAllBasicInfo();
+
+    setInfo(result.data)
+    
+  }
+
+  useEffect(() =>{
+    getBasicInfo();
+  },[]);
 
   return (
     <div className="container my-5" >
