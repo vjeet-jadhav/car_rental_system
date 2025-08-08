@@ -86,10 +86,13 @@ const PaymentButton = ({ amount, booking }) => {
             console.log("sending data for stroing",sendData);
             const result = await getTheBookingAndPaymentStatus(sendData);
             console.log(JSON.stringify(result));
-            if(result.status==200)
+            if(result && result.status==200)
             {
                 toast.success(result.data);
                 navigate("/user-booking");
+            }
+            else{
+                toast.warn("something goes wrong");
             }
         }
 

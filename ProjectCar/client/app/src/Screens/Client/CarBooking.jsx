@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import PaymentButton from '../../Components/PaymentButton';
+import { AuthContext } from '../../App';
 
 function CarBooking() {
 
+    const { user, serUser } = useContext(AuthContext);
     const location = useLocation();
     const { carInfo, tripData, getCity } = location.state || {};
+
     console.log("Car:", carInfo);
     console.log("Trip Info:", tripData);
     console.log("City:", getCity);
 
     // Calculate total hours (rounding up)
+
     const start = new Date(tripData.startTrip);
     const end = new Date(tripData.endTrip);
     const diffMs = end - start;
@@ -20,14 +24,15 @@ function CarBooking() {
     const amountBeforeDiscount = totalHours * carInfo.dailyRate;
 
     const finalAmount = amountBeforeDiscount;
-    const body = {
+    const body = (user == null) ? {} : {
         "startTrip": tripData.startTrip,
         "endTrip": tripData.endTrip,
         "amount": finalAmount,
         "car": carInfo.carId,
-        "client": 8, //geting from the token
+        "client": user.id, //geting from the token
         "host": carInfo.hostId
     }
+
     return (
         <div>
             <div className=' d-flex flex-row gap-3 m-4'>
@@ -71,15 +76,19 @@ function CarBooking() {
 
 
                         {/* Summary Display */}
-
-                        <div className="alert alert-info">
-                            <p>Total Hours: <strong></strong></p>
-                            <p>Amount Before Discount: ₹<strong></strong></p>
-                            <p>Final Amount: ₹<strong></strong></p>
-                        </div>
-
-
-                        <PaymentButton amount={finalAmount} booking={body} />
+                        {
+                            (user == null) ?
+                                <Link to="/user-login" className="btn fw-bold text-white" style={{ backgroundColor: 'rgba(248, 91, 60, 1)' }}>
+                                    Login
+                                </Link> :
+                                <>
+                                    <div className="alert alert-info">
+                                        <p>Total Hours: <strong>{totalHours}</strong></p>
+                                        <p>Final Amount: ₹<strong>{finalAmount}</strong></p>
+                                    </div>
+                                    <PaymentButton amount={0} booking={body} />
+                                </>
+                        }
 
                     </div>
                 </div>

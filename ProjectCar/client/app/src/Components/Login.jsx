@@ -2,7 +2,7 @@
 
 import {jwtDecode }from "jwt-decode";
 import React, { useContext, useState } from 'react';
-import { loginUser } from "../Services/user";
+// import { loginUser } from "../Services/user";
 
 
 import { Link, useNavigate } from 'react-router-dom';
@@ -33,7 +33,7 @@ function Login() {
       const result = await loginUser(email, password, city)
       const token = localStorage.setItem("token",result);
       const decoded = jwtDecode(result);
-      console.log(decoded);
+      console.log("user contains "+JSON.stringify(decoded));
       setUser(decoded);
       const authorities = decoded.authorities;
 

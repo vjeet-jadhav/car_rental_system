@@ -339,7 +339,7 @@ public class UserServiceImpl implements UserService{
 		List<Integer> seatCapacity=dto.getSeatCapacity();
 		
 		Double carRating =(double) dto.getRating();
-		
+		int flag=0;
 		String serviceArea = dto.getServiceArea();
 //		response dto
 		List<TopCarsResponseDto> responseEnity = new ArrayList<>();
@@ -347,16 +347,18 @@ public class UserServiceImpl implements UserService{
 		List<TopCarsResponseDto> listCars = getAllAvailableCarsForBooking(adto);
 		for(TopCarsResponseDto c:listCars)
 		{
+			
 			if ((fuelType.isEmpty() || fuelType.contains(c.getFuelType())) &&
 				    (transmissionType.isEmpty() || transmissionType.contains(c.getTransmissionType())) &&
 				    (seatCapacity.isEmpty() || seatCapacity.contains(c.getSeatCapacity())) &&
 				    (carRating == 0 || (c.getRating() >= carRating)) &&
-				    (serviceArea == null || serviceArea.equalsIgnoreCase(c.getServiceArea()))) {
+				    (serviceArea.isEmpty()|| serviceArea.equalsIgnoreCase(c.getServiceArea()))) {
 				    
 				    responseEnity.add(c);
 				}
-				
+						
 		}
+		
 		return responseEnity;
 	}
 
