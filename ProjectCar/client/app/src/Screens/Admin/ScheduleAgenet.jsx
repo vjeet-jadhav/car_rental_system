@@ -14,7 +14,7 @@ function ScheduleAgenet() {
     agentId:0
   })
 
-  console.log(cars);
+  // console.log(cars);
 
   const onAssign = async (carId, agentId) =>{
 

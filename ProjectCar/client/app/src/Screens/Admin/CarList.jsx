@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import '../../assets/Admin.css'
+import { getCarsInfoApi } from "../../Services/admin";
 
 
 const carsData = [
@@ -12,7 +13,7 @@ const carsData = [
 const CarList = () => {
   const [search, setSearch] = useState("");
   const [sortOption, setSortOption] = useState("");
-  const [cars, setCars] = useState(carsData);
+  const [cars, setCars] = useState([]);
 
   const handleSortChange = (e) => {
     const option = e.target.value;
@@ -28,10 +29,10 @@ const CarList = () => {
         sorted.sort((a, b) => b.rating - a.rating);
         break;
       case "earnings-asc":
-        sorted.sort((a, b) => a.earnings - b.earnings);
+        sorted.sort((a, b) => a.income - b.income);
         break;
       case "earnings-desc":
-        sorted.sort((a, b) => b.earnings - a.earnings);
+        sorted.sort((a, b) => b.income - a.income);
         break;
       case "bookings-asc":
         sorted.sort((a, b) => a.bookings - b.bookings);
@@ -40,18 +41,30 @@ const CarList = () => {
         sorted.sort((a, b) => b.bookings - a.bookings);
         break;
       default:
-        sorted = carsData; // reset
+        sorted = cars; // reset
         break;
     }
 
     setCars(sorted);
   };
 
+  // console.log(cars)
+
   const filteredCars = cars.filter(
     (car) =>
-      car.carNo.toLowerCase().includes(search.toLowerCase()) ||
-      car.userNo.includes(search)
+      car.carNumber.toLowerCase().includes(search.toLowerCase()) ||
+      car.id.toString().includes(search)
   );
+
+  const getCarsInfo = async () => {
+    const result = await getCarsInfoApi();
+    // console.log(result.data);
+    setCars(result.data)
+  }
+
+  useEffect(() =>{
+    getCarsInfo();
+  },[])
 
   return (
     <div className="container mt-4">
@@ -61,7 +74,7 @@ const CarList = () => {
         <input
           type="text"
           className="form-control fw-bolder"
-          placeholder="Search by Car No. or User No."
+          placeholder="Search by Car No. or Car Id."
           value={search}
           onChange={(e) => setSearch(e.target.value)} 
           style={{backgroundColor : '#fff' , border: "1px solid red" }}
@@ -87,8 +100,10 @@ const CarList = () => {
         <thead>
           <tr>
             <th>Sr. No.</th>
-            <th>User No.</th>
+            <th>Car ID.</th>
             <th>Car No.</th>
+            <th>Date</th>
+            <th>Brand</th>
             <th>Rating</th>
             <th>Bookings</th>
             <th>Earnings</th>
@@ -101,11 +116,13 @@ const CarList = () => {
               key={car.id}
             >
               <td>{index + 1}</td>
-              <td>{car.userNo}</td>
-              <td>{car.carNo}</td>
+              <td>{car.id}</td>
+              <td>{car.carNumber}</td>
+              <td>{car.creationDate}</td>
+              <td>{car.brand}</td>
               <td>{car.rating}</td>
               <td>{car.bookings}</td>
-              <td>{car.earnings}</td>
+              <td>{car.income}</td>
               <td className="">
                 <button className="btn btn-danger">Restrict</button>
               </td>

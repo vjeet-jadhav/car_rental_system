@@ -99,6 +99,8 @@ public class Car extends BaseEntity{
 	private List<Rating> ratingList = new ArrayList<>();
 	
 
+	@OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Booking> bookingList = new ArrayList<>();
 	
 //	helpers methods that helps
 	
