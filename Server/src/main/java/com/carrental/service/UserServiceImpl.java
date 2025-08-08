@@ -256,27 +256,27 @@ public class UserServiceImpl implements UserService{
 			
 			
 			if(i == 0) {
-				entity1.setImgType("front");
+				entity1.setImgType("main");
 				entity1.setImgUrl(urls.get(i).getUrl());
 				entity1.setFormat(urls.get(i).getFormat());
 				entity1.setPublicId(urls.get(i).getPublicId());
 			}else if (i == 1) {
-				entity1.setImgType("back");
+				entity1.setImgType("front");
 				entity1.setImgUrl(urls.get(i).getUrl());
 				entity1.setFormat(urls.get(i).getFormat());
 				entity1.setPublicId(urls.get(i).getPublicId());
 			}else if (i == 2) {
-				entity1.setImgType("left");
+				entity1.setImgType("back");
 				entity1.setImgUrl(urls.get(i).getUrl());
 				entity1.setFormat(urls.get(i).getFormat());
 				entity1.setPublicId(urls.get(i).getPublicId());
 			}else if (i == 3) {
-				entity1.setImgType("right");
+				entity1.setImgType("left");
 				entity1.setImgUrl(urls.get(i).getUrl());
 				entity1.setFormat(urls.get(i).getFormat());
 				entity1.setPublicId(urls.get(i).getPublicId());
 			}else if (i == 4) {
-				entity1.setImgType("top");
+				entity1.setImgType("right");
 				entity1.setImgUrl(urls.get(i).getUrl());
 				entity1.setFormat(urls.get(i).getFormat());
 				entity1.setPublicId(urls.get(i).getPublicId());
@@ -360,6 +360,7 @@ public class UserServiceImpl implements UserService{
 		return responseEnity;
 	}
 
+
 //	AVAILABLE CARS LIST
 	@Override
 	public List<TopCarsResponseDto> getAllCars() {
@@ -383,6 +384,7 @@ public class UserServiceImpl implements UserService{
 //		responseList.sort((x,y) -> (int)y.getRating()-(int)x.getRating());
 		return responseList;
 	}
+
 
 	public UserInfoDto getUserDetail(Long id) {
 

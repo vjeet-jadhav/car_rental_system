@@ -31,6 +31,11 @@ public class PendingCarDto {
     private CarStatus status;
 
     private AddressDTO address;
-
+    
+    private double rating;
+    
+    private int bookings;
+    
+    private double income;
 	
 }

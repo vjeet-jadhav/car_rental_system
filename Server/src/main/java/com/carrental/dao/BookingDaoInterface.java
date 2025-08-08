@@ -80,8 +80,10 @@ public interface BookingDaoInterface extends JpaRepository<Booking, Long> {
 	Optional<List<CarBookingHistoryDTO>> findHistoryByClientId(Long userId);
 
 
+
 	//PROVIDE BOOKED CARS IN TIME ZONE
 	@Query("SELECT b.car.id FROM Booking b WHERE b.startTrip < :endTrip AND b.endTrip > :startTrip")
 	List<Integer> getAlreadyBookedCars(LocalDateTime startTrip, LocalDateTime endTrip);
+
 
 }
