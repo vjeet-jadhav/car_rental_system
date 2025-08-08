@@ -1,7 +1,14 @@
 import React from 'react'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function AdminNav() {
+  const navigate = useNavigate();
+
+  function onLogout(){
+   localStorage.removeItem("token");
+   navigate("/");
+  }
+  
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary ">
       <div className="container">
@@ -44,13 +51,16 @@ function AdminNav() {
             <Link to="/admin/register" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
               Register Agent
             </Link>
-            <Link to="/admin/restrict" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
-              Cars & Users
+            <Link to="/admin/restrictCar" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
+              Cars 
+            </Link>
+            <Link to="/admin/restrictUser" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
+              Users
             </Link>
             <Link to="/admin/edit" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
               Edit
             </Link>
-            <button type="button" className="btn btn-primary me-3" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
+            <button type="button" className="btn btn-primary me-3" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}} onClick={() => onLogout()}>
               Logout
             </button>
           </div>

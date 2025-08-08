@@ -173,7 +173,9 @@ public class AdminServiceImpl implements AdminService {
 
 		List<PendingCarDto> result = new ArrayList();
 		
-		List<Car> carList = carDao.findAll();
+//		List<Car> carList = carDao.findAll();
+		List<Car> carList = carDao.getCarsToRestrict();
+
 		
 		for(Car car:carList){
 
@@ -189,6 +191,12 @@ public class AdminServiceImpl implements AdminService {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public AgentResDTO getUserByEmail(String email) {
+		// TODO Auto-generated method stub
+		return mapper.map(adminDao.findByEmail(email), AgentResDTO.class) ;
 	}
 
 }

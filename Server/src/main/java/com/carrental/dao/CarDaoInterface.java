@@ -52,6 +52,10 @@ public interface CarDaoInterface extends JpaRepository<Car, Long> {
 	List<Car> getByStatus();
 
 
+	@Query("SELECT c FROM Car c WHERE c.status IN (CarStatus.PENDING,CarStatus.REJECTED,CarStatus.VERIFIED,CarStatus.AVAILABLE)")
+	List<Car> getCarsToRestrict();
+
+	    
 	
 
 

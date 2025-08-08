@@ -26,6 +26,7 @@ import HostHomePage from "./Screens/Host/HostHomePage";
 import ClientCarReview from "./Screens/Client/ClientCarReview";
 import HostCarInformation from "./Screens/Host/HostCarInformation"
 import { ToastContainer } from "react-toastify";
+import { UserDetails } from "./Screens/Admin/UserDetails";
 
 
 
@@ -37,7 +38,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Container></Container>}>
           <Route path="admin" element={<AdminContainer></AdminContainer>}>
-            <Route path="restrict" element={<CarList />}></Route>
+            <Route path="restrictCar" element={<CarList/>}></Route>
+            <Route path="restrictUser" element={<UserDetails></UserDetails>}> </Route>
             <Route path="edit" element={<Profile />} />
             <Route index element={<ScheduleAgenet />} />
             <Route path="register" element={<RegisterAgent></RegisterAgent>}></Route>
