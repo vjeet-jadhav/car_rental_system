@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.carrental.config.JwtUtils;
+import com.carrental.dao.AddressDaoInterface;
 import com.carrental.dao.BookingDaoInterface;
 import com.carrental.dao.CarDao;
 import com.carrental.dao.CarDaoInterface;
@@ -36,12 +37,14 @@ import com.carrental.dto.CarReviewDto;
 import com.carrental.dto.CarResponseDTO;
 import com.carrental.dto.CarReviewDto;
 import com.carrental.dto.ImgResponseDTO;
+import com.carrental.dto.ResponseForCarCities;
 import com.carrental.dto.Top5RatingResponseDto;
 import com.carrental.dto.TopCarsResponseDto;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
 import com.carrental.dto.UserInfoDto;
 import com.carrental.dto.UserRequestDto;
+import com.carrental.dto.UserRequestForAvilableCarsForBooking;
 import com.carrental.dto.UserResponseDto;
 import com.carrental.dto.UserUpdateRequestDto;
 import com.carrental.entity.Booking;
@@ -64,6 +67,7 @@ import com.carrental.exception.ApiException;
 import com.carrental.exception.ResourceNotFoundException;
 import com.carrental.exception.UserNotFoundException;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 
@@ -78,7 +82,7 @@ public class UserServiceImpl implements UserService{
 	private RatingDaoInterface ratingDao;
 	private ModelMapper modelMapper;
 	private PasswordEncoder password;
-
+	private AddressDaoInterface addDao;
 	private PaymentDaoInterface paymentDao;
 
 	private JwtUtils jwtUtil;
@@ -154,7 +158,7 @@ public class UserServiceImpl implements UserService{
 					dto.setCarModel(booking.getCar().getCarModel());
 					dto.setDailyRate(booking.getCar().getDailyRate());
 					dto.setBookingStatus(booking.getBookingStatus());
-					
+					dto.setCarId(booking.getCar().getId());
 //					getting the payment status
 					Long bookingId = booking.getId();
 					Payment obj = paymentDao.findByBookingId(bookingId).orElseThrow(()-> new ResourceNotFoundException("payment not done"));
@@ -186,6 +190,10 @@ public class UserServiceImpl implements UserService{
 			obj.setRating(rating);
 			obj.setCarId(list.getId());
 			obj.setHostId(list.getHost().getId());
+			obj.setServiceArea(list.getAddress().getServiceArea());
+			obj.setFirstName(list.getHost().getFirstName());
+			obj.setLastName(list.getHost().getLastName());
+			obj.setAddress(list.getAddress().getAddress());
 			responseList.add(obj);
 		}
 //		sorting according to rating 
@@ -229,7 +237,7 @@ public class UserServiceImpl implements UserService{
 
 	public ApiResponse addImage(Long userId, String imgUrl , String publicId, String format) {
 		// TODO Auto-generated method stub
-		User user = userDaoInterface.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found for given id !"));;
+		User user = userDaoInterface.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found for given id !"));
 		UserImgEntity entity = new UserImgEntity();
 		entity.setUser(user);
 		entity.setImgType("profile");
@@ -325,7 +333,7 @@ public class UserServiceImpl implements UserService{
 //	getting cars by applying filters
 	
 	@Override
-	public List<TopCarsResponseDto> allCarsByFilter(CarFilterRequestDto dto) {
+	public List<TopCarsResponseDto> allCarsByFilter(CarFilterRequestDto dto,@Valid UserRequestForAvilableCarsForBooking adto) {
 		
 		List<CarFuelType> fuelType = dto.getFuelType();
 		
@@ -333,40 +341,120 @@ public class UserServiceImpl implements UserService{
 		
 		List<Integer> seatCapacity=dto.getSeatCapacity();
 		
+		Double carRating =(double) dto.getRating();
+		
+		String serviceArea = dto.getServiceArea();
 //		response dto
 		List<TopCarsResponseDto> responseEnity = new ArrayList<>();
 		
-		List<Car> listCars = carDao.getAllCarsByFilter(fuelType,transmissionType,seatCapacity);
-		for(Car c:listCars)
+		List<TopCarsResponseDto> listCars = getAllAvailableCarsForBooking(adto);
+		for(TopCarsResponseDto c:listCars)
 		{
-			TopCarsResponseDto obj = new TopCarsResponseDto();
-			double rating = generateAverageRating(c.getRatingList());
-			if(rating>=dto.getRating())
-			{
-				obj = modelMapper.map(c, TopCarsResponseDto.class);
-				obj.setRating(rating);
-				obj.setCarId(c.getId());
-				obj.setHostId(c.getHost().getId());
-				responseEnity.add(obj);
-			}
+			if ((fuelType.isEmpty() || fuelType.contains(c.getFuelType())) &&
+				    (transmissionType.isEmpty() || transmissionType.contains(c.getTransmissionType())) &&
+				    (seatCapacity.isEmpty() || seatCapacity.contains(c.getSeatCapacity())) &&
+				    (carRating == 0 || (c.getRating() >= carRating)) &&
+				    (serviceArea == null || serviceArea.equalsIgnoreCase(c.getServiceArea()))) {
+				    
+				    responseEnity.add(c);
+				}
 				
 		}
 		return responseEnity;
 	}
 
+//	AVAILABLE CARS LIST
 	@Override
+	public List<TopCarsResponseDto> getAllCars() {
+		
+        List<TopCarsResponseDto> responseList = new ArrayList<>();
+		
+		List<Car> carList = carDao.findAll();
+		for(Car list:carList)
+		{
+
+			double rating = generateAverageRating(list.getRatingList());
+
+			TopCarsResponseDto obj = new TopCarsResponseDto();
+			obj = modelMapper.map(list, TopCarsResponseDto.class);
+			obj.setRating(rating);
+			obj.setCarId(list.getId());
+			obj.setHostId(list.getHost().getId());
+			responseList.add(obj);
+		}
+
+//		responseList.sort((x,y) -> (int)y.getRating()-(int)x.getRating());
+		return responseList;
+	}
+
 	public UserInfoDto getUserDetail(Long id) {
 
 		
 		User user = userDaoInterface.findById(id).orElseThrow(() -> new UserNotFoundException("Sorry the User Cannot be Found ....."));
 		
 		return modelMapper.map(user, UserInfoDto.class);
+
 	}
 
-	
-	
 
-	
+	@Override
+	public List<TopCarsResponseDto> getAllAvailableCarsForBooking(@Valid UserRequestForAvilableCarsForBooking dto) {
+		
+//		already booked car in particular time zone
+		List<Integer> listCarId = bookingDao.getAlreadyBookedCars(dto.getStartTrip(),dto.getEndTrip());
+//		System.out.println(listCarId.toString()+" cars already booked");
+		
+//		TO AVOID THE NULL LIST
+		if(listCarId.size()==0)
+			listCarId.add(-1);
+		
+		LocalDate startDate = dto.getStartTrip().toLocalDate();
+		LocalDate endDate = dto.getEndTrip().toLocalDate();
+		
+		List<Car> availableCars = carDao.getAvailableCars(listCarId,startDate,endDate).orElseThrow(()->new ResourceNotFoundException("User not found for given id !"));
+//		System.out.println(" cars available for bookings booked");
+//		for(Car c:availableCars)
+//		{
+//			System.out.println(c.toString());
+//		}
+		
+		List<TopCarsResponseDto> responseList = new ArrayList<>();
+		
+		for(Car list:availableCars)
+		{
+//			System.out.println(list.getRatingList().toString());
+			double rating = generateAverageRating(list.getRatingList());
+//			System.out.println("car "+list.getId()+" rating"+ rating);
+			TopCarsResponseDto obj = new TopCarsResponseDto();
+			obj = modelMapper.map(list, TopCarsResponseDto.class);
+			obj.setRating(rating);
+			obj.setCarId(list.getId());
+			obj.setHostId(list.getHost().getId());
+			obj.setServiceArea(list.getAddress().getServiceArea());
+			obj.setFirstName(list.getHost().getFirstName());
+			obj.setLastName(list.getHost().getLastName());
+			obj.setAddress(list.getAddress().getAddress());
+			responseList.add(obj);
+		}
+//		sorting according to rating 
+		responseList.sort((x,y) -> -(int)y.getRating()-(int)x.getRating());
+		return responseList;
+	}
+
+	@Override
+	public List<String> getCityOfCars() {
+		
+		List<String> cities = addDao.getAllCity().orElseThrow();
+		return cities;
+	}
+
+	@Override
+	public List<String> getServiceAreaOfCars() {
+		// TODO Auto-generated method stub
+		List<String> serviceArea = addDao.getAllServiceArea().orElseThrow();
+		return serviceArea;
+	}
+
 	
 }
 

@@ -14,6 +14,7 @@ import com.carrental.dto.ApiResponse;
 import com.carrental.dto.CarBookingHistoryDTO;
 import com.carrental.dto.CarRegistrationDTO;
 import com.carrental.dto.CarResponseDTO;
+import com.carrental.dto.HostTotalEarningDTO;
 import com.carrental.dto.CarSheduleDTO;
 import com.carrental.entity.Car;
 import com.carrental.entity.Rating;
@@ -33,6 +34,7 @@ public class HostServiceImpl implements HostService {
 	private final CarDaoInterface carDao;
 	private final BookingDaoInterface bookingDao;
 	private final ModelMapper mapper;
+	
 
 	
 	public List<CarResponseDTO> getMyCars(Long userId) {
@@ -64,6 +66,10 @@ public class HostServiceImpl implements HostService {
 
 
 	@Override
+	public List<HostTotalEarningDTO> getTotalEarnings(Long id) {
+		return bookingDao.getTotalEarnings(id);
+	}
+
 	public ApiResponse sheduleCar(Long carId, CarSheduleDTO carShedule) 
 	{
 		System.out.println("HostService Implimentation ke sheduleCar ke under hu padul saheb...");

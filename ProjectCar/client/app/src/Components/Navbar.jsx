@@ -36,9 +36,14 @@ function Navbar() {
                                 </Link>
                             </li>
                         </ul>
+                        
+                        {1 ? <div className="d-flex align-items-center">
 
-                        <div className="d-flex align-items-center">
-                            <Link to="/favourite" className="px-3 me-2"style={{fontSize:'20px',color:'rgba(248, 91, 60, 1)'}} >
+                            <Link to="/user-login" className="btn btn-primary me-3" style={{ backgroundColor: 'rgba(248, 91, 60, 1)', border: 'none' }}>
+                                Login
+                            </Link>
+                        </div> : <div className="d-flex align-items-center">
+                            <Link to="/favourite" className="px-3 me-2" style={{ fontSize: '20px', color: 'rgba(248, 91, 60, 1)' }} >
                                 <i class="bi bi-heart"></i>
                             </Link>
                             <Link to="/user-booking" className="btn btn-primary px-3 me-2" style={{ backgroundColor: 'rgba(248, 91, 60, 1)', border: 'none' }}>
@@ -53,7 +58,7 @@ function Navbar() {
                             <Link to="/user-login" className="btn btn-primary me-3" style={{ backgroundColor: 'rgba(248, 91, 60, 1)', border: 'none' }}>
                                 Login
                             </Link>
-                        </div>
+                        </div>}
                     </div>
                 </div>
             </nav>

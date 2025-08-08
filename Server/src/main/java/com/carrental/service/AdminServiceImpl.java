@@ -57,11 +57,11 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<UserResponseDto> getAgents() {
+	public List<AgentResDTO> getAgents() {
 //		System.out.println("here");
 		return adminDao.findByUserRoleAndUserStatus(UserRole.AGENT,UserStatus.ACTIVE)
 				.stream()
-				.map(user -> mapper.map(user, UserResponseDto.class))
+				.map(user -> mapper.map(user, AgentResDTO.class))
 				.toList();
 	}
 
@@ -71,6 +71,7 @@ public class AdminServiceImpl implements AdminService {
 		Car car = carDao.findById(carId).orElseThrow(() -> new ResourceNotFoundException("Car with given id is not found !"));
 		User agent = adminDao.findById(agentId).orElseThrow(() -> new ResourceNotFoundException("Agent with given id is not found !"));
 		car.setAgent(agent);
+		car.setStatus(CarStatus.NOTVERIFIED);
 		
 		return new ApiResponse("Agent Assigned to Car !");
 	}
@@ -85,11 +86,12 @@ public class AdminServiceImpl implements AdminService {
 		 info.setTotalRevenue((double)paymentDao.getTotalAmount());
 		 info.setTotalHosts((int)adminDao.findByUserRoleAndUserStatus(UserRole.HOST,UserStatus.ACTIVE).size());
 		 
-		 List<TopCarsResponseDto> list = userService.getTopCars();
+//		 List<TopCarsResponseDto> list = userService.getTopCars();
+		 List<TopCarsResponseDto> allCars = userService.getAllCars();
 
 		 int cnt = 0;
 		 int sumOfRatings = 0;
-		 for(TopCarsResponseDto car: list) {
+		 for(TopCarsResponseDto car: allCars) {
 			 if(car.getRating() > 0) {
 				 
 				 sumOfRatings += car.getRating();

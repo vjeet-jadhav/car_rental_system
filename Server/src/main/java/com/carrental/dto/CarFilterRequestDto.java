@@ -22,6 +22,8 @@ public class CarFilterRequestDto {
 	
 	private List<Integer> seatCapacity;
 	
-	int rating;
+	private double rating;
+	
+	private String serviceArea;
 	
 }
