@@ -32,4 +32,12 @@ public class TopCarsResponseDto {
 	private double rating;
 	
 	private double dailyRate;
+	
+	private String serviceArea;
+	
+	private String firstName;
+	
+	private String lastName;
+	
+	private String address;
 }

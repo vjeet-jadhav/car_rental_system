@@ -81,5 +81,16 @@ public class AdminController {
 	public ResponseEntity<?> getPendingCars(){
 		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.getPendingCars());
 	}
+	
+	@GetMapping("/getCarsInfo")           //get cars with rating and total bookings 
+	public ResponseEntity<?> getCarsInfo(){
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.getEntireCarInfo());
+	}
+	
+	@GetMapping("/getUserByEmail/{email}")
+	public ResponseEntity<?> getUserByEmail(@PathVariable String email){
+		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.getUserByEmail(email));
+	}
 
 }

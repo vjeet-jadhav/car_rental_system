@@ -26,9 +26,13 @@ function RegisterAgent() {
     e.preventDefault();
     // console.log("Submitted Data:", formData);
     const result = await agentSignup(formData);
-    
-    toast.success("Agent Added Successfully !");
-    navigate("/admin");
+    // console.log(result)
+    if(result.status == 201){
+      toast.success("Agent Added Successfully !");
+      navigate("/admin");
+    }else{
+      toast.error("Agent Registration Failed !")
+    }
   };
 
 
