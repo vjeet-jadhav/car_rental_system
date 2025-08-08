@@ -71,7 +71,7 @@ function Signup() {
     else {
 
       const result = await userSignUp(signInInfo);
-
+      console.log(result);
       toast.success("Register successfully...:)");
     }
 

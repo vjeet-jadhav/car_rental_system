@@ -1,5 +1,7 @@
 package com.carrental.dao;
 
+import java.time.LocalDateTime;
+
 import java.util.List;
 
 
@@ -57,7 +59,7 @@ public interface BookingDaoInterface extends JpaRepository<Booking, Long> {
 		        AND b.endTrip > CURRENT_TIMESTAMP
 		      """)
 	Optional<List<CarBookingsDTO>> findActiveBookingsByCarId(@Param("carId") Long carId);
-	
+
 	
 	@Query("""
 	        SELECT new com.carrental.dto.CarBookingHistoryDTO(
@@ -77,5 +79,9 @@ public interface BookingDaoInterface extends JpaRepository<Booking, Long> {
 	    """)
 	Optional<List<CarBookingHistoryDTO>> findHistoryByClientId(Long userId);
 
+
+	//PROVIDE BOOKED CARS IN TIME ZONE
+	@Query("SELECT b.car.id FROM Booking b WHERE b.startTrip < :endTrip AND b.endTrip > :startTrip")
+	List<Integer> getAlreadyBookedCars(LocalDateTime startTrip, LocalDateTime endTrip);
 
 }
