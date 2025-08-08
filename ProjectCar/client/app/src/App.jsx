@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import "./App.css";
 import Signup from './Screens/Client/Signup'
 import Home from './Screens/Client/Home'
@@ -32,6 +32,22 @@ export const AuthContext = createContext();
 
 function App() {
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const savedUser = sessionStorage.getItem("user");
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      sessionStorage.setItem("user", JSON.stringify(user));
+    } else {
+      sessionStorage.removeItem("user");
+    }
+  }, [user]);
+
 
   return (
     <>
