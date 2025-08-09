@@ -14,7 +14,6 @@ function CarBooking() {
     console.log("City:", getCity);
 
     // Calculate total hours (rounding up)
-
     const start = new Date(tripData.startTrip);
     const end = new Date(tripData.endTrip);
     const diffMs = end - start;
@@ -24,6 +23,13 @@ function CarBooking() {
     const amountBeforeDiscount = totalHours * carInfo.dailyRate;
 
     const finalAmount = amountBeforeDiscount;
+
+    const forCreateOrder = {
+        "startTrip": tripData.startTrip,
+        "endTrip": tripData.endTrip,
+        "rate": carInfo.dailyRate,
+    }
+
     const body = {
         "startTrip": tripData.startTrip,
         "endTrip": tripData.endTrip,
@@ -44,12 +50,17 @@ function CarBooking() {
 
 
     return (
-        <div>
+        <div >
             <div className=' d-flex flex-row gap-3 m-4'>
 
                 {/* Proceed for payment */}
                 <div className="my-4 p-4 col-4 border rounded-4">
-                    <h3>Car Rental Payment</h3>
+                    <div className='d-flex justify-content-between my-3'>
+                        <h3>Drivana Payment</h3>
+                        <div className="d-flex justify-content-center p-1 ">
+                            <Link to="/" className="fw-bold text-decoration-none  rounded-2 p-1" style={{ color: 'white', backgroundColor: "rgba(248, 91, 60, 1)" }}><i className="bi bi-arrow-left ms-1"></i> Home Select Journey</Link>
+                        </div>
+                    </div>
 
                     <div className="d-flex flex-column gap-3" style={{ maxWidth: '450px' }}>
                         <div>
@@ -96,7 +107,7 @@ function CarBooking() {
                                         <p>Total Hours: <strong>{totalHours}</strong></p>
                                         <p>Final Amount: ₹<strong>{finalAmount}</strong></p>
                                     </div>
-                                    <PaymentButton amount={finalAmount} booking={body} />
+                                    <PaymentButton amt={forCreateOrder} booking={body} />
                                 </>
                         }
 

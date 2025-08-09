@@ -70,7 +70,7 @@ public class UserController {
 	
 	
 	@PostMapping("/signin")
-	public String userSignIn(@RequestBody UserLoginRequestDto dto)
+	public ResponseEntity<?> userSignIn(@RequestBody UserLoginRequestDto dto)
 	{
 		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword());
 		System.out.println("before - "+authentication.isAuthenticated());//false);
@@ -81,7 +81,7 @@ public class UserController {
 		System.out.println("after "+validAuthentication.isAuthenticated());//true
 		
 //		In case of success , generate JWT n send it to REST client
-		return jwtUtils.generateJwtToken(validAuthentication);
+		return ResponseEntity.ok(jwtUtils.generateJwtToken(validAuthentication));
 	}
 	
 	
@@ -118,9 +118,9 @@ public class UserController {
 	}
 
 	@PostMapping("/review")
-	public String submitReview(@RequestBody CarReviewDto reviewDto) {
+	public ResponseEntity<?> submitReview(@RequestBody CarReviewDto reviewDto) {
 		
-		return userService.addReview(reviewDto);
+		return ResponseEntity.ok(userService.addReview(reviewDto));
 	}
 	
 
@@ -223,8 +223,13 @@ public class UserController {
 	@GetMapping("/getTop3Cars")
 	public ResponseEntity<?> getTop3Cars()
 	{
-		
 		return ResponseEntity.ok(userService.getTopmostcars());
+	}
+	
+	@GetMapping("/getTopReviews")
+	public ResponseEntity<?> getTop3Reviews()
+	{
+		return ResponseEntity.ok(userService.getReviewsTop3());
 	}
 	
 }

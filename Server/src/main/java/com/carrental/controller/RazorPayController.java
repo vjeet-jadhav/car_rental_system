@@ -46,11 +46,13 @@ public class RazorPayController {
 	@PostMapping("/create-order")
     public ResponseEntity<?> createOrder(@RequestBody PaymentRequestDto paymentRequest) {
         try {
+        	
             JSONObject options = new JSONObject();
             options.put("amount", paymentRequest.getAmount() * 100); // convert to paise
             options.put("currency", "INR");
             options.put("receipt", "txn_" + System.currentTimeMillis());
             Order order = razorpayClient.orders.create(options);
+            System.out.println("order is "+order.toString());
             return ResponseEntity.ok(order.toString());
         } catch (Exception e) {
         	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -78,21 +80,24 @@ public class RazorPayController {
 	        System.out.println("request is comming for verification");
 	        // Use Razorpay SDK to verify signature
 	        boolean isValid = Utils.verifyPaymentSignature(params, secret);
+	        
+	        System.out.println(paymentResponse.toString()+"payment verify dto is");
 
 //	        on fail
 	        if (!isValid) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid signature. Payment verification failed.");
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid signature. Payment verification failed. ");
 	        }
-	        
 	        
 	        
 //	        on success
 	        UserCarBookingDto obj1 = paymentResponse.getBookingDto();
+	        
 	        Payment payment = razorpayClient.payments.fetch(paymentId);
+	        System.out.println(payment.toString());
 	        String id = payment.get("id");
 	        String status = payment.get("status");
 	        String method = payment.get("method");
-
+//	        System.out.println("payment method is "+method);
 	        CarPaymentDto obj2 = new CarPaymentDto();
 	        obj2.setRazorPayId(id);
 	        obj2.setAmount(obj1.getAmount());
