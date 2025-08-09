@@ -13,11 +13,14 @@ import com.carrental.dao.CarImgInterface;
 import com.carrental.dao.HostDao;
 import com.carrental.dto.ApiResponse;
 import com.carrental.dto.CarBookingHistoryDTO;
+import com.carrental.dto.CarImgResponseDTO;
 import com.carrental.dto.CarRegistrationDTO;
+import com.carrental.dto.CarResponceWithOneImgDTO;
 import com.carrental.dto.CarResponseDTO;
 import com.carrental.dto.HostTotalEarningDTO;
 import com.carrental.dto.CarSheduleDTO;
 import com.carrental.entity.Car;
+import com.carrental.entity.CarStatus;
 import com.carrental.entity.Rating;
 import com.carrental.entity.User;
 import com.carrental.exception.ApiException;
@@ -39,17 +42,17 @@ public class HostServiceImpl implements HostService {
 	
 
 	
-	public List<CarResponseDTO> getMyCars(Long userId) {
+	public List<CarResponceWithOneImgDTO> getMyCars(Long userId) {
 		
 		//Taking host with is cars by custom query
 		List<Car> cars = carDao.findByHostId(userId);
 		
 		System.out.println("HostService Implimentation ke getMycars ke under hu padul saheb...");
 		
-		List<CarResponseDTO> list= cars.stream()
+		List<CarResponceWithOneImgDTO> list= cars.stream()
 			       .map(car -> {
 			           // 1) Map all the scalar and address fields
-			           CarResponseDTO dto = mapper.map(car, CarResponseDTO.class);
+			    	   CarResponceWithOneImgDTO dto = mapper.map(car, CarResponceWithOneImgDTO.class);
 
 			           // 2) Compute the average rating (0 if no ratings)
 			           double avg = car.getRatingList()
@@ -65,14 +68,31 @@ public class HostServiceImpl implements HostService {
 			       })
 			       .collect(Collectors.toList());
 		
-		for(CarResponseDTO dto : list)
+		for(CarResponceWithOneImgDTO dto : list)
 		{
-			dto.setImagelist(carImdDao.findOrderedImagesByCarId(dto.getId()));
+			CarImgResponseDTO img = carImdDao.findMainImageByCarId(dto.getId());
+			dto.setImage(img);
 		}
 		
 		
 		return list;
 	}
+	
+	@Override
+	public CarResponseDTO getMyOnecar(Long carId) {
+		
+		System.out.println("HostService Implimentation ke getMyOnecar ke under hu padul saheb...");
+		
+		Car car = carDao.findById(carId)
+					.orElseThrow(() -> new ApiException("Invalid CarId..."));
+		
+		CarResponseDTO carDTO = mapper.map(car, CarResponseDTO.class);
+		
+		carDTO.setImagelist(carImdDao.findOrderedImagesByCarId(carId));
+		
+		return carDTO;
+	}
+	
 
 
 	@Override
@@ -90,6 +110,11 @@ public class HostServiceImpl implements HostService {
 		car.setSheduledFrom(carShedule.getSheduledFrom());
 		car.setSheduledTill(carShedule.getSheduledTill());
 		
+		if(car.getStatus() != CarStatus.NOTVERIFIED)
+		{
+			car.setStatus(CarStatus.AVAILABLE);
+		}
+		
 		return new ApiResponse("Car Sheduled successfully !");
 	}
 
@@ -104,7 +129,10 @@ public class HostServiceImpl implements HostService {
 		
 		car.setSheduledFrom(null);
 		car.setSheduledTill(null);
-		
+		if(car.getStatus() != CarStatus.NOTVERIFIED)
+		{
+			car.setStatus(CarStatus.VERIFIED);
+		}
 		return new ApiResponse("Car Unsheduled Successfully");
 	}
 
@@ -117,7 +145,6 @@ public class HostServiceImpl implements HostService {
 		
 		return bookings;
 	}
-	
 	
 	
 }
