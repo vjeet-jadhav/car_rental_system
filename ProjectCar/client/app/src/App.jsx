@@ -27,6 +27,7 @@ import ClientCarReview from "./Screens/Client/ClientCarReview";
 import HostCarInformation from "./Screens/Host/HostCarInformation"
 import HostHistory from "./Screens/Host/HostHistory";
 import HostEarning from "./Screens/Host/HostEarning";
+import CarRatings from "./Screens/Host/CarRatings";
 import { ToastContainer } from "react-toastify";
 import { UserDetails } from "./Screens/Admin/UserDetails";
 
@@ -71,6 +72,7 @@ function App() {
             <Route path="carinformation" element={<HostCarInformation></HostCarInformation>}></Route>
             <Route path="history" element={<HostHistory></HostHistory>}></Route>
             <Route path="earning" element={<HostEarning></HostEarning>}></Route>
+            <Route path="car/feedbacks" element={<CarRatings></CarRatings>}></Route>
           </Route>
 
           <Route path="agent" element={user ? <AgentContainer></AgentContainer> : <Home></Home>}>
