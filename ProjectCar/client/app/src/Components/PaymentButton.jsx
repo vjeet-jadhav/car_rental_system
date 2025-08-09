@@ -5,8 +5,6 @@ import { toast } from "react-toastify";
 
 const PaymentButton = ({ amount, booking }) => {
     // Dynamically load Razorpay SDK if not loaded yet
-
-    const [sendData, setSendData] = useState({});
     const navigate = useNavigate();
     const loadRazorpayScript = () =>
         new Promise((resolve) => {
@@ -27,7 +25,7 @@ const PaymentButton = ({ amount, booking }) => {
             return;
         }
 
-        console.log(booking);
+        console.log(booking, "booking data is ");
         // console.log("data for backend",body.paymentDto);
 
         // Create order on backend
@@ -45,19 +43,18 @@ const PaymentButton = ({ amount, booking }) => {
 
         // Open Razorpay payment popup with order info
         const options = {
-            key: "rzp_test_ZwE6SwAVPaxRo9", // Replace with your Razorpay Test Key ID
+            key: "rzp_test_ZwE6SwAVPaxRo9", // Razorpay Test Key ID
             amount: orderData.amount,
             currency: orderData.currency,
             order_id: orderData.id,
             name: "Drivana App",
             description: "Drivana Payment",
-            handler: function (response) {
-                alert("Payment Successful!");
+            handler: async function (response) {
                 console.log("Payment ID:", response.razorpay_payment_id);
                 console.log("Order ID:", response.razorpay_order_id);
                 console.log("Signature:", response.razorpay_signature);
                 // TODO: Send this data to backend for payment verification
-                console.log("booking data",booking);
+                console.log("booking data", booking);
                 const object = {
                     "paymentVerify": {
                         "razorpayOrderId": response.razorpay_order_id,
@@ -67,8 +64,23 @@ const PaymentButton = ({ amount, booking }) => {
                     "bookingDto": booking
                 }
 
-                setSendData(object);
-                afterResponse();
+                console.log("Sending data for verification to backend", object);
+                try {
+                    const result = await getTheBookingAndPaymentStatus(object);
+                    console.log("Verification result:", result);
+
+                    if (result && result.status === 200) {
+                        toast.success(result.data || "Booking confirmed!");
+                        sessionStorage.setItem("paymentDone", "true"); 
+                        navigate("/user-booking", { replace: true });  
+
+                    } else {
+                        toast.error("Payment verification failed. If booking isn't confirmed, refund will be initiated.");
+                    }
+                } catch (error) {
+                    console.error("Verification error:", error);
+                    toast.error("Server error during payment verification. Please check your booking status.");
+                }
 
 
             },
@@ -81,20 +93,6 @@ const PaymentButton = ({ amount, booking }) => {
                 color: "#3399cc",
             },
         };
-
-        async function afterResponse() {
-            console.log("sending data for stroing",sendData);
-            const result = await getTheBookingAndPaymentStatus(sendData);
-            console.log(JSON.stringify(result));
-            if(result && result.status==200)
-            {
-                toast.success(result.data);
-                navigate("/user-booking");
-            }
-            else{
-                toast.warn("something goes wrong");
-            }
-        }
 
 
         const paymentObject = new window.Razorpay(options);

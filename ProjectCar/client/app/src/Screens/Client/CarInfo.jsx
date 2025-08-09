@@ -76,6 +76,8 @@ function CarInfo() {
 
   // NAVIGATE TO BOOKING CAR
   const navigateToBookingCar = (car) => {
+    // For New Booking
+    sessionStorage.removeItem("paymentDone");
     console.log(car);
     navigate("/carbooking", {
       state: {
@@ -133,6 +135,9 @@ function CarInfo() {
                 readOnly
               />
             </div>
+          </div>
+          <div className="d-flex justify-content-center p-1 ">
+            <Link to="/" className="fw-bold text-decoration-none border rounded-3 p-1" style={{ color: 'white',backgroundColor:"rgba(248, 91, 60, 1)" }}><i className="bi bi-arrow-left ms-1"></i> Home Select Journey</Link>
           </div>
         </div>
 

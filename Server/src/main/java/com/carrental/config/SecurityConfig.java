@@ -51,6 +51,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.POST, "/api/payment/create-order").permitAll()
 				.requestMatchers(HttpMethod.POST, "/api/payment/verify").permitAll()
 				.requestMatchers(HttpMethod.POST, "/user/serachCar").permitAll()
+				.requestMatchers(HttpMethod.GET, "/user/getTop3Cars").permitAll()
 				.requestMatchers(HttpMethod.GET, "/user/getCarServiceArea").permitAll()
 				.requestMatchers(HttpMethod.POST, "/user/applyFilters").permitAll()
 				.requestMatchers(HttpMethod.GET, "/user/getCarCity").permitAll()

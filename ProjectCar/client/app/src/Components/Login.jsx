@@ -5,11 +5,12 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginUser } from "../Services/user";
 import { AuthContext } from "../App";
+import { toast } from "react-toastify";
 
 function Login() {
 
   const navigate = useNavigate();
-  const {setUser} = useContext(AuthContext);
+  const {user,setUser} = useContext(AuthContext);
 
   const [loginInfo , setLoginInfo] = useState({
     email :"",
