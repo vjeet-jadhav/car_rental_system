@@ -30,7 +30,7 @@ function Login() {
       const result = await loginUser(email, password, city)
       const token = sessionStorage.setItem("token",result);
       const decoded = jwtDecode(result);
-      console.log(decoded);
+      console.log("user contains "+JSON.stringify(decoded));
       setUser(decoded);
       const authorities = decoded.authorities;
 

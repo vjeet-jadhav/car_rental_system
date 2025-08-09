@@ -121,3 +121,29 @@ export async function updateUserInfo(firstName, lastName, email, mob_num){
 
   }
 }
+
+export async function getTheBookingAndPaymentStatus(getData) {
+  const body = "";
+  console.log("body to send backed", getData);
+  const url = `${config.serverUrl}/api/payment/verify`;
+  try {
+    const result = await axios.post(url, getData);
+    return result;
+  }
+  catch (e) {
+    console.log(e);
+  }
+}
+
+// export async function getBooking()
+// {
+//   const url = `${config.serverUrl}/user/myBooking`;
+//   // const token =
+//   try{
+//     const result = await axios.get(url,{
+//       headers:{
+//         token:
+//       }
+//     })
+//   }
+// }

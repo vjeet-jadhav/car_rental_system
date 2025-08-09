@@ -1,4 +1,6 @@
-import { createContext, useState, useEffect } from "react";
+
+import { createContext, useContext, useEffect, useState } from "react";
+
 import "./App.css";
 import Signup from './Screens/Client/Signup'
 import Home from './Screens/Client/Home'
@@ -29,11 +31,30 @@ import HostHistory from "./Screens/Host/HostHistory";
 import HostEarning from "./Screens/Host/HostEarning";
 import { ToastContainer } from "react-toastify";
 import { UserDetails } from "./Screens/Admin/UserDetails";
+import ClientContainer from "./Screens/Client/ClientContainer";
+import ProtectedRoutes from "./Screens/Client/ProtectedRoutes";
+// import ProtectedRoutesTrip from "./Screens/Client/ProtectedRoutesTrip";
+
 
 export const AuthContext = createContext();
 
 function App() {
   const [user, setUser] = useState(null);
+
+
+  // const [trip, setTrip] = useState(() => {
+  //   const storedTrip = sessionStorage.getItem("trip");
+  //   return storedTrip ? JSON.parse(storedTrip) : null;
+  // });
+
+  // console.log("trip is ", trip);
+
+  // useEffect(() => {
+  //   if (trip) {
+  //     sessionStorage.setItem("trip", JSON.stringify(trip));
+  //   }
+  // }, [trip]);
+
 
   useEffect(() => {
     const savedUser = sessionStorage.getItem("user");
@@ -51,18 +72,20 @@ function App() {
   }, [user]);
 
 
+
   return (
     <>
-    <AuthContext.Provider value={{user, setUser}}>
-      <Routes>
-        <Route path="/" element={<Container></Container>}>
-          <Route path="admin" element={user ? <AdminContainer></AdminContainer> : <Home></Home>}>
-            <Route path="restrictCar" element={<CarList/>}></Route>
-            <Route path="restrictUser" element={<UserDetails></UserDetails>}> </Route>
-            <Route path="edit" element={<Profile />} />
-            <Route index element={<ScheduleAgenet />} />
-            <Route path="register" element={<RegisterAgent></RegisterAgent>}></Route>
-          </Route>
+      <AuthContext.Provider value={{ user, setUser }}>
+        <Routes>
+          <Route path="/" element={<Container></Container>}>
+            <Route path="admin" element={user ? <AdminContainer></AdminContainer> : <Home></Home>}>
+              <Route path="restrictCar" element={<CarList />}></Route>
+              <Route path="restrictUser" element={<UserDetails></UserDetails>}> </Route>
+              <Route path="edit" element={<Profile />} />
+              <Route index element={<ScheduleAgenet />} />
+              <Route path="register" element={<RegisterAgent></RegisterAgent>}></Route>
+            </Route>
+
 
           <Route path="host" element={user ? <HostContainer></HostContainer> : <Home></Home>}>
             <Route path="carregistration" element={<HostRegistration></HostRegistration>}></Route>
@@ -73,29 +96,38 @@ function App() {
             <Route path="earning" element={<HostEarning></HostEarning>}></Route>
           </Route>
 
-          <Route path="agent" element={user ? <AgentContainer></AgentContainer> : <Home></Home>}>
-            <Route path="history" element={<AgentHistory></AgentHistory>}></Route>
-            <Route path="edit" element={<Profile />} />
-            <Route path="" element={<PendingRequests></PendingRequests>}></Route>
+
+            <Route path="agent" element={user ? <AgentContainer></AgentContainer> : <Home></Home>}>
+              <Route path="history" element={<AgentHistory></AgentHistory>}></Route>
+              <Route path="edit" element={<Profile />} />
+              <Route path="" element={<PendingRequests></PendingRequests>}></Route>
+            </Route>
+
+            <Route path="" element={<ClientContainer />}>
+              <Route path="" element={<Home />} />
+              <Route path="user-login" element={<Login />} />
+              <Route path="user-signup" element={<Signup />} />
+              {/* ON THE BASIS OF TRIP JOURNEY IS SELECTED OR NOT */}
+              {/* <Route element={<ProtectedRoutesTrip trip={trip} />}>
+                
+              </Route> */}
+              <Route path="/allcars" element={<CarInfo />} />
+              <Route path="/carbooking" element={<CarBooking />} />
+              {/* ON THE BASIS OF USER IS LOGIN OR NOT */}
+              <Route element={<ProtectedRoutes user={user} />}>
+                <Route path="edit" element={<Profile />} />
+                <Route path="become-host" element={<HostRegistration />} />
+                <Route path="become-host/registration-form" element={<HostRegistrationForm />} />
+                <Route path="user-booking" element={<ClientBooking />} />
+                <Route path="review-car" element={<ClientCarReview />} />
+              </Route>
+
+            </Route>
           </Route>
 
-
-          <Route path="" element={<Home/>}/>
-          <Route path="allcars" element={<CarInfo />}/>
-          <Route path="carbooking" element={<CarBooking />}/>
-          <Route path="edit" element={<Profile />} />
-          <Route path="become-host" element={<HostRegistration />}></Route>
-          <Route path="become-host/registration-form" element={<HostRegistrationForm/>}></Route>
-          <Route path="user-login" element={<Login />} />
-          <Route path="user-signup" element={<Signup />} />
-          <Route path="user-booking" element={<ClientBooking />} />
-          <Route  path="review-car"  element={<ClientCarReview />} />
-          
-        </Route>
-
-      </Routes>
-    </AuthContext.Provider>
-    <ToastContainer />
+        </Routes>
+      </AuthContext.Provider>
+      <ToastContainer />
     </>
   );
 }

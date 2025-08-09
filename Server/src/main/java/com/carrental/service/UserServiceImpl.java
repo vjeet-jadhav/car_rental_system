@@ -128,13 +128,10 @@ public class UserServiceImpl implements UserService{
 		entity.setHost(host);
 		entity.setBookingStatus(BookingStatus.CONFIRMED);
 		bookingDao.save(entity);
-//		on successful booking car status need to update
-		car.setStatus(CarStatus.BOOKED);
-		
+
 //	    storing the payment details
 		
 		Payment pEntity = modelMapper.map(pDto, Payment.class);
-		
 		pEntity.setBookingId(entity);
 		pEntity.setPaymentStatus(PaymentStatus.COMPLETED);
 		pEntity.setPaymentTime(LocalDateTime.now());
@@ -347,7 +344,7 @@ public class UserServiceImpl implements UserService{
 		List<Integer> seatCapacity=dto.getSeatCapacity();
 		
 		Double carRating =(double) dto.getRating();
-		
+		int flag=0;
 		String serviceArea = dto.getServiceArea();
 //		response dto
 		List<TopCarsResponseDto> responseEnity = new ArrayList<>();
@@ -355,16 +352,18 @@ public class UserServiceImpl implements UserService{
 		List<TopCarsResponseDto> listCars = getAllAvailableCarsForBooking(adto);
 		for(TopCarsResponseDto c:listCars)
 		{
+			
 			if ((fuelType.isEmpty() || fuelType.contains(c.getFuelType())) &&
 				    (transmissionType.isEmpty() || transmissionType.contains(c.getTransmissionType())) &&
 				    (seatCapacity.isEmpty() || seatCapacity.contains(c.getSeatCapacity())) &&
 				    (carRating == 0 || (c.getRating() >= carRating)) &&
-				    (serviceArea == null || serviceArea.equalsIgnoreCase(c.getServiceArea()))) {
+				    (serviceArea.isEmpty()|| serviceArea.equalsIgnoreCase(c.getServiceArea()))) {
 				    
 				    responseEnity.add(c);
 				}
-				
+						
 		}
+		
 		return responseEnity;
 	}
 

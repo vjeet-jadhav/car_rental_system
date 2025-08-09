@@ -53,6 +53,7 @@ public class UserController {
 	private AuthenticationManager authenticationManager;
 	private JwtUtils jwtUtils;
 	
+	
 	@PostMapping("/signup")
 	public ResponseEntity<?> RegesterUser(@RequestBody @Valid UserRequestDto userDto) {
 		System.out.println(userDto.toString());
@@ -93,7 +94,7 @@ public class UserController {
 		System.out.println(pDto.toString());
 		userService.bookCar(bDto,pDto);
 //		Booking entity = 
-//		System.out.println("sanket   "+dto.toString());
+//		System.out.println("sanket   "+requestBookingDto.toString());
 		return ResponseEntity.ok("Booking and payment executed successfully...)");
 	}
 
@@ -213,4 +214,6 @@ public class UserController {
 		Long userId =(Long) SecurityContextHolder.getContext().getAuthentication().getDetails();
 		return ResponseEntity.status(HttpStatus.OK).body(userService.getUserDetail(userId));
 	}
+	
+	
 }

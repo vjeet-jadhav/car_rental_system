@@ -1,13 +1,37 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import PaymentButton from '../../Components/PaymentButton';
+import { AuthContext } from '../../App';
 
 function CarBooking() {
 
+    const { user, serUser } = useContext(AuthContext);
     const location = useLocation();
     const { carInfo, tripData, getCity } = location.state || {};
+
     console.log("Car:", carInfo);
     console.log("Trip Info:", tripData);
     console.log("City:", getCity);
+
+    // Calculate total hours (rounding up)
+
+    const start = new Date(tripData.startTrip);
+    const end = new Date(tripData.endTrip);
+    const diffMs = end - start;
+    const totalHours = Math.ceil(diffMs / (1000 * 60 * 60));
+
+    // Calculate amounts
+    const amountBeforeDiscount = totalHours * carInfo.dailyRate;
+
+    const finalAmount = amountBeforeDiscount;
+    const body = (user == null) ? {} : {
+        "startTrip": tripData.startTrip,
+        "endTrip": tripData.endTrip,
+        "amount": finalAmount,
+        "car": carInfo.carId,
+        "client": user.id, //geting from the token
+        "host": carInfo.hostId
+    }
 
     return (
         <div>
@@ -52,17 +76,20 @@ function CarBooking() {
 
 
                         {/* Summary Display */}
+                        {
+                            (user == null) ?
+                                <Link to="/user-login" className="btn fw-bold text-white" style={{ backgroundColor: 'rgba(248, 91, 60, 1)' }}>
+                                    Login
+                                </Link> :
+                                <>
+                                    <div className="alert alert-info">
+                                        <p>Total Hours: <strong>{totalHours}</strong></p>
+                                        <p>Final Amount: ₹<strong>{finalAmount}</strong></p>
+                                    </div>
+                                    <PaymentButton amount={0} booking={body} />
+                                </>
+                        }
 
-                        <div className="alert alert-info">
-                            <p>Total Hours: <strong></strong></p>
-                            <p>Amount Before Discount: ₹<strong></strong></p>
-                            <p>Final Amount: ₹<strong></strong></p>
-                        </div>
-
-
-                        <button type="submit" className="btn btn-success" >
-                            Pay ₹
-                        </button>
                     </div>
                 </div>
 
@@ -108,10 +135,10 @@ function CarBooking() {
                             <div>
                                 <span className='fw-bold' style={{ fontSize: '2rem' }}>{carInfo.rating}⭐</span>
                             </div>
-                            <br/>
+                            <br />
                             <div className='px-3 py-1'>
                                 <pre>
-                                    <span className='fw-bold'>Location</span><br/>
+                                    <span className='fw-bold'>Location</span><br />
                                     {carInfo.address}
                                 </pre>
                             </div>
