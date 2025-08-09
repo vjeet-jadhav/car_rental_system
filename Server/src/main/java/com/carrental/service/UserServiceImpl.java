@@ -128,13 +128,10 @@ public class UserServiceImpl implements UserService{
 		entity.setHost(host);
 		entity.setBookingStatus(BookingStatus.CONFIRMED);
 		bookingDao.save(entity);
-//		on successful booking car status need to update
-		car.setStatus(CarStatus.BOOKED);
-		
+
 //	    storing the payment details
 		
 		Payment pEntity = modelMapper.map(pDto, Payment.class);
-		
 		pEntity.setBookingId(entity);
 		pEntity.setPaymentStatus(PaymentStatus.COMPLETED);
 		pEntity.setPaymentTime(LocalDateTime.now());
@@ -148,6 +145,7 @@ public class UserServiceImpl implements UserService{
 		System.out.println("user id is"+id);
 		User user = userDaoInterface.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Invaild User ID/Not a Valid User"));
+		
 			
 		List<Booking> bookingList = userDaoInterface.fetchAllBooking(id);
 		List<UserBookingsDto> list = bookingList.stream().map(booking -> {
@@ -158,7 +156,9 @@ public class UserServiceImpl implements UserService{
 					dto.setCarModel(booking.getCar().getCarModel());
 					dto.setDailyRate(booking.getCar().getDailyRate());
 					dto.setBookingStatus(booking.getBookingStatus());
+					dto.setTotalAmount(booking.getAmount());
 					dto.setCarId(booking.getCar().getId());
+					dto.setBookingDate(booking.getBookingdate());
 //					getting the payment status
 					Long bookingId = booking.getId();
 					Payment obj = paymentDao.findByBookingId(bookingId).orElseThrow(()-> new ResourceNotFoundException("payment not done"));
@@ -197,7 +197,7 @@ public class UserServiceImpl implements UserService{
 			responseList.add(obj);
 		}
 //		sorting according to rating 
-		responseList.sort((x,y) -> (int)y.getRating()-(int)x.getRating());
+		responseList.sort((x,y) -> Double.compare(y.getRating(), x.getRating()));
 		return responseList;
 	}
 	
@@ -250,12 +250,16 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public ApiResponse addCarImg(Long carId, List<ImgResponseDTO> urls) {
+		
+		System.out.println("UserService ke addCarImg ke under hu Sanket dada...");
 		// TODO Auto-generated method stub
 		Car car = carDao.findById(carId).orElseThrow(() -> new ResourceNotFoundException("Car not found for given id !"));
 		
 		for(int i = 0 ; i < urls.size(); i++) {
 			CarImgEntity entity1 = new CarImgEntity();
 			entity1.setCar(car);
+			
+			System.out.println("UserService2 ke addCarImg ke under hu Sanket dada...");
 			
 			
 			if(i == 0) {
@@ -342,7 +346,7 @@ public class UserServiceImpl implements UserService{
 		List<Integer> seatCapacity=dto.getSeatCapacity();
 		
 		Double carRating =(double) dto.getRating();
-		
+		int flag=0;
 		String serviceArea = dto.getServiceArea();
 //		response dto
 		List<TopCarsResponseDto> responseEnity = new ArrayList<>();
@@ -350,16 +354,18 @@ public class UserServiceImpl implements UserService{
 		List<TopCarsResponseDto> listCars = getAllAvailableCarsForBooking(adto);
 		for(TopCarsResponseDto c:listCars)
 		{
+			
 			if ((fuelType.isEmpty() || fuelType.contains(c.getFuelType())) &&
 				    (transmissionType.isEmpty() || transmissionType.contains(c.getTransmissionType())) &&
 				    (seatCapacity.isEmpty() || seatCapacity.contains(c.getSeatCapacity())) &&
 				    (carRating == 0 || (c.getRating() >= carRating)) &&
-				    (serviceArea == null || serviceArea.equalsIgnoreCase(c.getServiceArea()))) {
+				    (serviceArea.isEmpty()|| serviceArea.equalsIgnoreCase(c.getServiceArea()))) {
 				    
 				    responseEnity.add(c);
 				}
-				
+						
 		}
+		
 		return responseEnity;
 	}
 
@@ -452,11 +458,23 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public List<String> getServiceAreaOfCars() {
-		// TODO Auto-generated method stub
 		List<String> serviceArea = addDao.getAllServiceArea().orElseThrow();
 		return serviceArea;
 	}
 
+	@Override
+	public List<TopCarsResponseDto> getTopmostcars() {
+		List<TopCarsResponseDto> allCars = getTopCars();
+		List<TopCarsResponseDto> top3Cars = new ArrayList<>();
+		for(int i=0;i<3;i++)
+		{
+			top3Cars.add(allCars.get(i));
+		}
+		return top3Cars;
+	}
+
+	
+	
 	
 }
 

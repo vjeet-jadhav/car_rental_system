@@ -46,8 +46,12 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.OPTIONS).permitAll()
 				.requestMatchers(HttpMethod.GET, "/").permitAll()
 				.requestMatchers(HttpMethod.GET, "/user/topCars").permitAll()
-//				.requestMatchers(HttpMethod.POST,"/user/bookingCar").permitAll() 
+//				.requestMatchers(HttpMethod.POST,"/user/bookingCar").permitAll()
+				// need to be protected for testing purpose
+				.requestMatchers(HttpMethod.POST, "/api/payment/create-order").permitAll()
+				.requestMatchers(HttpMethod.POST, "/api/payment/verify").permitAll()
 				.requestMatchers(HttpMethod.POST, "/user/serachCar").permitAll()
+				.requestMatchers(HttpMethod.GET, "/user/getTop3Cars").permitAll()
 				.requestMatchers(HttpMethod.GET, "/user/getCarServiceArea").permitAll()
 				.requestMatchers(HttpMethod.POST, "/user/applyFilters").permitAll()
 				.requestMatchers(HttpMethod.GET, "/user/getCarCity").permitAll()
@@ -62,8 +66,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.GET,"/host").hasRole("HOST")
 				.requestMatchers(HttpMethod.POST, "/car/validate").hasAnyRole("HOST","USER")
 				.requestMatchers(HttpMethod.POST, "/car/registration").hasAnyRole("HOST","USER")
-				.requestMatchers(HttpMethod.POST, "/car/update").hasRole("HOST")
-
+				.requestMatchers(HttpMethod.PUT, "/car/update").hasRole("HOST")
 				.requestMatchers(HttpMethod.GET, "/user/review/**").permitAll()
 
 				.requestMatchers(HttpMethod.GET, "/car/ratings").hasAnyRole("HOST", "USER")

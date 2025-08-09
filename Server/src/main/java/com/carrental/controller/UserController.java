@@ -53,6 +53,7 @@ public class UserController {
 	private AuthenticationManager authenticationManager;
 	private JwtUtils jwtUtils;
 	
+	
 	@PostMapping("/signup")
 	public ResponseEntity<?> RegesterUser(@RequestBody @Valid UserRequestDto userDto) {
 		System.out.println(userDto.toString());
@@ -84,6 +85,8 @@ public class UserController {
 	}
 	
 	
+	
+//	ON SUCCESS
 	@PostMapping("/bookingCar")
 	public ResponseEntity<?> userCarBooking(@RequestBody BookingRequestComDto requestBookingDto)
 	{
@@ -93,9 +96,12 @@ public class UserController {
 		System.out.println(pDto.toString());
 		userService.bookCar(bDto,pDto);
 //		Booking entity = 
-//		System.out.println("sanket   "+dto.toString());
+//		System.out.println("sanket   "+requestBookingDto.toString());
 		return ResponseEntity.ok("Booking and payment executed successfully...)");
 	}
+	
+	
+
 
 	@GetMapping("/myBooking")
 	public ResponseEntity<?> userBookings()
@@ -170,6 +176,7 @@ public class UserController {
 	@PostMapping("/uploadMul/{carId}")
 	public ResponseEntity<?> uploadMulImages(@RequestParam("files") MultipartFile[] files, @PathVariable Long carId){
 		
+		System.out.println("UserController ke uploadMulImages ke under hu Sanket dada...");
 		List<ImgResponseDTO> urls = new ArrayList<>();
 		for(MultipartFile file: files ) {
 			
@@ -212,4 +219,12 @@ public class UserController {
 		Long userId =(Long) SecurityContextHolder.getContext().getAuthentication().getDetails();
 		return ResponseEntity.status(HttpStatus.OK).body(userService.getUserDetail(userId));
 	}
+	
+	@GetMapping("/getTop3Cars")
+	public ResponseEntity<?> getTop3Cars()
+	{
+		
+		return ResponseEntity.ok(userService.getTopmostcars());
+	}
+	
 }

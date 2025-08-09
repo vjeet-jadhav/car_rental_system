@@ -66,4 +66,8 @@ public interface UserService {
 
 	UserInfoDto getUserDetail(Long id);
 
+	List<TopCarsResponseDto> getTopmostcars();
+
+	
+
 }

@@ -1,15 +1,16 @@
-
 import {jwtDecode }from "jwt-decode";
 import React, { useContext, useState } from 'react';
+
 
 import { Link, useNavigate } from 'react-router-dom';
 import { loginUser } from "../Services/user";
 import { AuthContext } from "../App";
+import { toast } from "react-toastify";
 
 function Login() {
 
   const navigate = useNavigate();
-  const {setUser} = useContext(AuthContext);
+  const {user,setUser} = useContext(AuthContext);
 
   const [loginInfo , setLoginInfo] = useState({
     email :"",
@@ -30,7 +31,7 @@ function Login() {
       const result = await loginUser(email, password, city)
       const token = sessionStorage.setItem("token",result);
       const decoded = jwtDecode(result);
-      console.log(decoded);
+      console.log("user contains "+JSON.stringify(decoded));
       setUser(decoded);
       const authorities = decoded.authorities;
 
