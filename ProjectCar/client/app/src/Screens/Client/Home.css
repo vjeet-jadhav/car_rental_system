@@ -1,29 +1,31 @@
-.home-btn-serach{
+.home-btn-serach {
     width: 300px;
 }
 
-.home-hero-section{
-    background-color: rgb(251, 85, 25);
+.home-hero-section {
+    background-color: rgb(253, 83, 10);
+
     border-radius: 18px;
 }
 
-.home-serach-div{
+.home-serach-div {
     background-color: white;
+
 }
 
 /* seconfd div */
-.cursor-pointer{
+.cursor-pointer {
     cursor: pointer;
 }
 
-.scale-up:hover{
+.scale-up:hover {
     transition: transform 0.3s ease-in-out;
     transform: scale(1.05);
 }
 
-.home-work-track:hover{
+.home-work-track:hover {
     /* hover:scale-105 transition-all hover:shadow-blue-500 */
     transition: all 0.3s ease-in-out;
     transform: scale(1.03);
-    box-shadow:2px 2px 2px 1px rgb(251, 85, 25) ;
+    box-shadow: 2px 2px 2px 1px rgb(251, 85, 25);
 }

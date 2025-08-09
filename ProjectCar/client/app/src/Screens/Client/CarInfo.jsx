@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./CarInfo.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getCarsAfterFilter, getServiceAreaJS } from '../../Services/user';
+
 function CarInfo() {
+
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -27,9 +29,11 @@ function CarInfo() {
     fuelType: []
   });
 
-
-
-
+  // CREATING ARRAY FOR FILTERS
+  const transmission = ["MANUAL", "AUTOMATIC"];
+  const fuel = ["PETROL", "DIESEL", "ELECTRICAL", "CNG"]
+  const capacity = ["4", "5", "6", "7"];
+  const rate = [3.0, 3.5, 4.0, 4.5];
   const getAllServiceArea = async () => {
     const result = await getServiceAreaJS(city);
     if (result.status === 200) {
@@ -73,13 +77,15 @@ function CarInfo() {
   }
 
   // NAVIGATE TO BOOKING CAR
-  const navigateToBookingCar = (car)=>{
+  const navigateToBookingCar = (car) => {
+    // For New Booking
+    sessionStorage.removeItem("paymentDone");
     console.log(car);
-    navigate("/carbooking",{
-      state:{
-        "carInfo":car,
-        "tripData":tripInfo,
-        "getCity":city
+    navigate("/carbooking", {
+      state: {
+        "carInfo": car,
+        "tripData": tripInfo,
+        "getCity": city
       }
     });
   }
@@ -87,7 +93,7 @@ function CarInfo() {
 
 
   return (
-    <div>
+    <div >
       {/* top section */}
       <div className="d-flex mt-5  p-2 gap-1">
         {/* left-section */}
@@ -97,7 +103,6 @@ function CarInfo() {
           </div>
         </div>
         {/* rigth-section */}
-
         {/* updated by sanket-main */}
         <div className="col-9 p-3">
           <div className="d-flex justify-content-around" style={{ margin: "0px 200px" }}>
@@ -107,7 +112,7 @@ function CarInfo() {
                 type="datetime-local"
                 id="startTime"
                 className="form-control"
-                value={tripInfo.startTrip}  // pass this as a prop or state variable
+                value={tripInfo.startTrip}
                 readOnly
               />
             </div>
@@ -117,7 +122,7 @@ function CarInfo() {
                 type="text"
                 id="startTime"
                 className="form-control"
-                value={city}  // pass this as a prop or state variable
+                value={city}
                 readOnly
               />
             </div>
@@ -128,10 +133,13 @@ function CarInfo() {
                 type="datetime-local"
                 id="endTime"
                 className="form-control"
-                value={tripInfo.endTrip}    // pass this as a prop or state variable
+                value={tripInfo.endTrip}
                 readOnly
               />
             </div>
+          </div>
+          <div className="d-flex justify-content-center p-1 ">
+            <Link to="/" className="fw-bold text-decoration-none border rounded-3 p-1" style={{ color: 'white', backgroundColor: "rgba(248, 91, 60, 1)" }}><i className="bi bi-arrow-left ms-1"></i> Home Select Journey</Link>
           </div>
         </div>
 
@@ -170,7 +178,7 @@ function CarInfo() {
             <div className="px-3 py-2 mt-2 border mx-2 rounded">
               <h5>Filter By Transmission</h5>
               <div className="d-flex flex-column gap-3 px-3 mt-3">
-                {["MANUAL", "AUTOMATIC"].map((type) => (
+                {transmission.map((type) => (
                   <div key={type}>
                     <input
                       type="checkbox"
@@ -191,7 +199,7 @@ function CarInfo() {
             <div className="px-3 py-2 mt-2 border mx-2 rounded">
               <h5>Filter By Fuel Type</h5>
               <div className="d-flex flex-column gap-3 px-3 mt-3">
-                {["PETROL", "DIESEL", "ELECTRICAL", "CNG"].map((fuel) => (
+                {fuel.map((fuel) => (
                   <div key={fuel}>
                     <input
                       type="checkbox"
@@ -211,7 +219,7 @@ function CarInfo() {
             <div className="px-3 py-2 mt-2 border mx-2 rounded">
               <h5>Filter By Seats</h5>
               <div className="d-flex flex-column gap-3 px-3 mt-3">
-                {["4", "5", "6", "7"].map((seat) => (
+                {capacity.map((seat) => (
                   <div key={seat}>
                     <input
                       type="checkbox"
@@ -237,7 +245,7 @@ function CarInfo() {
                     onChange={(e) => setFilters({ ...getFilters, rating: e.target.value })}
                   >
                     <option value="">Rating</option>
-                    {[3.0, 3.5, 4.0, 4.5].map((rate, index) => {
+                    {rate.map((rate, index) => {
                       return <>
                         <option key={index} value={rate}>{rate}</option>
                       </>
@@ -262,57 +270,55 @@ function CarInfo() {
         {/* rigth-section */}
 
         {/* rendering data from privious component */}
-        <div className="col-9  border-danger">
-          <div className="d-flex justify-content-evenly mt-5">
-            {/* cards */}
+        <div className="col-9 border-danger">
+          <div className="row justify-content-evenly mt-5">
             {
-              (carData.length === 0) 
-              ? 
-              <div class="alert alert-warning text-center mt-4" role="alert">
-                <h4 class="alert-heading">No Cars Available</h4>
-                <p>Currently, cars are not available for your selected trip time zone. To continue, please adjust the time and try again.</p>
-              </div> 
-              : 
-              
-              carData.map((car) => {
-                return <>
-                  <div
-                    className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none"
-                    onClick={()=>navigateToBookingCar(car)}
-                  >
-                    <img
-                      src="/Image/carBg1.jpg" // Corrected path for React
-                      className=""
-                      alt="Car"
-                      style={{ height: "70%" }}
-                    />
-
-                    <div className="card-body" style={{ height: "20%" }}>
-                      <h5 className="card-title mb-2">{car.brand} : {car.carModel}</h5>
-
-                      <div className="d-flex justify-content-between text-muted small mb-2">
-                        <div>
-                          <span>{car.transmissionType}</span> | <span>{car.fuelType}</span> |{" "}
-                          <span>{car.seatCapacity} seats</span>
+              carData.length === 0
+                ?
+                <div className="alert alert-warning text-center mt-4" role="alert">
+                  <h4 className="alert-heading">No Cars Available</h4>
+                  <p>Currently, cars are not available for your selected trip time zone. To continue, please adjust the time and try again.</p>
+                </div>
+                :
+                carData.map((car, index) => (
+                  <div key={index} className="col-md-4 mb-4">
+                    <div
+                      className="card cursor-pointer shadow-sm scale-up text-decoration-none"
+                      onClick={() => navigateToBookingCar(car)}
+                    >
+                      <img
+                        src="/Image/carBg1.jpg"
+                        alt="Car"
+                        className="card-img-top"
+                        style={{ height: "70%" }}
+                      />
+                      <div className="card-body" style={{ height: "20%" }}>
+                        <div className='d-flex justify-content-between'>
+                          <h5 className="card-title mb-2">{car.brand} : {car.carModel}</h5>
+                          <span className="fw-bold">₹{car.dailyRate}/hr</span>
                         </div>
-                        <div>
-                          <span>{car.rating}⭐</span>
+                        <div className="d-flex justify-content-between text-muted small mb-2">
+                          <div>
+                            <span>{car.transmissionType}</span> | <span>{car.fuelType}</span> |{" "}
+                            <span>{car.seatCapacity} seats</span>
+                          </div>
+                          <div>
+                            <span>{car.rating}⭐</span>
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="d-flex justify-content-between">
-                        <span className="text-success">{car.status}</span>
-                        <span className="fw-bold">₹{car.dailyRate}/hr</span>
+                        <div className="d-flex justify-content-between">
+                          <span className="text-success">{car.status} :--</span>
+                          <span >{car.serviceArea}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </>
-              })
+                ))
             }
-
-
           </div>
         </div>
+
       </div>
     </div >
   );
