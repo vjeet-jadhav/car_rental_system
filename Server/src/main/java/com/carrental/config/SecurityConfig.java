@@ -47,7 +47,8 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.GET, "/").permitAll()
 				.requestMatchers(HttpMethod.GET, "/user/topCars").permitAll()
 //				.requestMatchers(HttpMethod.POST,"/user/bookingCar").permitAll()
-				// need to be protected for testing purpose
+				// need to be protected for testing purpose user/signin
+				.requestMatchers(HttpMethod.GET, "/user/getTopReviews").permitAll()
 				.requestMatchers(HttpMethod.POST, "/api/payment/create-order").permitAll()
 				.requestMatchers(HttpMethod.POST, "/api/payment/verify").permitAll()
 				.requestMatchers(HttpMethod.POST, "/user/serachCar").permitAll()

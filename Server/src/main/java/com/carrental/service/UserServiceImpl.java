@@ -40,6 +40,7 @@ import com.carrental.dto.ImgResponseDTO;
 import com.carrental.dto.ResponseForCarCities;
 import com.carrental.dto.Top5RatingResponseDto;
 import com.carrental.dto.TopCarsResponseDto;
+import com.carrental.dto.TopReviewsResponseHome;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
 import com.carrental.dto.UserInfoDto;
@@ -232,7 +233,7 @@ public class UserServiceImpl implements UserService{
 		
 		ratingDao.save(rating);
 		
-		return "Review Successfully Added";
+		return "Thank you for sharing your feedback! Your review has been submitted successfully.";
 	}
 
 	public ApiResponse addImage(Long userId, String imgUrl , String publicId, String format) {
@@ -471,6 +472,28 @@ public class UserServiceImpl implements UserService{
 			top3Cars.add(allCars.get(i));
 		}
 		return top3Cars;
+	}
+
+	@Override
+	public List<TopReviewsResponseHome> getReviewsTop3() {
+		
+		Pageable pageable = PageRequest.of(0, 3);
+		
+		List<Rating> rating = ratingDao.getReview(pageable);
+//		List<TopReviewsResponseHome> list = rating.stream().map(rate->modelMapper.map(rate, TopReviewsResponseHome.class)).toList();
+		List<TopReviewsResponseHome> list = new ArrayList<>();
+		for(Rating r : rating)
+		{
+			TopReviewsResponseHome obj = new TopReviewsResponseHome();
+			obj.setFirstNmae(r.getClient().getFirstName());
+			obj.setLastName(r.getClient().getLastName());
+			obj.setCarBrand(r.getCar().getBrand());
+			obj.setCarModel(r.getCar().getCarModel());
+			obj.setRating(r.getRating());
+			obj.setFeedback(r.getFeedback());
+			list.add(obj);
+		}
+		return list;
 	}
 
 	

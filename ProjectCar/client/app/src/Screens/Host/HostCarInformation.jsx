@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { updateCar } from '../../Services/host'
 import { toast } from 'react-toastify';
-import { Message } from './../../../node_modules/esbuild/lib/main.d';
+// import { Message } from './../../../node_modules/esbuild/lib/main.d';
 
 function HostCarInformation() {
   const { state } = useLocation();

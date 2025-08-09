@@ -29,8 +29,8 @@ public class Payment  extends BaseEntity{
 	private PaymentStatus paymentStatus;
 	
 	@Column(length = 30, nullable = false)
-	@Enumerated(EnumType.STRING)
-	private PaymentMethod paymentMethod;
+//	@Enumerated(EnumType.STRING)
+	private String paymentMethod;
 
     @Column(name="payment_date_time")
     private LocalDateTime paymentTime;
