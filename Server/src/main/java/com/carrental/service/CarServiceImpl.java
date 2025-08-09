@@ -3,8 +3,9 @@ package com.carrental.service;
 
 
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import com.carrental.dao.RatingDaoInterface;
 import com.carrental.dao.UserDaoInterface;
 import com.carrental.dao.VahanDaoInterface;
 import com.carrental.dto.ApiResponse;
+import com.carrental.dto.ApiResponseWithId;
 import com.carrental.dto.CarBookingsDTO;
 import com.carrental.dto.CarRegistrationDTO;
 import com.carrental.dto.RatingResponseDTO;
@@ -76,21 +78,29 @@ public class CarServiceImpl implements CarService{
 	}
 	
 
-	public ApiResponse registerCar(Long userId, @Valid CarRegistrationDTO car) {
-		
-		System.out.println("CarServiceImpl ke registerCar ke under hu Sanket dada...");
-		
-		Car car2 = mapper.map(car,Car.class);
-		car2.setId(null);
-		car2.setStatus(CarStatus.NOTVERIFIED);
-		car2.getAddress().setCar(car2);
-		System.out.println("User Id: " + userId);
-		
-		User u = userDao.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User not found"));
-		u.addHostedCar(car2);
-		u.setUserRole(UserRole.HOST);
-		
-		return new ApiResponse("New Car Added successfully ");
+	public ApiResponseWithId registerCar(Long userId, @Valid CarRegistrationDTO carDto) {
+
+	    // Map DTO to entity
+	    Car car2 = mapper.map(carDto, Car.class);
+	    car2.setId(null);
+	    car2.setStatus(CarStatus.NOTVERIFIED);
+	    car2.getAddress().setCar(car2);
+	    
+
+	    // Car is saved
+	    Car savedCar = carDao.save(car2); 
+	    
+	    // Associate with user and make user a HOST
+	    User u = userDao.findById(userId)
+	            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+	    u.addHostedCar(savedCar);
+	    u.setUserRole(UserRole.HOST);
+	    userDao.save(u);
+
+	    // Return message + carId in data
+	    Map<String, Object> payload = new HashMap<>();
+	    payload.put("carId", savedCar.getId());
+	    return new ApiResponseWithId("New Car Added successfully", payload);
 	}
 
 

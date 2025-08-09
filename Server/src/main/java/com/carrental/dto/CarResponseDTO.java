@@ -16,9 +16,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class CarResponseDTO {
 
 	private Long id;
@@ -33,8 +37,6 @@ public class CarResponseDTO {
 
     private String carNumber;
 
-    private String rcNumber;
-
     private Double dailyRate;
     
     private CarStatus status;
@@ -44,9 +46,12 @@ public class CarResponseDTO {
     private CarTransmissionType transmissionType;
 
     private Integer seatCapacity;
+    
+    private double rating;
 
     private AddressDTO address;
     
-    //private List<RatingsDTO2> ratings;
-    private double rating;
+    private List<CarImgResponseDTO> imagelist;
+    
+    
 }

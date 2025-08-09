@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.carrental.dao.BookingDaoInterface;
 import com.carrental.dao.CarDaoInterface;
+import com.carrental.dao.CarImgInterface;
 import com.carrental.dao.HostDao;
 import com.carrental.dto.ApiResponse;
 import com.carrental.dto.CarBookingHistoryDTO;
@@ -33,6 +34,7 @@ public class HostServiceImpl implements HostService {
 	private final HostDao hostDao;
 	private final CarDaoInterface carDao;
 	private final BookingDaoInterface bookingDao;
+	private final CarImgInterface carImdDao;
 	private final ModelMapper mapper;
 	
 
@@ -44,7 +46,7 @@ public class HostServiceImpl implements HostService {
 		
 		System.out.println("HostService Implimentation ke getMycars ke under hu padul saheb...");
 		
-		return cars.stream()
+		List<CarResponseDTO> list= cars.stream()
 			       .map(car -> {
 			           // 1) Map all the scalar and address fields
 			           CarResponseDTO dto = mapper.map(car, CarResponseDTO.class);
@@ -62,6 +64,14 @@ public class HostServiceImpl implements HostService {
 			           return dto;
 			       })
 			       .collect(Collectors.toList());
+		
+		for(CarResponseDTO dto : list)
+		{
+			dto.setImagelist(carImdDao.findOrderedImagesByCarId(dto.getId()));
+		}
+		
+		
+		return list;
 	}
 
 
