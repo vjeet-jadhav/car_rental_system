@@ -13,12 +13,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserRequestDto {
+	
 	@NotBlank(message = "First Name is Required")
-	@Length(min = 5, max = 20, message = "Invalid First Name Lenght")
+	@Length(min = 2, max = 25, message = "Invalid First Name Lenght")
 	private String firstName;
 	
 	@NotBlank(message = "Last Name is Required")
-	@Length(min = 5, max = 20, message = "Invalid Last Name Length")
+	@Length(min = 2, max = 25, message = "Invalid Last Name Length")
 	private String lastName;
 	
 	@NotBlank(message = "Email is Required")
@@ -40,6 +41,6 @@ public class UserRequestDto {
 	private int zipCode;
 	
 	@NotBlank(message = "Mobile Number is Required")
-	@Length(max = 10, message = "Mobile Number Max Length Exceeded")
+	@Length(max = 10,min=10, message = "Mobile Number Max Length Exceeded")
 	private String mob_num;
 }

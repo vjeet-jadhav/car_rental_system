@@ -40,6 +40,7 @@ import com.carrental.dto.ImgResponseDTO;
 import com.carrental.dto.ResponseForCarCities;
 import com.carrental.dto.Top5RatingResponseDto;
 import com.carrental.dto.TopCarsResponseDto;
+import com.carrental.dto.TopReviewsResponseHome;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
 import com.carrental.dto.UserInfoDto;
@@ -128,13 +129,10 @@ public class UserServiceImpl implements UserService{
 		entity.setHost(host);
 		entity.setBookingStatus(BookingStatus.CONFIRMED);
 		bookingDao.save(entity);
-//		on successful booking car status need to update
-		car.setStatus(CarStatus.BOOKED);
-		
+
 //	    storing the payment details
 		
 		Payment pEntity = modelMapper.map(pDto, Payment.class);
-		
 		pEntity.setBookingId(entity);
 		pEntity.setPaymentStatus(PaymentStatus.COMPLETED);
 		pEntity.setPaymentTime(LocalDateTime.now());
@@ -159,7 +157,9 @@ public class UserServiceImpl implements UserService{
 					dto.setCarModel(booking.getCar().getCarModel());
 					dto.setDailyRate(booking.getCar().getDailyRate());
 					dto.setBookingStatus(booking.getBookingStatus());
+					dto.setTotalAmount(booking.getAmount());
 					dto.setCarId(booking.getCar().getId());
+					dto.setBookingDate(booking.getBookingdate());
 //					getting the payment status
 					Long bookingId = booking.getId();
 					Payment obj = paymentDao.findByBookingId(bookingId).orElseThrow(()-> new ResourceNotFoundException("payment not done"));
@@ -198,7 +198,7 @@ public class UserServiceImpl implements UserService{
 			responseList.add(obj);
 		}
 //		sorting according to rating 
-		responseList.sort((x,y) -> (int)y.getRating()-(int)x.getRating());
+		responseList.sort((x,y) -> Double.compare(y.getRating(), x.getRating()));
 		return responseList;
 	}
 	
@@ -233,7 +233,7 @@ public class UserServiceImpl implements UserService{
 		
 		ratingDao.save(rating);
 		
-		return "Review Successfully Added";
+		return "Thank you for sharing your feedback! Your review has been submitted successfully.";
 	}
 
 	public ApiResponse addImage(Long userId, String imgUrl , String publicId, String format) {
@@ -347,7 +347,7 @@ public class UserServiceImpl implements UserService{
 		List<Integer> seatCapacity=dto.getSeatCapacity();
 		
 		Double carRating =(double) dto.getRating();
-		
+		int flag=0;
 		String serviceArea = dto.getServiceArea();
 //		response dto
 		List<TopCarsResponseDto> responseEnity = new ArrayList<>();
@@ -355,16 +355,18 @@ public class UserServiceImpl implements UserService{
 		List<TopCarsResponseDto> listCars = getAllAvailableCarsForBooking(adto);
 		for(TopCarsResponseDto c:listCars)
 		{
+			
 			if ((fuelType.isEmpty() || fuelType.contains(c.getFuelType())) &&
 				    (transmissionType.isEmpty() || transmissionType.contains(c.getTransmissionType())) &&
 				    (seatCapacity.isEmpty() || seatCapacity.contains(c.getSeatCapacity())) &&
 				    (carRating == 0 || (c.getRating() >= carRating)) &&
-				    (serviceArea == null || serviceArea.equalsIgnoreCase(c.getServiceArea()))) {
+				    (serviceArea.isEmpty()|| serviceArea.equalsIgnoreCase(c.getServiceArea()))) {
 				    
 				    responseEnity.add(c);
 				}
-				
+						
 		}
+		
 		return responseEnity;
 	}
 
@@ -457,11 +459,45 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public List<String> getServiceAreaOfCars() {
-		// TODO Auto-generated method stub
 		List<String> serviceArea = addDao.getAllServiceArea().orElseThrow();
 		return serviceArea;
 	}
 
+	@Override
+	public List<TopCarsResponseDto> getTopmostcars() {
+		List<TopCarsResponseDto> allCars = getTopCars();
+		List<TopCarsResponseDto> top3Cars = new ArrayList<>();
+		for(int i=0;i<3;i++)
+		{
+			top3Cars.add(allCars.get(i));
+		}
+		return top3Cars;
+	}
+
+	@Override
+	public List<TopReviewsResponseHome> getReviewsTop3() {
+		
+		Pageable pageable = PageRequest.of(0, 3);
+		
+		List<Rating> rating = ratingDao.getReview(pageable);
+//		List<TopReviewsResponseHome> list = rating.stream().map(rate->modelMapper.map(rate, TopReviewsResponseHome.class)).toList();
+		List<TopReviewsResponseHome> list = new ArrayList<>();
+		for(Rating r : rating)
+		{
+			TopReviewsResponseHome obj = new TopReviewsResponseHome();
+			obj.setFirstNmae(r.getClient().getFirstName());
+			obj.setLastName(r.getClient().getLastName());
+			obj.setCarBrand(r.getCar().getBrand());
+			obj.setCarModel(r.getCar().getCarModel());
+			obj.setRating(r.getRating());
+			obj.setFeedback(r.getFeedback());
+			list.add(obj);
+		}
+		return list;
+	}
+
+	
+	
 	
 }
 

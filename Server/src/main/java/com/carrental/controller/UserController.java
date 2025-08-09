@@ -53,6 +53,7 @@ public class UserController {
 	private AuthenticationManager authenticationManager;
 	private JwtUtils jwtUtils;
 	
+	
 	@PostMapping("/signup")
 	public ResponseEntity<?> RegesterUser(@RequestBody @Valid UserRequestDto userDto) {
 		System.out.println(userDto.toString());
@@ -69,7 +70,7 @@ public class UserController {
 	
 	
 	@PostMapping("/signin")
-	public String userSignIn(@RequestBody UserLoginRequestDto dto)
+	public ResponseEntity<?> userSignIn(@RequestBody UserLoginRequestDto dto)
 	{
 		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword());
 		System.out.println("before - "+authentication.isAuthenticated());//false);
@@ -80,10 +81,12 @@ public class UserController {
 		System.out.println("after "+validAuthentication.isAuthenticated());//true
 		
 //		In case of success , generate JWT n send it to REST client
-		return jwtUtils.generateJwtToken(validAuthentication);
+		return ResponseEntity.ok(jwtUtils.generateJwtToken(validAuthentication));
 	}
 	
 	
+	
+//	ON SUCCESS
 	@PostMapping("/bookingCar")
 	public ResponseEntity<?> userCarBooking(@RequestBody BookingRequestComDto requestBookingDto)
 	{
@@ -93,9 +96,12 @@ public class UserController {
 		System.out.println(pDto.toString());
 		userService.bookCar(bDto,pDto);
 //		Booking entity = 
-//		System.out.println("sanket   "+dto.toString());
+//		System.out.println("sanket   "+requestBookingDto.toString());
 		return ResponseEntity.ok("Booking and payment executed successfully...)");
 	}
+	
+	
+
 
 	@GetMapping("/myBooking")
 	public ResponseEntity<?> userBookings()
@@ -112,9 +118,9 @@ public class UserController {
 	}
 
 	@PostMapping("/review")
-	public String submitReview(@RequestBody CarReviewDto reviewDto) {
+	public ResponseEntity<?> submitReview(@RequestBody CarReviewDto reviewDto) {
 		
-		return userService.addReview(reviewDto);
+		return ResponseEntity.ok(userService.addReview(reviewDto));
 	}
 	
 
@@ -213,4 +219,17 @@ public class UserController {
 		Long userId =(Long) SecurityContextHolder.getContext().getAuthentication().getDetails();
 		return ResponseEntity.status(HttpStatus.OK).body(userService.getUserDetail(userId));
 	}
+	
+	@GetMapping("/getTop3Cars")
+	public ResponseEntity<?> getTop3Cars()
+	{
+		return ResponseEntity.ok(userService.getTopmostcars());
+	}
+	
+	@GetMapping("/getTopReviews")
+	public ResponseEntity<?> getTop3Reviews()
+	{
+		return ResponseEntity.ok(userService.getReviewsTop3());
+	}
+	
 }
