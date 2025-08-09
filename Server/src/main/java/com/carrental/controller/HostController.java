@@ -67,6 +67,7 @@ public class HostController {
 	public ResponseEntity<?> getBookingHistory()
 	{
 		Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getDetails();
+		System.out.println(userId);
 		System.out.println("HostController ke getBookingHistory ke under hu padul saheb...");
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(hostService.getBookingHistory(userId));

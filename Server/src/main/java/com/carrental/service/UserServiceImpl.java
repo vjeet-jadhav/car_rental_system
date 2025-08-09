@@ -145,6 +145,7 @@ public class UserServiceImpl implements UserService{
 		System.out.println("user id is"+id);
 		User user = userDaoInterface.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Invaild User ID/Not a Valid User"));
+		
 			
 		List<Booking> bookingList = userDaoInterface.fetchAllBooking(id);
 		List<UserBookingsDto> list = bookingList.stream().map(booking -> {
@@ -247,12 +248,16 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public ApiResponse addCarImg(Long carId, List<ImgResponseDTO> urls) {
+		
+		System.out.println("UserService ke addCarImg ke under hu Sanket dada...");
 		// TODO Auto-generated method stub
 		Car car = carDao.findById(carId).orElseThrow(() -> new ResourceNotFoundException("Car not found for given id !"));
 		
 		for(int i = 0 ; i < urls.size(); i++) {
 			CarImgEntity entity1 = new CarImgEntity();
 			entity1.setCar(car);
+			
+			System.out.println("UserService2 ke addCarImg ke under hu Sanket dada...");
 			
 			
 			if(i == 0) {

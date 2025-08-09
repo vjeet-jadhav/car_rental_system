@@ -27,6 +27,8 @@ import HostRegistrationForm from "./Screens/Host/HostRegistrationForm";
 import HostHomePage from "./Screens/Host/HostHomePage";
 import ClientCarReview from "./Screens/Client/ClientCarReview";
 import HostCarInformation from "./Screens/Host/HostCarInformation"
+import HostHistory from "./Screens/Host/HostHistory";
+import HostEarning from "./Screens/Host/HostEarning";
 import { ToastContainer } from "react-toastify";
 import { UserDetails } from "./Screens/Admin/UserDetails";
 import ClientContainer from "./Screens/Client/ClientContainer";
@@ -84,12 +86,16 @@ function App() {
               <Route path="register" element={<RegisterAgent></RegisterAgent>}></Route>
             </Route>
 
-            <Route path="host" element={user ? <HostContainer></HostContainer> : <Home></Home>}>
-              <Route path="carregistration" element={<HostRegistration></HostRegistration>}></Route>
-              <Route path="registrationform" element={<HostRegistrationForm></HostRegistrationForm>}></Route>
-              <Route index element={<HostHomePage></HostHomePage>}></Route>
-              <Route path="carinformation" element={<HostCarInformation></HostCarInformation>}></Route>
-            </Route>
+
+          <Route path="host" element={user ? <HostContainer></HostContainer> : <Home></Home>}>
+            <Route path="carregistration" element={<HostRegistration></HostRegistration>}></Route>
+            <Route path="registrationform" element={<HostRegistrationForm></HostRegistrationForm>}></Route>
+            <Route index element={<HostHomePage></HostHomePage>}></Route>
+            <Route path="carinformation" element={<HostCarInformation></HostCarInformation>}></Route>
+            <Route path="history" element={<HostHistory></HostHistory>}></Route>
+            <Route path="earning" element={<HostEarning></HostEarning>}></Route>
+          </Route>
+
 
             <Route path="agent" element={user ? <AgentContainer></AgentContainer> : <Home></Home>}>
               <Route path="history" element={<AgentHistory></AgentHistory>}></Route>

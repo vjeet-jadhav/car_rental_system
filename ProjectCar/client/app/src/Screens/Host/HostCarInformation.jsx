@@ -1,93 +1,126 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-// Dummy data (would normally come in via props or context)
-const carInfo = {
-  brand:        'Toyota',
-  model:        'Corolla',
-  variant:      'LE',
-  number:       'MH-12-3456',
-  registration: 'TN-09-6789',
-  city:         'Pune',
-  state:        'Maharashtra',
-  pincode:      '411057',
-  address:      '123, MG Road, Shivaji Nagar',
-  transmission: 'Automatic',
-  seats:        5,
-  fuel:         'Petrol'
-};
-
-const mainImage     = '/Image/car-hero-section.svg';
-const galleryImages = [
-  '/Image/car-hero-section.svg',
-  '/Image/car-hero-section.svg',
-  '/Image/car-hero-section.svg',
-  '/Image/car-hero-section.svg',
-];
+import { updateCar } from '../../Services/host'
+import { toast } from 'react-toastify';
+import { Message } from './../../../node_modules/esbuild/lib/main.d';
 
 function HostCarInformation() {
+  const { state } = useLocation();
+  const [car, setCar] = useState(state?.car);
+
+  if (!car) return <div className="text-center mt-5">No car data found.</div>;
+
+  const mainImage = car.imagelist?.[0]?.imgUrl || '/Image/car-hero-section.svg';
+  const galleryImages = car.imagelist?.slice(1, 5).map(img => img.imgUrl) || [];
+
   const [isEditing, setIsEditing] = useState(false);
   const [editFields, setEditFields] = useState({
-    city: carInfo.city,
-    state: carInfo.state,
-    pincode: carInfo.pincode,
-    address: carInfo.address,
+    address: car.address?.address || '',
+    dailyRate: car.dailyRate ?? '',
+    city: car.address?.city || '',
+    state: car.address?.state || '',
+    serviceArea: car.address?.serviceArea || '',
+    pinCode: car.address?.pinCode || ''
   });
 
-  // Editable field names
-  const editable = ['City', 'State', 'Pincode', 'Address'];
+  const [errors, setErrors] = useState({});
+
+  // Mapping labels to field keys
+  const fieldKeyMap = {
+    'Daily Rate': 'dailyRate',
+    'Address': 'address',
+    'City': 'city',
+    'State': 'state',
+    'Service Area': 'serviceArea',
+    'Pincode': 'pinCode'
+  };
+
+  const validate = () => {
+    const newErrors = {};
+
+    if (!editFields.address.trim()) newErrors.address = 'Address is required';
+    if (!editFields.dailyRate || isNaN(editFields.dailyRate)) newErrors.dailyRate = 'Valid rate required';
+    if (!editFields.city.trim()) newErrors.city = 'City is required';
+    if (!editFields.state.trim()) newErrors.state = 'State is required';
+    if (!editFields.serviceArea.trim()) newErrors.serviceArea = 'Service area is required';
+    if (!editFields.pinCode || isNaN(editFields.pinCode)) newErrors.pinCode = 'Valid pincode required';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleEditClick = () => {
-    setEditFields({
-      city: carInfo.city,
-      state: carInfo.state,
-      pincode: carInfo.pincode,
-      address: carInfo.address,
-    });
+    setErrors({});
     setIsEditing(true);
   };
 
-  const handleCancel = () => {
-    setIsEditing(false);
-  };
+  const handleSubmit = async () => {
+  if (!validate()) return;
 
-  const handleSubmit = () => {
-    const updated = {
-      ...carInfo,
-      city:    editFields.city,
-      state:   editFields.state,
-      pincode: editFields.pincode,
+  const updated = {
+    id: car.id,
+    brand: car.brand,
+    carModel: car.carModel,
+    varient: car.varient,
+    yearOfManufacturing: car.yearOfManufacturing,
+    carNumber: car.carNumber,
+    rcNumber: car.rcNumber,
+    dailyRate: parseFloat(editFields.dailyRate),
+    status: car.status,
+    fuelType: car.fuelType,
+    transmissionType: car.transmissionType,
+    seatCapacity: car.seatCapacity,
+    address: {
       address: editFields.address,
-    };
-    console.log('Submitted data:', updated);
-    // TODO: call your API / parent handler here with `updated`
-    setIsEditing(false);
+      city: editFields.city,
+      state: editFields.state,
+      serviceArea: editFields.serviceArea,
+      pinCode: parseInt(editFields.pinCode, 10)
+    }
   };
 
-  // All fields in desired sequence
+  console.log('Submitting payload:', updated);
+
+  try {
+    const result = await updateCar(updated);
+    if (result.status === 'success') {
+      toast.success(result.message);
+      setCar(updated);
+      setIsEditing(false);
+    } else {
+      toast.error(result.message || 'Updation Failed');
+    }
+  } catch (err) {
+    toast.error('Unexpected error occurred');
+  }
+};
+
   const fields = [
-    ['Brand',        carInfo.brand],
-    ['Model',        carInfo.model],
-    ['Variant',      carInfo.variant],
-    ['Car Number',   carInfo.number],
-    ['Registration', carInfo.registration],
-    ['Transmission', carInfo.transmission],
-    ['Seats',        carInfo.seats],
-    ['Fuel',         carInfo.fuel],
-    ['City',         editFields.city],
-    ['State',        editFields.state],
-    ['Pincode',      editFields.pincode],
-    ['Address',      editFields.address],
+    ['Brand', car.brand],
+    ['Model', car.carModel],
+    ['Variant', car.varient],
+    ['Car Number', car.carNumber],
+    ['RC Number', car.carNumber],
+    ['Year', car.yearOfManufacturing?.split('T')[0]],
+    ['Transmission', car.transmissionType],
+    ['Seats', car.seatCapacity],
+    ['Fuel', car.fuelType],
+    ['Status', car.status],
+    ['Daily Rate', editFields.dailyRate],
+    ['Address', editFields.address],
+    ['City', editFields.city],
+    ['State', editFields.state],
+    ['Service Area', editFields.serviceArea],
+    ['Pincode', editFields.pinCode]
   ];
+
+  const editableFields = Object.keys(fieldKeyMap);
 
   return (
     <div className="container-fluid p-4">
-      {/* Image Box */}
-      <div
-        className="p-2 d-flex border border-2 border-warning rounded-4 overflow-hidden mx-auto mt-3"
-        style={{ width: '90%', minHeight: '450px' }}
-      >
-        {/* Main Image (50%) */}
+      {/* Image Section */}
+      <div className="p-2 d-flex border border-2 border-warning rounded-4 overflow-hidden mx-auto mt-3" style={{ width: '90%', minHeight: '450px' }}>
         <div style={{ flex: '0 0 50%' }}>
           <img
             src={mainImage}
@@ -96,12 +129,7 @@ function HostCarInformation() {
             style={{ objectFit: 'cover' }}
           />
         </div>
-
-        {/* Thumbnails (50%) */}
-        <div
-          className="p-3 d-flex flex-column justify-content-between"
-          style={{ flex: '0 0 50%' }}
-        >
+        <div className="p-3 d-flex flex-column justify-content-between" style={{ flex: '0 0 50%' }}>
           {[0, 2].map(rowStart => (
             <div key={rowStart} className="d-flex gap-2" style={{ height: '49%' }}>
               {galleryImages.slice(rowStart, rowStart + 2).map((src, idx) => (
@@ -118,28 +146,31 @@ function HostCarInformation() {
         </div>
       </div>
 
-      {/* Car Details: 4 per row */}
+      {/* Car Details */}
       <div className="container mt-5" style={{ width: '90%' }}>
         <h4 className="text-warning mb-3">Car Details</h4>
         <div className="row g-2">
           {fields.map(([label, value], idx) => {
-            const key = label;
-            const lowercase = label.toLowerCase().replace(' ', '');
-            const isFieldEditable = editable.includes(label);
+            const fieldKey = fieldKeyMap[label];
+            const isEditable = editableFields.includes(label);
+            const error = fieldKey ? errors[fieldKey] : null;
 
             return (
-              <div className="col-6 col-md-3" key={key + idx}>
+              <div className="col-6 col-md-3" key={label + idx}>
                 <div className="p-2 bg-white border rounded shadow-sm h-100">
                   <small className="text-muted">{label}</small>
-                  {isEditing && isFieldEditable ? (
-                    <input
-                      type="text"
-                      className="form-control form-control-sm mt-1"
-                      value={editFields[lowercase]}
-                      onChange={e =>
-                        setEditFields(prev => ({ ...prev, [lowercase]: e.target.value }))
-                      }
-                    />
+                  {isEditing && isEditable ? (
+                    <>
+                      <input
+                        type={label === 'Daily Rate' || label === 'Pincode' ? 'number' : 'text'}
+                        className={`form-control form-control-sm mt-1 ${error ? 'is-invalid' : ''}`}
+                        value={editFields[fieldKey]}
+                        onChange={e =>
+                          setEditFields(prev => ({ ...prev, [fieldKey]: e.target.value }))
+                        }
+                      />
+                      {error && <div className="invalid-feedback">{error}</div>}
+                    </>
                   ) : (
                     <p className="mt-1 mb-0 fw-semibold small">{value}</p>
                   )}
@@ -158,13 +189,10 @@ function HostCarInformation() {
           </button>
         ) : (
           <>
-            <button
-              className="btn btn-outline-secondary me-3 px-4"
-              onClick={handleCancel}
-            >
+            <button className="btn btn-outline-secondary me-3 px-4" onClick={handleCancel}>
               Cancel
             </button>
-            <button className="btn px-4 text-white" onClick={handleSubmit} style={{backgroundColor:'rgb(251, 85, 25)'}}>
+            <button className="btn px-4 text-white" onClick={handleSubmit} style={{ backgroundColor: 'rgb(251, 85, 25)' }}>
               Submit
             </button>
           </>
