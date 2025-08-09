@@ -1,6 +1,7 @@
 package com.carrental.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -28,4 +29,15 @@ public interface CarImgInterface extends JpaRepository<CarImgEntity, Long> {
 		        end
 		      """)
 	List<CarImgResponseDTO> findOrderedImagesByCarId(@Param("carId") Long carId);
+	
+	
+	@Query("""
+		      select new com.carrental.dto.CarImgResponseDTO(
+		        i.imgType, i.imgUrl, i.publicId
+		      )
+		      from CarImgEntity i
+		      where i.car.id = :carId
+		        and lower(i.imgType) = 'main'
+		    """)
+	CarImgResponseDTO findMainImageByCarId(@Param("carId") Long carId);
 }
