@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import PaymentButton from '../../Components/PaymentButton';
 import { AuthContext } from '../../App';
@@ -24,14 +24,24 @@ function CarBooking() {
     const amountBeforeDiscount = totalHours * carInfo.dailyRate;
 
     const finalAmount = amountBeforeDiscount;
-    const body = (user == null) ? {} : {
+    const body = {
         "startTrip": tripData.startTrip,
         "endTrip": tripData.endTrip,
         "amount": finalAmount,
+        "client": user.id,
         "car": carInfo.carId,
-        "client": user.id, //geting from the token
         "host": carInfo.hostId
     }
+
+    // NOT ABLE TO CAME BACK BY BROWSER ARROW
+    useEffect(() => {
+        const isPaymentDone = sessionStorage.getItem("paymentDone");
+        if (isPaymentDone === "true") {
+            toast.info("You’ve already completed your booking.");
+            navigate("/user-booking", { replace: true });
+        }
+    }, []);
+
 
     return (
         <div>
@@ -86,7 +96,7 @@ function CarBooking() {
                                         <p>Total Hours: <strong>{totalHours}</strong></p>
                                         <p>Final Amount: ₹<strong>{finalAmount}</strong></p>
                                     </div>
-                                    <PaymentButton amount={0} booking={body} />
+                                    <PaymentButton amount={finalAmount} booking={body} />
                                 </>
                         }
 

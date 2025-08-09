@@ -1,6 +1,8 @@
 import axios from "axios";
 import { config } from "./config";
 
+const token = sessionStorage.getItem("token");
+
 // USER SIGNUP
 export async function userSignUp({ firstName, lastName, email, password, city, state, zipCode, mob_num }) {
   const body = { firstName, lastName, email, password, city, state, zipCode, mob_num };
@@ -88,7 +90,7 @@ export async function getCarsAfterFilter( filters,tripInfo) {
 
 export async function getUser(){
   try {
-    const token = localStorage.getItem('token');
+    // const token = localStorage.getItem('token');
     const url = `${config.serverUrl}/user/info`
 
     const response = await axios.get(url, {
@@ -106,7 +108,6 @@ export async function getUser(){
 export async function updateUserInfo(firstName, lastName, email, mob_num){
   try {
     const body = {firstName, lastName, email, mob_num};
-    const token = localStorage.getItem('token');
     const url = `${config.serverUrl}/user/editProfile`
 
     const response = await axios.put(url, body, {
@@ -135,15 +136,33 @@ export async function getTheBookingAndPaymentStatus(getData) {
   }
 }
 
-// export async function getBooking()
-// {
-//   const url = `${config.serverUrl}/user/myBooking`;
-//   // const token =
-//   try{
-//     const result = await axios.get(url,{
-//       headers:{
-//         token:
-//       }
-//     })
-//   }
-// }
+export async function getBooking()
+{
+  const url = `${config.serverUrl}/user/myBooking`;
+  const token = sessionStorage.getItem("token");
+  try{
+    const result = await axios.get(url,{
+      headers:{
+        Authorization: `Bearer ${token}`
+      } 
+    })
+    return result;
+  }catch(e)
+  {
+    console.log(e,"get user bookings");
+  }
+}
+
+// getTopCars
+
+export async function getTopCars()
+{
+  const url = `${config.serverUrl}/user/getTop3Cars`;
+  try{
+    const result = await axios.get(url)
+    return result;
+  }catch(e)
+  {
+    console.log(e,"get top cars bookings services");
+  }
+}

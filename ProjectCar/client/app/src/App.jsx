@@ -105,8 +105,7 @@ function App() {
               {/* <Route element={<ProtectedRoutesTrip trip={trip} />}>
                 
               </Route> */}
-              <Route path="/allcars" element={<CarInfo />} />
-              <Route path="/carbooking" element={<CarBooking />} />
+
               {/* ON THE BASIS OF USER IS LOGIN OR NOT */}
               <Route element={<ProtectedRoutes user={user} />}>
                 <Route path="edit" element={<Profile />} />
@@ -114,6 +113,8 @@ function App() {
                 <Route path="become-host/registration-form" element={<HostRegistrationForm />} />
                 <Route path="user-booking" element={<ClientBooking />} />
                 <Route path="review-car" element={<ClientCarReview />} />
+                <Route path="/allcars" element={<CarInfo />} />
+                <Route path="/carbooking" element={<CarBooking />} />
               </Route>
 
             </Route>

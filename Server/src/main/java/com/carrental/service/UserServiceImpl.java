@@ -155,7 +155,9 @@ public class UserServiceImpl implements UserService{
 					dto.setCarModel(booking.getCar().getCarModel());
 					dto.setDailyRate(booking.getCar().getDailyRate());
 					dto.setBookingStatus(booking.getBookingStatus());
+					dto.setTotalAmount(booking.getAmount());
 					dto.setCarId(booking.getCar().getId());
+					dto.setBookingDate(booking.getBookingdate());
 //					getting the payment status
 					Long bookingId = booking.getId();
 					Payment obj = paymentDao.findByBookingId(bookingId).orElseThrow(()-> new ResourceNotFoundException("payment not done"));
@@ -194,7 +196,7 @@ public class UserServiceImpl implements UserService{
 			responseList.add(obj);
 		}
 //		sorting according to rating 
-		responseList.sort((x,y) -> (int)y.getRating()-(int)x.getRating());
+		responseList.sort((x,y) -> Double.compare(y.getRating(), x.getRating()));
 		return responseList;
 	}
 	
@@ -451,11 +453,23 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public List<String> getServiceAreaOfCars() {
-		// TODO Auto-generated method stub
 		List<String> serviceArea = addDao.getAllServiceArea().orElseThrow();
 		return serviceArea;
 	}
 
+	@Override
+	public List<TopCarsResponseDto> getTopmostcars() {
+		List<TopCarsResponseDto> allCars = getTopCars();
+		List<TopCarsResponseDto> top3Cars = new ArrayList<>();
+		for(int i=0;i<3;i++)
+		{
+			top3Cars.add(allCars.get(i));
+		}
+		return top3Cars;
+	}
+
+	
+	
 	
 }
 

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import './Home.css'
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { getAllCarCities, getAvailableCars } from '../../Services/user';
+import { getAllCarCities, getAvailableCars, getTopCars } from '../../Services/user';
 import Navbar from '../../Components/Navbar';
 import { AuthContext } from '../../App';
 
@@ -10,7 +10,7 @@ function Home() {
 
   const navigate = useNavigate();
 
-  const { trip, setTrip } = useContext(AuthContext);
+
 
   const [getTripInfo, setTrioInfo] = useState(
     {
@@ -21,6 +21,8 @@ function Home() {
 
   // For the User 
   const [getCity, setCity] = useState([]);
+
+  const [getTopcCars, setTopCars] = useState([]);
 
   const [city, setOnlyCity] = useState("");
 
@@ -45,24 +47,21 @@ function Home() {
     }
   }
 
+  const topCars = async () => {
+    const result = await getTopCars();
+    if (result && result.status == 200) {
+      setTopCars(result.data);
+    }
+    else {
+      console.log("get all cars problem");
+    }
+  }
+
   const NavigateOnCars = async () => {
     console.log(getTripInfo);
 
     const { startTrip, endTrip } = getTripInfo;
 
-    // SETTING TRIP-INFO FOR PROTEXTING THE ALLCAR ROUTE
-    setTrip({
-      start: startTrip,
-      end: endTrip,
-      loc: city,
-    });
-
-    // SETTING INTO SESSION STRORAGE TO AVOID THE REFRESH
-    sessionStorage.setItem("trip", JSON.stringify({
-      start: startTrip,
-      end: endTrip,
-      loc: city,
-    }));
 
 
     // ADDING BUFFER TIME TO AVOID SERVER SIDE VALIDATION
@@ -75,17 +74,19 @@ function Home() {
     // console.log(adjStartTrip+"adding buffer time");
 
 
-    if (startTrip.length === 0)
+    if (startTrip.length == 0)
       toast.warn("Select Start Trip time");
-    else if (endTrip.length === 0)
+    else if (endTrip.length == 0)
       toast.warn("Select End Trip time");
     else if (new Date(startTrip) >= new Date(endTrip)) {
       toast.warn("End Trip time must be after Start Trip time");
+    }else if(!city){
+      toast.warn("select city");
     }
     else {
 
       const result = await getAvailableCars(getTripInfo);
-      if (result.status === 200) {
+      if (result && result.status == 200) {
         navigate('/allcars', {
           state: {
             "data": result.data,
@@ -95,6 +96,7 @@ function Home() {
         })
       }
       else {
+        toast.error("You are not selecting proper journey time (Must be present or future)");
         console.log("something goes wrong....");
       }
 
@@ -104,6 +106,7 @@ function Home() {
 
   useEffect(() => {
     getAllCity();
+    topCars();
   }, []);
 
   return (
@@ -183,101 +186,46 @@ function Home() {
         <div className='container mt-5  p-5' >
           <div className="bg-light p-4 rounded shadow-sm">
             <h2 className='text-center'>Top cars</h2>
-            <div className="d-flex justify-content-evenly mt-5">
-              {/* cards */}
 
-              <Link
-                to="carbooking"
-                className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none "
-              >
-                <img
-                  src="/Image/carBg1.jpg" // Corrected path for React
-                  className=""
-                  alt="Car"
-                  style={{ height: "70%" }}
-                />
+            {/* TOP CARS */}
+            <div className="col-12 border-danger">
+              <div className="row justify-content-evenly mt-5">
+                {
+                    getTopcCars.map((car, index) => (
+                      <div key={index} className="col-md-4 mb-4">
+                        <div
+                          className="card cursor-pointer shadow-sm scale-up text-decoration-none"
+                          onClick={() => navigateToBookingCar(car)}
+                        >
+                          <img
+                            src="/Image/carBg1.jpg"
+                            alt="Car"
+                            className="card-img-top"
+                            style={{ height: "70%" }}
+                          />
+                          <div className="card-body" style={{ height: "20%" }}>
+                            <h5 className="card-title mb-2">{car.brand} : {car.carModel}</h5>
 
-                <div className="card-body" style={{ height: "20%" }}>
-                  <h5 className="card-title mb-2">Model: TATA</h5>
+                            <div className="d-flex justify-content-between text-muted small mb-2">
+                              <div>
+                                <span>{car.transmissionType}</span> | <span>{car.fuelType}</span> |{" "}
+                                <span>{car.seatCapacity} seats</span>
+                              </div>
+                              <div>
+                                <span>{car.rating}⭐</span>
+                              </div>
+                            </div>
 
-                  <div className="d-flex justify-content-between text-muted small mb-2">
-                    <div>
-                      <span>Manual</span> | <span>Petrol</span> |{" "}
-                      <span>7 seats</span>
-                    </div>
-                    <div>
-                      <span>4.5⭐</span>
-                    </div>
-                  </div>
-
-                  <div className="d-flex justify-content-between">
-                    <span className="text-success">Delivery Available</span>
-                    <span className="fw-bold">₹196/hr</span>
-                  </div>
-                </div>
-              </Link>
-
-              <Link
-                to="carbooking"
-                className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none"
-              >
-                <img
-                  src="/Image/carBg2.jpg" // Corrected path for React
-                  className=""
-                  alt="Car"
-                  style={{ height: "70%" }}
-                />
-
-                <div className="card-body " style={{ height: "20%" }}>
-                  <h5 className="card-title mb-2">Model: TATA</h5>
-
-                  <div className="d-flex justify-content-between text-muted small mb-2">
-                    <div>
-                      <span>Manual</span> | <span>Petrol</span> |{" "}
-                      <span>7 seats</span>
-                    </div>
-                    <div>
-                      <span>4.5⭐</span>
-                    </div>
-                  </div>
-
-                  <div className="d-flex justify-content-between">
-                    <span className="text-success">Delivery Available</span>
-                    <span className="fw-bold">₹196/hr</span>
-                  </div>
-                </div>
-              </Link>
-
-              <Link
-                to="carbooking"
-                className="card cursor-pointer mb-4 shadow-sm col-md-3 scale-up text-decoration-none"
-              >
-                <img
-                  src="/Image/carBg3.jpg" // Corrected path for React
-                  className=""
-                  alt="Car"
-                  style={{ height: "70%" }}
-                />
-
-                <div className="card-body" style={{ height: "20%" }}>
-                  <h5 className="card-title mb-2">Model: TATA</h5>
-
-                  <div className="d-flex justify-content-between text-muted small mb-2">
-                    <div>
-                      <span>Manual</span> | <span>Petrol</span> |{" "}
-                      <span>7 seats</span>
-                    </div>
-                    <div>
-                      <span>4.5⭐</span>
-                    </div>
-                  </div>
-
-                  <div className="d-flex justify-content-between">
-                    <span className="text-success">Delivery Available</span>
-                    <span className="fw-bold">₹196/hr</span>
-                  </div>
-                </div>
-              </Link>
+                            <div className="d-flex justify-content-between">
+                              <span className="text-success">{car.status}</span>
+                              <span className="fw-bold">₹{car.dailyRate}/hr</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                }
+              </div>
             </div>
 
             <div className="d-flex justify-content-center align-content-center">

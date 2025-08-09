@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,12 +79,15 @@ public class RazorPayController {
 	        // Use Razorpay SDK to verify signature
 	        boolean isValid = Utils.verifyPaymentSignature(params, secret);
 
+//	        on fail
 	        if (!isValid) {
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid signature. Payment verification failed.");
 	        }
-
-	        UserCarBookingDto obj1 = paymentResponse.getBookingDto();
 	        
+	        
+	        
+//	        on success
+	        UserCarBookingDto obj1 = paymentResponse.getBookingDto();
 	        Payment payment = razorpayClient.payments.fetch(paymentId);
 	        String id = payment.get("id");
 	        String status = payment.get("status");

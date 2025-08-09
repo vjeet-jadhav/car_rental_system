@@ -1,34 +1,39 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+// import { getBooking } from '../../Services/user';
+import { getBooking } from '../../Services/user';
 function ClientBooking() {
-    
-    const getUserBooking = async ()=>{
+
+    const [bookings, setBookings] = useState([]);
+    const getUserBooking = async () => {
         const result = await getBooking();
-        if(result && result.status==200)
-        {
-            
+        if (result && result.status == 200) {
+            console.log(JSON.stringify(result.data));
+            setBookings(result.data);
         }
-        else
-        {
+        else {
             console.log("something goes wrong...");
         }
     }
 
-    useEffect(()=>{
 
-    },[]);
+
+    useEffect(() => {
+        getUserBooking();
+    }, []);
     return (
         <div>
-            <div className="container mt-5">
+            <div className=" mt-5 mx-2">
                 <h2 className="text-center mb-4">Car Booking Details</h2>
                 <table className="table table-bordered table-hover">
-                    <thead className="table-dark">
+                    <thead >
                         <tr>
                             <th>#</th>
                             <th>Owner</th>
                             <th>Car</th>
                             <th>Start Time</th>
                             <th>End Time</th>
+                            <th>Booking Date</th>
                             <th>Total Hours</th>
                             <th>Rate/Hour</th>
                             <th>Total Amount</th>
@@ -41,21 +46,22 @@ function ClientBooking() {
                         {bookings.map((booking, index) => (
                             <tr key={booking.BookingID}>
                                 <td>{index + 1}</td>
-                                <td>{booking.UserName}</td>
-                                <td>{booking.CarModel}</td>
-                                <td>{booking.StartDateTime}</td>
-                                <td>{booking.EndDateTime}</td>
-                                <td>{booking.TotalHours}</td>
-                                <td>₹{booking.HourlyRate}</td>
-                                <td>₹{booking.TotalAmount}</td>
+                                <td>{booking.firstName} {booking.lastName}</td>
+                                <td>{booking.brand} {booking.carModel}</td>
+                                <td>{booking.startTrip}</td>
+                                <td>{booking.endTrip}</td>
+                                <td>{booking.bookingDate}</td>
+                                <td>{booking.totalAmount/booking.dailyRate}</td>
+                                <td>₹{booking.dailyRate}</td>
+                                <td>₹{booking.totalAmount}</td>
                                 <td>
-                                    <span className={`badge bg-${getStatusColor(booking.BookingStatus)} btn`} style={{Width:'200px'}}>
-                                        {booking.BookingStatus}
+                                    <span style={{ Width: '200px',color:"green" }}>
+                                        {booking.bookingStatus}
                                     </span>
                                 </td>
                                 <td>
-                                    <span className={`badge bg-${getStatusColor(booking.PaymentStatus)} btn `} style={{Width:'200px'}}>
-                                        {booking.PaymentStatus}
+                                    <span style={{ Width: '200px',color:"green" }}>
+                                        {booking.paymentStatus}
                                     </span>
                                 </td>
                                 <td>
