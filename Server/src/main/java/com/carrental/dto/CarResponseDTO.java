@@ -53,5 +53,7 @@ public class CarResponseDTO {
     
     private List<CarImgResponseDTO> imagelist;
     
+    private LocalDate sheduledFrom;
     
+    private LocalDate sheduledTill;
 }
