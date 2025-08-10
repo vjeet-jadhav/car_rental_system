@@ -1,5 +1,7 @@
-import axios from "axios"
+import axios from "axios";
 import { config } from "./config";
+
+const token = sessionStorage.getItem("token");
 
 // USER SIGNUP
 export async function userSignUp({ firstName, lastName, email, password, city, state, zipCode, mob_num }) {
@@ -7,25 +9,25 @@ export async function userSignUp({ firstName, lastName, email, password, city, s
   const url = `${config.serverUrl}/user/signup`;
   try {
     const result = await axios.post(url, body);
-    console.log(result);
+    return result;
   } catch (e) {
     console.log(e);
   }
 }
 
-export async function loginUser(email, password, city) {
+export async function loginUser(email, password) {
   try {
-    const body = { email, password, city };
+    const body = { email, password};
     const url = `${config.serverUrl}/user/signin`;
     const response = await axios.post(url, body);
     console.log(response)
-    return response.data;
+    return response;
   } catch (ex) {
     console.log(`Exception :`, ex);
   }
 }
 
-<<<<<<< HEAD
+
 export async function getAvailableCars({ startTrip, endTrip }) {
   const body = { startTrip, endTrip };
   const url = `${config.serverUrl}/user/serachCar`;
@@ -61,8 +63,8 @@ export async function getServiceAreaJS({ city }) {
 }
 
 
-export async function getCarsAfterFilter( filters,tripInfo) {
- const body = {
+export async function getCarsAfterFilter(filters, tripInfo) {
+  const body = {
     carFilter: {
       fuelType: filters.fuelType,
       transmissionType: filters.transmissionType,
@@ -75,22 +77,25 @@ export async function getCarsAfterFilter( filters,tripInfo) {
       endTrip: tripInfo.endTrip
     }
   };
-  console.log("body yaar",body);
+  console.log("body yaar", body);
   const url = `${config.serverUrl}/user/applyFilters`;
   try {
-    const result = await axios.post(url,body);
+    const result = await axios.post(url, body);
     return result;
   }
   catch (e) {
     console.log(e);
-=======
-export async function getUser(){
+
+  }
+}
+
+export async function getUser() {
   try {
-    const token = localStorage.getItem('token');
+    // const token = localStorage.getItem('token');
     const url = `${config.serverUrl}/user/info`
 
     const response = await axios.get(url, {
-      headers : {
+      headers: {
         Authorization: `Bearer ${token}`
       },
     })
@@ -101,10 +106,9 @@ export async function getUser(){
   }
 }
 
-export async function updateUserInfo(firstName, lastName, email, mob_num){
+export async function updateUserInfo(firstName, lastName, email, mob_num) {
   try {
-    const body = {firstName, lastName, email, mob_num};
-    const token = localStorage.getItem('token');
+    const body = { firstName, lastName, email, mob_num };
     const url = `${config.serverUrl}/user/editProfile`
 
     const response = await axios.put(url, body, {
@@ -116,6 +120,88 @@ export async function updateUserInfo(firstName, lastName, email, mob_num){
   }
   catch (ex) {
     console.log(`exception: `, ex)
->>>>>>> 255123cc74834bb6521caf9a35b2d41f981e004c
+
+  }
+}
+
+export async function getTheBookingAndPaymentStatus(getData) {
+  const body = "";
+  console.log("body to send backed", getData);
+  const url = `${config.serverUrl}/api/payment/verify`;
+  try {
+    const result = await axios.post(url, getData);
+    return result;
+  }
+  catch (e) {
+    console.log(e);
+  }
+}
+
+export async function getBooking() {
+  const url = `${config.serverUrl}/user/myBooking`;
+  const token = sessionStorage.getItem("token");
+  try {
+    const result = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    return result;
+  } catch (e) {
+    console.log(e, "get user bookings");
+  }
+}
+
+// getTopCars
+
+export async function getTopCars() {
+  const url = `${config.serverUrl}/user/getTop3Cars`;
+  try {
+    const result = await axios.get(url)
+    return result;
+  } catch (e) {
+    console.log(e, "get top cars bookings services");
+  }
+}
+
+export async function getAllCarsForBrowse() {
+  const url = `${config.serverUrl}/user/topCars`;
+  try {
+    const result = await axios.get(url)
+    return result;
+  } catch (e) {
+    console.log(e, "get top cars bookings services");
+  }
+}
+
+// 
+
+export async function submitFeedback(props) {
+  const body = props;
+  const url = `${config.serverUrl}/user/review`;
+  const token = sessionStorage.getItem("token");
+  try {
+    const result = await axios.post(url, body, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    return result;
+  } catch (e) {
+    console.log(e, "submiting review js");
+  }
+}
+
+// getFeedbacksForHome
+
+export async function getFeedbacksForHome() {
+ 
+  const url = `${config.serverUrl}/user/getTopReviews`;
+  
+  try {
+    const result = await axios.get(url)
+    return result;
+  } catch (e) {
+    console.log(e, "get feedback js");
   }
 }

@@ -11,7 +11,7 @@ import com.carrental.dto.CarFilterRequestDto;
 import com.carrental.dto.CarPaymentDto;
 import com.carrental.dto.CarResponseDTO;
 import com.carrental.dto.TopCarsResponseDto;
-
+import com.carrental.dto.TopReviewsResponseHome;
 import com.carrental.dto.CarReviewDto;
 import com.carrental.dto.ImgResponseDTO;
 import com.carrental.dto.ResponseForCarCities;
@@ -63,6 +63,13 @@ public interface UserService {
 	List<String> getServiceAreaOfCars();
 	List<TopCarsResponseDto> getAllCars();
 
+
 	UserInfoDto getUserDetail(Long id);
+
+	List<TopCarsResponseDto> getTopmostcars();
+
+	List<TopReviewsResponseHome> getReviewsTop3();
+
+	
 
 }

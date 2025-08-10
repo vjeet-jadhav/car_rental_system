@@ -22,7 +22,9 @@ public interface AgentDao extends JpaRepository<Car, Long> {
         c.status
       )
       FROM Car c	
-      WHERE c.agent.id = :agentId
+      WHERE c.agent.id = :agentId 
+			    and c.status != com.carrental.entity.CarStatus.NOTVERIFIED
+      
 			""")
 	
 	List<CarHistoryDTO> findHistoryByAgentId(Long agentId);

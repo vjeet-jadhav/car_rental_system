@@ -74,14 +74,16 @@ public interface BookingDaoInterface extends JpaRepository<Booking, Long> {
 	            b.amount
 	        )
 	        FROM Booking b
-	        WHERE b.client.id = :userId
+	        WHERE b.host.id = :userId
 	        ORDER BY b.bookingdate DESC
 	    """)
 	Optional<List<CarBookingHistoryDTO>> findHistoryByClientId(Long userId);
 
 
+
 	//PROVIDE BOOKED CARS IN TIME ZONE
 	@Query("SELECT b.car.id FROM Booking b WHERE b.startTrip < :endTrip AND b.endTrip > :startTrip")
 	List<Integer> getAlreadyBookedCars(LocalDateTime startTrip, LocalDateTime endTrip);
+
 
 }

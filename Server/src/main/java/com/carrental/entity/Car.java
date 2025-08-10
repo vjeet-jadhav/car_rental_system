@@ -40,6 +40,9 @@ public class Car extends BaseEntity{
 	@Column(name="car_model", nullable = false)
 	private String carModel;
 	
+	@Column(name="rc_number", nullable = false, unique = true)
+	private String rcNumber;
+	
 	@Column(nullable = false)
 	private String varient;
 	
@@ -48,9 +51,6 @@ public class Car extends BaseEntity{
 	
 	@Column(name="car_number", nullable = false, unique = true)
 	private String carNumber;
-	
-	@Column(name="rc_number", nullable = false, unique = true)
-	private String rcNumber;
 	
 	@Column(name="daily_rate", nullable = false)
 	private double dailyRate;
@@ -99,6 +99,8 @@ public class Car extends BaseEntity{
 	private List<Rating> ratingList = new ArrayList<>();
 	
 
+	@OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Booking> bookingList = new ArrayList<>();
 	
 //	helpers methods that helps
 	
