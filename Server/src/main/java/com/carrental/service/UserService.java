@@ -15,6 +15,7 @@ import com.carrental.dto.TopReviewsResponseHome;
 import com.carrental.dto.CarReviewDto;
 import com.carrental.dto.ImgResponseDTO;
 import com.carrental.dto.ResponseForCarCities;
+import com.carrental.dto.SignupResponseDto;
 import com.carrental.dto.Top5RatingResponseDto;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
@@ -30,7 +31,7 @@ import jakarta.validation.Valid;
 
 public interface UserService {
 
-	UserResponseDto RegisterUser(UserRequestDto userDto);
+	SignupResponseDto RegisterUser(UserRequestDto userDto);
 	
 	ApiResponse updateUser(Long id, UserUpdateRequestDto userDto);
 

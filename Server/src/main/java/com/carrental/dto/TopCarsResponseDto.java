@@ -1,5 +1,7 @@
 package com.carrental.dto;
 
+import java.util.List;
+
 import com.carrental.entity.CarFuelType;
 import com.carrental.entity.CarStatus;
 import com.carrental.entity.CarTransmissionType;
@@ -40,4 +42,6 @@ public class TopCarsResponseDto {
 	private String lastName;
 	
 	private String address;
+	
+	private List<CarImgResponseDTO> imagelist;
 }

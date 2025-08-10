@@ -35,6 +35,7 @@ import { UserDetails } from "./Screens/Admin/UserDetails";
 import ClientContainer from "./Screens/Client/ClientContainer";
 import ProtectedRoutes from "./Screens/Client/ProtectedRoutes";
 import AllCars from "./Screens/Client/AllCars";
+import ProtectedRoutesTrip from "./Screens/Client/ProtectedRoutesTrip";
 // import ProtectedRoutesTrip from "./Screens/Client/ProtectedRoutesTrip";
 
 
@@ -42,20 +43,20 @@ export const AuthContext = createContext();
 
 function App() {
   const [user, setUser] = useState(null);
+  
 
-
-  // const [trip, setTrip] = useState(() => {
-  //   const storedTrip = sessionStorage.getItem("trip");
-  //   return storedTrip ? JSON.parse(storedTrip) : null;
+  // const [rani, setRani] = useState(() => {
+  //   const setRani = sessionStorage.getItem("rani");
+  //   return setRani ? setRani : null;
   // });
 
-  // console.log("trip is ", trip);
+  // console.log("trip is ", rani);
 
   // useEffect(() => {
-  //   if (trip) {
-  //     sessionStorage.setItem("trip", JSON.stringify(trip));
+  //   if (rani) {
+  //     sessionStorage.setItem("trip", JSON.stringify(rani));
   //   }
-  // }, [trip]);
+  // }, [rani]);
 
 
   useEffect(() => {
@@ -77,7 +78,7 @@ function App() {
 
   return (
     <>
-      <AuthContext.Provider value={{ user, setUser }}>
+      <AuthContext.Provider value={{ user, setUser}}>
         <Routes>
           <Route path="/" element={<Container></Container>}>
             <Route path="admin" element={user ? <AdminContainer></AdminContainer> : <ClientContainer/>}>
@@ -111,6 +112,7 @@ function App() {
               <Route path="user-login" element={<Login />} />
               <Route path="user-signup" element={<Signup />} />
               <Route path="all-cars" element={<AllCars />} />
+              <Route path="/allcars" element={<CarInfo />} />
 
               {/* ON THE BASIS OF USER IS LOGIN OR NOT */}
               <Route element={<ProtectedRoutes user={user} />}>
@@ -119,7 +121,6 @@ function App() {
                 <Route path="become-host/registration-form" element={<HostRegistrationForm />} />
                 <Route path="user-booking" element={<ClientBooking />} />
                 <Route path="review-car" element={<ClientCarReview />} />
-                <Route path="/allcars" element={<CarInfo />} />
                 <Route path="/carbooking" element={<CarBooking />} />
               </Route>
 

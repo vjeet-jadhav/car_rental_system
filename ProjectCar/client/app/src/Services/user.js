@@ -4,8 +4,8 @@ import { config } from "./config";
 const token = sessionStorage.getItem("token");
 
 // USER SIGNUP
-export async function userSignUp({ firstName, lastName, email, password, city, state, zipCode, mob_num }) {
-  const body = { firstName, lastName, email, password, city, state, zipCode, mob_num };
+export async function userSignUp({ firstName, lastName, email, password, city, state, zipCode, mob_num,licenseNumber,dateOfBirth }) {
+  const body = { firstName, lastName, email, password, city, state, zipCode, mob_num,licenseNumber,dateOfBirth };
   const url = `${config.serverUrl}/user/signup`;
   try {
     const result = await axios.post(url, body);
