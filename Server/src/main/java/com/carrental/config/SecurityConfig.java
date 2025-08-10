@@ -75,6 +75,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.PUT, "/host/shedule-car/{carId}").hasRole("HOST")
 				.requestMatchers(HttpMethod.PUT, "/host/unschedule-car/{carId}").hasRole("HOST")
 				.requestMatchers(HttpMethod.GET, "/host/get-booking-history").hasRole("HOST")
+				.requestMatchers(HttpMethod.GET, "/host/getcar/{carId}").hasRole("HOST")
 
 				.requestMatchers(HttpMethod.POST,"/admin/register").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET,"/admin/getagents").hasRole("ADMIN")

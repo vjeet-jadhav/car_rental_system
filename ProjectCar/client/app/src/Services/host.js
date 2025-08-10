@@ -1,11 +1,13 @@
 import axios from 'axios';
 import { config } from "./config";
+import { data } from 'react-router-dom';
 
-const token = localStorage.getItem('token');
+
 
 export const fetchHistory = async () => {
   try {
     const url = `${config.serverUrl}/host/get-booking-history`
+    const token = sessionStorage.getItem('token');
     const response = await axios.get(url, { headers: {
           Authorization: `Bearer ${token}`}
         })
@@ -20,6 +22,7 @@ export const fetchHistory = async () => {
 export const fetchTotalEarnings = async () => {
   try {
     const url = `${config.serverUrl}/host/earning`
+    const token = sessionStorage.getItem('token');
     const response = await axios.get(url, { headers: {
           Authorization: `Bearer ${token}`}
         })
@@ -42,7 +45,7 @@ export const fetchTotalEarnings = async () => {
 export async function verifyRc(rcNumber) {
   const url = `${config.serverUrl}/car/validate`;
   const body = { rcNumber };
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   try {
     const result = await axios.post(url, body, {
@@ -85,7 +88,7 @@ export async function verifyRc(rcNumber) {
  */
 export async function registerCar(carDto) {
   const url = `${config.serverUrl}/car/registration`;
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
 
   try {
     const res = await axios.post(url, carDto, {
@@ -119,7 +122,7 @@ export async function registerCar(carDto) {
  */
 export async function uploadCarImages(carId, filesInOrder) {
   const url = `${config.serverUrl}/user/uploadMul/${carId}`;
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
 
   const form = new FormData();
   filesInOrder.forEach((f) => {
@@ -153,7 +156,7 @@ export async function uploadCarImages(carId, filesInOrder) {
  */
 export async function getMyCars() {
   const url = `${config.serverUrl}/host`;
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   try {
     const res = await axios.get(url, {
       headers: { Authorization: `Bearer ${token}` }
@@ -167,13 +170,36 @@ export async function getMyCars() {
   }
 }
 
+export async function getCarById(carId)
+{
+    const url = `${config.serverUrl}/host/getcar/${carId}`;
+    const token = sessionStorage.getItem('token');
+
+    try{
+        const res = await axios.get(url, {
+            headers :{
+                Authorization : `Bearer ${token}`
+            }
+        });
+        console.log('Fetched car from backend:', res.data);
+        return { status : 'success', data : res.data};
+    }catch(e)
+    {
+        if(e.response?.data?.message)
+        {
+            return { status : error, message : response.data.message};
+        }
+        return { status : error, message : e.message || 'Network Error'}
+    }
+}
+
 
 export async function updateCar(carDto) {
     const url = `${config.serverUrl}/car/update`;
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
 
     try{
-        const res = await axios.post(url, carDto,
+        const res = await axios.put(url, carDto,
             {
                 headers : { Authorization : `Bearer ${token}` }
             });
@@ -185,4 +211,69 @@ export async function updateCar(carDto) {
     }
     return { status: 'error', message: e.message || 'Network error' };
     } 
+}
+
+
+export async function sheduleCar(carId, scheduleFields){
+    const url = `${config.serverUrl}/host/shedule-car/${carId}`;
+    const token = sessionStorage.getItem('token');
+
+    try{
+        const res = await axios.put(url, scheduleFields,
+            {
+                headers : { Authorization : `Bearer ${token}` }
+            });
+         return { status : 'success', message : res.data.message }
+    } catch(e)
+    {
+        if (e.response?.data?.message) {
+      return { status: 'error', message: e.response.data.message };
+    }
+    return { status: 'error', message: e.message || 'Network error' };
+    } 
+}
+
+
+/**
+ * Unschedule car
+ * PUT /host/unschedule-car/{carId}
+ */
+export async function unsheduleCar(carId) {
+  const url = `${config.serverUrl}/host/unschedule-car/${carId}`;
+  const token = sessionStorage.getItem('token');
+
+  try {
+    const res = await axios.put(url, {}, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    return { status: 'success', message: res.data?.message || 'Unsheduled', data: res.data };
+  } catch (e) {
+    if (e.response?.data?.message) return { status: 'error', message: e.response.data.message };
+    if (e.response?.data) return { status: 'error', message: JSON.stringify(e.response.data) };
+    return { status: 'error', message: e.message || 'Network error' };
+  }
+}
+
+
+export async function getCarRatings(carId) {
+  const url = `${config.serverUrl}/car/ratings/${carId}`;
+  const token = sessionStorage.getItem('token');
+
+  try {
+    const res = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    return {
+      status: 'success',
+      data: res.data
+    };
+  } catch (e) {
+    return {
+      status: 'error',
+      message: e.response?.data?.message || e.message || 'Network Error'
+    };
+  }
 }

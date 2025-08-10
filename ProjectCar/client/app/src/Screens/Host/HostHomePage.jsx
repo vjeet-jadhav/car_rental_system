@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
@@ -64,8 +63,8 @@ export default function HostMyCars() {
     loadCars();
   }, []);
 
-  const onViewDetails = (car) => {
-    navigate('/host/carinformation', { state: { car } });
+  const onViewDetails = (carId) => {
+    navigate('/host/carinformation', { state: { carId } });
   };
 
   return (
@@ -87,7 +86,7 @@ export default function HostMyCars() {
         ) : (
           <div className="row g-4">
             {cars.map((car) => {
-              const imageUrl = car.imagelist?.[0]?.imgUrl || PLACEHOLDER;
+              const imageUrl = car.image?.imgUrl || PLACEHOLDER;
 
               return (
                 <div key={car.id} className="col-12 col-md-6 col-lg-4">
@@ -111,7 +110,7 @@ export default function HostMyCars() {
                           <h6 className="mb-0">{car.brand} {car.carModel}</h6>
                           <StatusBadge status={car.status} />
                         </div>
-                        <p className="text-muted small mb-1">{car.carNumber || car.rcNumber}</p>
+                        <p className="text-muted small mb-1">{car.carNumber}</p>
                         <Stars rating={car.rating} />
                       </div>
 
@@ -120,17 +119,17 @@ export default function HostMyCars() {
                         <div className="d-flex gap-2">
                           <button
                             className="btn btn-sm btn-warning"
-                            onClick={() => onViewDetails(car)}
+                            onClick={() => onViewDetails(car.id)}
                           >
                             Details
                           </button>
                           <button
                             className="btn btn-sm btn-outline-secondary"
                             onClick={() => {
-                              if (car.imagelist?.length) {
-                                window.open(car.imagelist[0].imgUrl, '_blank');
+                              if (car.image?.imgUrl) {
+                                window.open(car.image.imgUrl, '_blank');
                               } else {
-                                toast.info('No images to preview');
+                                toast.info('No image to preview');
                               }
                             }}
                           >

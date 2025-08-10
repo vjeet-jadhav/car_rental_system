@@ -45,6 +45,7 @@ public class CarServiceImpl implements CarService{
 	private final UserDaoInterface userDao;
 	private final RatingDaoInterface ratingDao;
 	private final BookingDaoInterface bookingDao;
+	private final HostService hostService;
 	private final ModelMapper mapper;
 	
 	public RcValidationResponce<CarRegistrationDTO> validateCar(String rcNumber) {
@@ -111,6 +112,8 @@ public class CarServiceImpl implements CarService{
 				.orElseThrow(()-> new ResourceNotFoundException("Invalid Car ID : Update failed\""));
 		
 		mapper.map(car, car2);
+		
+		
 		
 		return new ApiResponse("Car details updated !");
 	}
