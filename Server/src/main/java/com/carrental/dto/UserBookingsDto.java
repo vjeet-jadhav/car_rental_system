@@ -1,5 +1,6 @@
 package com.carrental.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.carrental.entity.BookingStatus;
@@ -29,6 +30,10 @@ public class UserBookingsDto {
 	private LocalDateTime endTrip;
 	
 	private double dailyRate;
+	
+	private double totalAmount;
+	
+	private LocalDate bookingDate;
 	
 	private BookingStatus bookingStatus;
 	

@@ -29,8 +29,8 @@ public class Payment  extends BaseEntity{
 	private PaymentStatus paymentStatus;
 	
 	@Column(length = 30, nullable = false)
-	@Enumerated(EnumType.STRING)
-	private PaymentMethod paymentMethod;
+//	@Enumerated(EnumType.STRING)
+	private String paymentMethod;
 
     @Column(name="payment_date_time")
     private LocalDateTime paymentTime;
@@ -38,5 +38,8 @@ public class Payment  extends BaseEntity{
     @OneToOne(optional = false)
     @JoinColumn(name = "booking_id", nullable = false )
     private Booking bookingId;
+    
+    @Column(name="razor_pay_id",nullable=false)
+    private String razorPayId;
 		
 }

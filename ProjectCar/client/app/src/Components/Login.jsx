@@ -1,55 +1,64 @@
+import { jwtDecode } from "jwt-decode";
+import React, { useContext, useEffect, useState } from 'react';
 
-import {jwtDecode }from "jwt-decode";
-import React, { useContext, useState } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { loginUser } from "../Services/user";
 import { AuthContext } from "../App";
+import { toast } from "react-toastify";
 
 function Login() {
 
   const navigate = useNavigate();
-  const {setUser} = useContext(AuthContext);
-
-  const [loginInfo , setLoginInfo] = useState({
-    email :"",
-    password:"",
-    city:""
+  const { user, setUser } = useContext(AuthContext);
+  const[message,setMessage]=useState("");
+  const [loginInfo, setLoginInfo] = useState({
+    email: "",
+    password: "",
+    city: ""
   });
 
-  const onLogin = async () =>{
+  const onLogin = async () => {
 
-    const {email , password , city} = loginInfo;
-
+    const { email, password } = loginInfo;
+    
     if (loginInfo.email.length == 0) {
       toast.warn('Please enter the email')
     } else if (loginInfo.password.length == 0) {
       toast.warn('Please enter the password')
     } else {
 
-      const result = await loginUser(email, password, city)
-      const token = sessionStorage.setItem("token",result);
-      const decoded = jwtDecode(result);
-      console.log(decoded);
-      setUser(decoded);
-      const authorities = decoded.authorities;
+      const result = await loginUser(email, password)
+      if (result && result.status == 200) {
+        console.log("Result from backend is ",JSON.stringify(result.data));
+        const token = sessionStorage.setItem("token", result.data);
+        const decoded = jwtDecode(result.data);
+        console.log("user contains " + JSON.stringify(decoded));
+        setUser(decoded);
+        const authorities = decoded.authorities;
 
-      if (authorities == 'ADMIN') {
-        setTimeout(() => navigate("/admin"), 1000);
-      }else if(authorities == 'AGENT'){
-        setTimeout(() => navigate("/agent"), 1000);
-      }else if(authorities == 'USER'){
-        setTimeout(() => navigate("/"), 1000);
-      }else if(authorities == 'HOST'){
-        setTimeout(() => navigate("/host"), 1000);
+        if (authorities == 'ADMIN') {
+          setTimeout(() => navigate("/admin"), 1000);
+        } else if (authorities == 'AGENT') {
+          setTimeout(() => navigate("/agent"), 1000);
+        } else if (authorities == 'USER') {
+          setTimeout(() => { navigate("/") }, 1000);
+          toast.success("Welcome, To Drivana");
+        } else if (authorities == 'HOST') {
+          setTimeout(() => navigate("/host"), 1000);
+        }
       }
-      else {
-        toast.error(result.error)
+      else
+      {
+        setMessage("New here? Sign up now and join us!")
+        toast.error("Unable to log in. Please check your email and password and try again.");
       }
     }
   }
 
+  useEffect(()=>{
 
+  },[message]);
 
   return (
     <div style={{ backgroundColor: '#fb8500' }} className="container  app-background mt-3 w-75">
@@ -77,38 +86,24 @@ function Login() {
                 Email :
               </label>
 
-              <input type="email" id='email' className="form-control mb-4" placeholder="Email" onChange={(e) =>
-              setLoginInfo({ ...loginInfo, email: e.target.value })
-            }/>
+              <input type="email" id='email' className="form-control mb-4" placeholder="Email" onChange={(e) =>{
+                setLoginInfo({ ...loginInfo, email: e.target.value });
+                setMessage("");
+              }
+              } />
 
               <label className="form-check-label ms-2 mb-3 fw-bold" htmlFor="pass">
                 Password :
               </label>
 
-              <input type="password" id='pass' className="form-control mb-4" placeholder="Password" onChange={(e) =>
-              setLoginInfo({ ...loginInfo, password: e.target.value })
-            } />
+              <input type="password" id='pass' className="form-control mb-4" placeholder="Password" onChange={(e) =>{
+                setLoginInfo({ ...loginInfo, password: e.target.value })
+                setMessage("");
+              }
+              } />
 
-              <label className="form-check-label ms-2 mb-3 fw-bold" htmlFor="location">
-                Location :
-              </label>
 
-              <select name="" id="location" className='form-control mb-4' onChange={(e) =>
-              setLoginInfo({ ...loginInfo, city: e.target.value })
-            }>
-                <option value="Pune">Pune</option>
-                <option value="Mumbai">Mumbai</option>
-                <option value="Sambhajinagar">Sambhajinagar</option>
-              </select>
-             
-             
-              <div className="form-check d-flex justify-content-center mb-4">
-                <input className="form-check-input" type="checkbox" id="remember" />
-                <label className="form-check-label ms-2 fw-bold" htmlFor="remember">
-                  Remember me.
-                </label>
-              </div>
-
+              {message&&<p className="text-center fst-italic text-primary">"New here? Sign up now and join us!"</p>}
               <button style={{ backgroundColor: '#fb8500', color: '#fff' }} className="btn  w-100 mb-2 fw-bold" onClick={() => onLogin(loginInfo)}>Log-In</button>
               {/* <p className="text-center" d-flex justify-content-center gap-3>or</p> */}
               <Link to="/user-signup" style={{ backgroundColor: '#fb8500', color: '#fff' }} className="btn  w-100 mb-1 fw-bold">Sign-Up</Link>

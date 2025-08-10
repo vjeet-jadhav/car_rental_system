@@ -44,7 +44,7 @@ function HostNav() {
             <Link to="/host/carregistration" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
               Register New Car
             </Link>
-            <Link to="/host/carearnings" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
+            <Link to="/host/earning" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
               Earning
             </Link>
             <Link to="/host/history" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>

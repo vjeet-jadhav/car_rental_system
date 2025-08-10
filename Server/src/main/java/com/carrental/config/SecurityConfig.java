@@ -46,8 +46,13 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.OPTIONS).permitAll()
 				.requestMatchers(HttpMethod.GET, "/").permitAll()
 				.requestMatchers(HttpMethod.GET, "/user/topCars").permitAll()
-//				.requestMatchers(HttpMethod.POST,"/user/bookingCar").permitAll() 
+//				.requestMatchers(HttpMethod.POST,"/user/bookingCar").permitAll()
+				// need to be protected for testing purpose user/signin
+				.requestMatchers(HttpMethod.GET, "/user/getTopReviews").permitAll()
+				.requestMatchers(HttpMethod.POST, "/api/payment/create-order").permitAll()
+				.requestMatchers(HttpMethod.POST, "/api/payment/verify").permitAll()
 				.requestMatchers(HttpMethod.POST, "/user/serachCar").permitAll()
+				.requestMatchers(HttpMethod.GET, "/user/getTop3Cars").permitAll()
 				.requestMatchers(HttpMethod.GET, "/user/getCarServiceArea").permitAll()
 				.requestMatchers(HttpMethod.POST, "/user/applyFilters").permitAll()
 				.requestMatchers(HttpMethod.GET, "/user/getCarCity").permitAll()
@@ -62,8 +67,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.GET,"/host").hasRole("HOST")
 				.requestMatchers(HttpMethod.POST, "/car/validate").hasAnyRole("HOST","USER")
 				.requestMatchers(HttpMethod.POST, "/car/registration").hasAnyRole("HOST","USER")
-				.requestMatchers(HttpMethod.POST, "/car/update").hasRole("HOST")
-
+				.requestMatchers(HttpMethod.PUT, "/car/update").hasRole("HOST")
 				.requestMatchers(HttpMethod.GET, "/user/review/**").permitAll()
 
 				.requestMatchers(HttpMethod.GET, "/car/ratings").hasAnyRole("HOST", "USER")
@@ -71,6 +75,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.PUT, "/host/shedule-car/{carId}").hasRole("HOST")
 				.requestMatchers(HttpMethod.PUT, "/host/unschedule-car/{carId}").hasRole("HOST")
 				.requestMatchers(HttpMethod.GET, "/host/get-booking-history").hasRole("HOST")
+				.requestMatchers(HttpMethod.GET, "/host/getcar/{carId}").hasRole("HOST")
 
 				.requestMatchers(HttpMethod.POST,"/admin/register").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET,"/admin/getagents").hasRole("ADMIN")

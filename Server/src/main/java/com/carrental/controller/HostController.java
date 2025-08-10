@@ -34,6 +34,13 @@ public class HostController {
 				.body(hostService.getMyCars(userId));
 	}
 	
+	@GetMapping("/getcar/{carId}")
+	public ResponseEntity<?> getMyOnecar(@PathVariable Long carId)
+	{
+		System.out.println("HostController ke getMyOnecar ke under hu padul saheb...");
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(hostService.getMyOnecar(carId));
+	}
 
 	@GetMapping("/earning")
 	public ResponseEntity<?> getTotalEarnings(){
@@ -67,6 +74,7 @@ public class HostController {
 	public ResponseEntity<?> getBookingHistory()
 	{
 		Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getDetails();
+		System.out.println(userId);
 		System.out.println("HostController ke getBookingHistory ke under hu padul saheb...");
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(hostService.getBookingHistory(userId));
