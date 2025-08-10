@@ -34,6 +34,13 @@ public class HostController {
 				.body(hostService.getMyCars(userId));
 	}
 	
+	@GetMapping("/getcar/{carId}")
+	public ResponseEntity<?> getMyOnecar(@PathVariable Long carId)
+	{
+		System.out.println("HostController ke getMyOnecar ke under hu padul saheb...");
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(hostService.getMyOnecar(carId));
+	}
 
 	@GetMapping("/earning")
 	public ResponseEntity<?> getTotalEarnings(){

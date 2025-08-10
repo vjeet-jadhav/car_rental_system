@@ -2,9 +2,9 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Home from './Home';
 
-function ProtectedRoutesTrip({trip}) {
+function ProtectedRoutesTrip({rani}) {
   
-    return trip?<Outlet/>:<Home/>;
+    return rani?<Outlet/>:<Home/>;
 }
 
 export default ProtectedRoutesTrip

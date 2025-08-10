@@ -2,7 +2,9 @@ import React, { useContext, useEffect, useState } from 'react'
 import './Home.css'
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { getAllCarCities, getAvailableCars, getTopCars } from '../../Services/user';
+
+import { getAllCarCities, getAvailableCars, getFeedbacksForHome, getTopCars } from '../../Services/user';
+
 import Navbar from '../../Components/Navbar';
 import { AuthContext } from '../../App';
 
@@ -25,6 +27,8 @@ function Home() {
   const [getTopcCars, setTopCars] = useState([]);
 
   const [city, setOnlyCity] = useState("");
+
+  const [getFeedback, setFeedback] = useState([]);
 
   // for adding buffer time
   function formatLocalDateTime(date) {
@@ -80,7 +84,7 @@ function Home() {
       toast.warn("Select End Trip time");
     else if (new Date(startTrip) >= new Date(endTrip)) {
       toast.warn("End Trip time must be after Start Trip time");
-    }else if(!city){
+    } else if (!city) {
       toast.warn("select city");
     }
     else {
@@ -104,13 +108,22 @@ function Home() {
 
   }
 
+  const getTopFeedbacks = async () => {
+    const result = await getFeedbacksForHome();
+    if (result && result.status == 200) {
+      // console.log(JSON.stringify(result.data));
+      setFeedback(result.data);
+    }
+  }
+
   useEffect(() => {
     getAllCity();
     topCars();
+    getTopFeedbacks();
   }, []);
 
   return (
-    <>
+    <div >
       <div>
         {/* hero section div1*/}
 
@@ -164,7 +177,7 @@ function Home() {
                   </select>
                 </div>
                 <div className='d-flex justify-content-center align-items-center'>
-                  <button className='btn btn-success home-btn-serach' onClick={NavigateOnCars}>Search</button>
+                  <button className="btn btn-primary px-3 me-2 fw-bold" style={{ backgroundColor: 'rgba(248, 91, 60, 1)', border: 'none', width: "200px" }} onClick={NavigateOnCars}>Search</button>
                 </div>
               </div>
             </div>
@@ -191,48 +204,50 @@ function Home() {
             <div className="col-12 border-danger">
               <div className="row justify-content-evenly mt-5">
                 {
-                    getTopcCars.map((car, index) => (
-                      <div key={index} className="col-md-4 mb-4">
-                        <div
-                          className="card cursor-pointer shadow-sm scale-up text-decoration-none"
-                          onClick={() => navigateToBookingCar(car)}
-                        >
-                          <img
-                            src="/Image/carBg1.jpg"
-                            alt="Car"
-                            className="card-img-top"
-                            style={{ height: "70%" }}
-                          />
-                          <div className="card-body" style={{ height: "20%" }}>
+                  getTopcCars.map((car, index) => (
+                    <div key={index} className="col-md-4 mb-4">
+                      <div
+                        className="card cursor-pointer shadow-sm scale-up text-decoration-none"
+                        onClick={() => navigateToBookingCar(car)}
+                      >
+                        <img
+                          src={car.imagelist?.[0]?.imgUrl || '/Image/car-hero-section.svg'}
+                          alt="Car"
+                          className="card-img-top"
+                          style={{ height: "70%" }}
+                        />
+                        <div className="card-body" style={{ height: "20%" }}>
+                          <div className='d-flex justify-content-between'>
                             <h5 className="card-title mb-2">{car.brand} : {car.carModel}</h5>
-
-                            <div className="d-flex justify-content-between text-muted small mb-2">
-                              <div>
-                                <span>{car.transmissionType}</span> | <span>{car.fuelType}</span> |{" "}
-                                <span>{car.seatCapacity} seats</span>
-                              </div>
-                              <div>
-                                <span>{car.rating}⭐</span>
-                              </div>
+                            <span className="fw-bold">₹{car.dailyRate}/hr</span>
+                          </div>
+                          <div className="d-flex justify-content-between text-muted small mb-2">
+                            <div>
+                              <span>{car.transmissionType}</span> | <span>{car.fuelType}</span> |{" "}
+                              <span>{car.seatCapacity} seats</span>
                             </div>
-
-                            <div className="d-flex justify-content-between">
-                              <span className="text-success">{car.status}</span>
-                              <span className="fw-bold">₹{car.dailyRate}/hr</span>
+                            <div>
+                              <span>{car.rating}⭐</span>
                             </div>
+                          </div>
+
+                          <div className="d-flex justify-content-between">
+                            <span className="text-success">{car.status} :--</span>
+                            <span >{car.serviceArea}</span>
                           </div>
                         </div>
                       </div>
-                    ))
+                    </div>
+                  ))
                 }
               </div>
             </div>
 
             <div className="d-flex justify-content-center align-content-center">
-              <button className="btn btn-link text-decoration-none fw-medium" onClick={() => navigate("/allcars")} style={{ color: 'rgba(248, 91, 60, 1)' }}>
+              <Link to="/all-cars" className="btn btn-link text-decoration-none fw-medium" onClick={() => navigate("/allcars")} style={{ color: 'rgba(248, 91, 60, 1)' }}>
                 Browse All Cars
                 <i className="bi bi-arrow-right ms-1"></i>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -296,61 +311,39 @@ function Home() {
         {/* feedback */}
         <div className='container mt-5  p-5'>
           <div className="bg-light p-4 rounded shadow-sm">
-            <h2 className="h4 fw-bold mb-4 text-center">Recent Feedback</h2>
+            <h2 className="h4 fw-bold mb-4 text-center">Top Feedback</h2>
             <div className="row gy-4">
-              {[
-                {
-                  name: "Jane Cooper",
-                  rating: 5,
-                  comment:
-                    "Excellent service! The product arrived earlier than expected and was exactly what I needed.",
-                  date: "2 days ago",
-                },
-                {
-                  name: "Michael Johnson",
-                  rating: 4,
-                  comment:
-                    "Great quality products and responsive customer service team. Would recommend!",
-                  date: "1 week ago",
-                },
-                {
-                  name: "Emily Davis",
-                  rating: 5,
-                  comment:
-                    "I've been a customer for years and the quality never disappoints. Love the new features!",
-                  date: "2 weeks ago",
-                },
-              ].map((feedback, index) => (
+              {getFeedback.map((feedback, index) => (
                 <div className="col-12 col-md-6 col-lg-4" key={index}>
                   <div className="bg-white p-3 rounded border shadow-sm hover-shadow transition">
                     <div className="d-flex justify-content-between align-items-center mb-3">
                       <div className="d-flex align-items-center">
                         <div className="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center me-2" style={{ width: '40px', height: '40px' }}>
-                          {feedback.name.charAt(0)}
+                          {feedback.firstNmae.charAt(0)}
                         </div>
-                        <h5 className="mb-0 fw-medium">{feedback.name}</h5>
+                        <h5 className="mb-0 fw-medium">{feedback.firstNmae} {feedback.lastName}</h5>
                       </div>
-                      <span className="text-muted small">{feedback.date}</span>
                     </div>
-                    <div className="mb-2 text-warning">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <i
-                          className={`bi ${star <= feedback.rating ? "bi-star-fill" : "bi-star"} me-1`}
-                          key={star}
-                        ></i>
-                      ))}
+                    <div className="mb-2 fw-bold" style={{ color: "rgba(248, 91, 60, 1)", fontSize: "20px" }}>
+                      <span>{feedback.rating}⭐</span>
                     </div>
-                    <p className="text-muted mb-0">{feedback.comment}</p>
+                    <div className="mb-2 ">
+                      <h5 className="mb-0 fw-medium">{feedback.carBrand} : {feedback.carModel}</h5>
+
+                    </div>
+                    <div className=' p-1'>
+                      <p className="text-muted mb-0">{feedback.feedback}</p>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-4 text-center">
+            {/* <div className="mt-4 text-center">
               <button className="btn btn-link text-decoration-none fw-medium" style={{ color: 'rgba(248, 91, 60, 1)' }}>
                 View All Feedback
                 <i className="bi bi-arrow-right ms-1"></i>
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -358,47 +351,36 @@ function Home() {
         <div className='d-flex container w-100 justify-content-center align-items-center mt-5'>
           {/* google map */}
           <div>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3901381.8747824263!2d75.01073565274407!3d18.93309678846613!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcfc41e9c9cd6f9%3A0x1b2f22924be04fb6!2sMaharashtra%2C%20India!5e0!3m2!1sen!2snl!4v1753431340427!5m2!1sen!2snl" style={{ width: "600px", height: "450px", style: "border:0;", allowfullscreen: "", loading: "lazy", referrerpolicy: "no-referrer-when-downgrade" }} className='rounded-3'></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3901381.8747824263!2d75.01073565274407!3d18.93309678846613!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcfc41e9c9cd6f9%3A0x1b2f22924be04fb6!2sMaharashtra%2C%20India!5e0!3m2!1sen!2snl!4v1753431340427!5m2!1sen!2snl" style={{ width: "500px", height: "350px", style: "border:0;", allowfullscreen: "", loading: "lazy", referrerpolicy: "no-referrer-when-downgrade" }} className='rounded-3'></iframe>
           </div>
           {/* form */}
           <div className='w-100'>
-            <form className="container p-4 border rounded shadow-sm bg-light" style={{ maxWidth: "600px" }}>
+            <div
+              className="container p-4 rounded shadow-sm bg-light"
+              style={{
+                maxWidth: "600px",
+                border: "1px solid rgba(248, 91, 60, 1)"
+              }}
+            >
               <h4 className="mb-4 text-center">Contact Us</h4>
 
-              {/* Name */}
-              <div className="mb-3">
-                <label htmlFor="name" className="form-label">Name</label>
-                <input type="text" className="form-control" id="name" placeholder="Enter your name" required />
-              </div>
+              <p>If you have any queries, feel free to reach out to us:</p>
 
-              {/* Email */}
-              <div className="mb-3">
-                <label htmlFor="email" className="form-label">Email address</label>
-                <input type="email" className="form-control" id="email" placeholder="Enter your email" required />
-              </div>
+              <ul className="list-unstyled">
+                <li><strong>Phone:</strong> +1 234 567 8900</li>
+                <li><strong>Email:</strong> support@example.com</li>
+                <li><strong>Address:</strong> 123 Main Street, City, Country</li>
+              </ul>
 
-              {/* Title */}
-              <div className="mb-3">
-                <label htmlFor="title" className="form-label">Subject / Title</label>
-                <input type="text" className="form-control" id="title" placeholder="What's this about?" required />
-              </div>
-
-              {/* Message */}
-              <div className="mb-3">
-                <label htmlFor="message" className="form-label">Message</label>
-                <textarea className="form-control" id="message" rows="4" placeholder="Write your message here..." required></textarea>
-              </div>
-
-              {/* Submit Button */}
-              <div className="text-center">
-                <button type="submit" className="btn  text-white fw-semibold" style={{ backgroundColor: 'rgb(251, 85, 25)' }}>Send Message</button>
-              </div>
-            </form>
+              <p>We’re here to help you 24/7. Thank you!</p>
+            </div>
           </div>
+
+
         </div>
 
       </div>
-    </>
+    </div>
 
   )
 }

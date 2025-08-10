@@ -47,7 +47,8 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.GET, "/").permitAll()
 				.requestMatchers(HttpMethod.GET, "/user/topCars").permitAll()
 //				.requestMatchers(HttpMethod.POST,"/user/bookingCar").permitAll()
-				// need to be protected for testing purpose
+				// need to be protected for testing purpose user/signin
+				.requestMatchers(HttpMethod.GET, "/user/getTopReviews").permitAll()
 				.requestMatchers(HttpMethod.POST, "/api/payment/create-order").permitAll()
 				.requestMatchers(HttpMethod.POST, "/api/payment/verify").permitAll()
 				.requestMatchers(HttpMethod.POST, "/user/serachCar").permitAll()
@@ -74,6 +75,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.PUT, "/host/shedule-car/{carId}").hasRole("HOST")
 				.requestMatchers(HttpMethod.PUT, "/host/unschedule-car/{carId}").hasRole("HOST")
 				.requestMatchers(HttpMethod.GET, "/host/get-booking-history").hasRole("HOST")
+				.requestMatchers(HttpMethod.GET, "/host/getcar/{carId}").hasRole("HOST")
 
 				.requestMatchers(HttpMethod.POST,"/admin/register").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET,"/admin/getagents").hasRole("ADMIN")

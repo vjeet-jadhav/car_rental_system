@@ -11,10 +11,11 @@ import com.carrental.dto.CarFilterRequestDto;
 import com.carrental.dto.CarPaymentDto;
 import com.carrental.dto.CarResponseDTO;
 import com.carrental.dto.TopCarsResponseDto;
-
+import com.carrental.dto.TopReviewsResponseHome;
 import com.carrental.dto.CarReviewDto;
 import com.carrental.dto.ImgResponseDTO;
 import com.carrental.dto.ResponseForCarCities;
+import com.carrental.dto.SignupResponseDto;
 import com.carrental.dto.Top5RatingResponseDto;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
@@ -30,7 +31,7 @@ import jakarta.validation.Valid;
 
 public interface UserService {
 
-	UserResponseDto RegisterUser(UserRequestDto userDto);
+	SignupResponseDto RegisterUser(UserRequestDto userDto);
 	
 	ApiResponse updateUser(Long id, UserUpdateRequestDto userDto);
 
@@ -67,6 +68,8 @@ public interface UserService {
 	UserInfoDto getUserDetail(Long id);
 
 	List<TopCarsResponseDto> getTopmostcars();
+
+	List<TopReviewsResponseHome> getReviewsTop3();
 
 	
 

@@ -16,4 +16,6 @@ public interface HostService {
 	public Object unsheduleCar(Long carId);
 
 	public Object getBookingHistory(Long userId);
+
+	public Object getMyOnecar(Long carId);
 }

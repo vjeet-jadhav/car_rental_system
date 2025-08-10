@@ -2,12 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import "./CarInfo.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getCarsAfterFilter, getServiceAreaJS } from '../../Services/user';
+import { AuthContext } from "../../App";
 
 function CarInfo() {
 
-  
+
   const location = useLocation();
   const navigate = useNavigate();
+  // const{setRani} = useContext(AuthContext);
   // derefference the content of previous component
   let { data = [], tripInfo = {}, city = "" } = location.state || {};
   // console.log(data);
@@ -29,9 +31,11 @@ function CarInfo() {
     fuelType: []
   });
 
-
-
-
+  // CREATING ARRAY FOR FILTERS
+  const transmission = ["MANUAL", "AUTOMATIC"];
+  const fuel = ["PETROL", "DIESEL", "ELECTRICAL", "CNG"]
+  const capacity = ["4", "5", "6", "7"];
+  const rate = [3.0, 3.5, 4.0, 4.5];
   const getAllServiceArea = async () => {
     const result = await getServiceAreaJS(city);
     if (result.status === 200) {
@@ -79,6 +83,8 @@ function CarInfo() {
     // For New Booking
     sessionStorage.removeItem("paymentDone");
     console.log(car);
+    // sessionStorage.setItem("rani",JSON.stringify(car));
+    setRani(car);
     navigate("/carbooking", {
       state: {
         "carInfo": car,
@@ -91,7 +97,7 @@ function CarInfo() {
 
 
   return (
-    <div>
+    <div >
       {/* top section */}
       <div className="d-flex mt-5  p-2 gap-1">
         {/* left-section */}
@@ -110,7 +116,7 @@ function CarInfo() {
                 type="datetime-local"
                 id="startTime"
                 className="form-control"
-                value={tripInfo.startTrip}  // pass this as a prop or state variable
+                value={tripInfo.startTrip}
                 readOnly
               />
             </div>
@@ -120,7 +126,7 @@ function CarInfo() {
                 type="text"
                 id="startTime"
                 className="form-control"
-                value={city}  // pass this as a prop or state variable
+                value={city}
                 readOnly
               />
             </div>
@@ -131,13 +137,13 @@ function CarInfo() {
                 type="datetime-local"
                 id="endTime"
                 className="form-control"
-                value={tripInfo.endTrip}    // pass this as a prop or state variable
+                value={tripInfo.endTrip}
                 readOnly
               />
             </div>
           </div>
           <div className="d-flex justify-content-center p-1 ">
-            <Link to="/" className="fw-bold text-decoration-none border rounded-3 p-1" style={{ color: 'white',backgroundColor:"rgba(248, 91, 60, 1)" }}><i className="bi bi-arrow-left ms-1"></i> Home Select Journey</Link>
+            <Link to="/" className="fw-bold text-decoration-none border rounded-3 p-1" style={{ color: 'white', backgroundColor: "rgba(248, 91, 60, 1)" }}><i className="bi bi-arrow-left ms-1"></i> Home Select Journey</Link>
           </div>
         </div>
 
@@ -176,7 +182,7 @@ function CarInfo() {
             <div className="px-3 py-2 mt-2 border mx-2 rounded">
               <h5>Filter By Transmission</h5>
               <div className="d-flex flex-column gap-3 px-3 mt-3">
-                {["MANUAL", "AUTOMATIC"].map((type) => (
+                {transmission.map((type) => (
                   <div key={type}>
                     <input
                       type="checkbox"
@@ -197,7 +203,7 @@ function CarInfo() {
             <div className="px-3 py-2 mt-2 border mx-2 rounded">
               <h5>Filter By Fuel Type</h5>
               <div className="d-flex flex-column gap-3 px-3 mt-3">
-                {["PETROL", "DIESEL", "ELECTRICAL", "CNG"].map((fuel) => (
+                {fuel.map((fuel) => (
                   <div key={fuel}>
                     <input
                       type="checkbox"
@@ -217,7 +223,7 @@ function CarInfo() {
             <div className="px-3 py-2 mt-2 border mx-2 rounded">
               <h5>Filter By Seats</h5>
               <div className="d-flex flex-column gap-3 px-3 mt-3">
-                {["4", "5", "6", "7"].map((seat) => (
+                {capacity.map((seat) => (
                   <div key={seat}>
                     <input
                       type="checkbox"
@@ -243,7 +249,7 @@ function CarInfo() {
                     onChange={(e) => setFilters({ ...getFilters, rating: e.target.value })}
                   >
                     <option value="">Rating</option>
-                    {[3.0, 3.5, 4.0, 4.5].map((rate, index) => {
+                    {rate.map((rate, index) => {
                       return <>
                         <option key={index} value={rate}>{rate}</option>
                       </>
@@ -285,14 +291,16 @@ function CarInfo() {
                       onClick={() => navigateToBookingCar(car)}
                     >
                       <img
-                        src="/Image/carBg1.jpg"
+                        src={car.imagelist?.[0]?.imgUrl || '/Image/car-hero-section.svg'}
                         alt="Car"
                         className="card-img-top"
                         style={{ height: "70%" }}
                       />
                       <div className="card-body" style={{ height: "20%" }}>
-                        <h5 className="card-title mb-2">{car.brand} : {car.carModel}</h5>
-
+                        <div className='d-flex justify-content-between'>
+                          <h5 className="card-title mb-2">{car.brand} : {car.carModel}</h5>
+                          <span className="fw-bold">₹{car.dailyRate}/hr</span>
+                        </div>
                         <div className="d-flex justify-content-between text-muted small mb-2">
                           <div>
                             <span>{car.transmissionType}</span> | <span>{car.fuelType}</span> |{" "}
@@ -304,8 +312,8 @@ function CarInfo() {
                         </div>
 
                         <div className="d-flex justify-content-between">
-                          <span className="text-success">{car.status}</span>
-                          <span className="fw-bold">₹{car.dailyRate}/hr</span>
+                          <span className="text-success">{car.status} :--</span>
+                          <span >{car.serviceArea}</span>
                         </div>
                       </div>
                     </div>

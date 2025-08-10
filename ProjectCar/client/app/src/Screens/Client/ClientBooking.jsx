@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 // import { getBooking } from '../../Services/user';
 import { getBooking } from '../../Services/user';
+import { AuthContext } from '../../App';
 function ClientBooking() {
 
     const [bookings, setBookings] = useState([]);
+    const{user}=useContext(AuthContext);
+    const navigate = useNavigate();
     const getUserBooking = async () => {
         const result = await getBooking();
         if (result && result.status == 200) {
@@ -16,13 +19,19 @@ function ClientBooking() {
         }
     }
 
-
+    const navToReview = (id)=>{
+        navigate("/review-car",{
+            state:{
+                "car_id":id,
+            }
+        })
+    }
 
     useEffect(() => {
         getUserBooking();
     }, []);
     return (
-        <div>
+        <div >
             <div className=" mt-5 mx-2">
                 <h2 className="text-center mb-4">Car Booking Details</h2>
                 <table className="table table-bordered table-hover">
@@ -65,9 +74,9 @@ function ClientBooking() {
                                     </span>
                                 </td>
                                 <td>
-                                    <Link to="/review-car" className="text-decoration-none fw-medium">
+                                    <button onClick={()=>navToReview(booking.carId)} className="text-decoration-none fw-medium btn-bg-primary btn" style={{color:"rgba(248, 91, 60, 1)"}}>
                                         Review
-                                    </Link>
+                                    </button>
                                 </td>
                             </tr>
                         ))}

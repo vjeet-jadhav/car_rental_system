@@ -27,7 +27,7 @@ import com.carrental.dao.PaymentDaoInterface;
 import com.carrental.dao.RatingDaoInterface;
 
 import com.carrental.dao.CarImgInterface;
-
+import com.carrental.dao.LicenseDaoInterface;
 import com.carrental.dao.UserDaoInterface;
 import com.carrental.dao.UserImgInterface;
 import com.carrental.dto.ApiResponse;
@@ -38,8 +38,10 @@ import com.carrental.dto.CarResponseDTO;
 import com.carrental.dto.CarReviewDto;
 import com.carrental.dto.ImgResponseDTO;
 import com.carrental.dto.ResponseForCarCities;
+import com.carrental.dto.SignupResponseDto;
 import com.carrental.dto.Top5RatingResponseDto;
 import com.carrental.dto.TopCarsResponseDto;
+import com.carrental.dto.TopReviewsResponseHome;
 import com.carrental.dto.UserBookingsDto;
 import com.carrental.dto.UserCarBookingDto;
 import com.carrental.dto.UserInfoDto;
@@ -53,6 +55,7 @@ import com.carrental.entity.Car;
 import com.carrental.entity.CarFuelType;
 import com.carrental.entity.CarStatus;
 import com.carrental.entity.CarTransmissionType;
+import com.carrental.entity.LicenseStatus;
 import com.carrental.entity.Payment;
 import com.carrental.entity.PaymentStatus;
 import com.carrental.entity.Rating;
@@ -84,21 +87,38 @@ public class UserServiceImpl implements UserService{
 	private PasswordEncoder password;
 	private AddressDaoInterface addDao;
 	private PaymentDaoInterface paymentDao;
-
+	private LicenseDaoInterface licenseDao;
+	private CarImgInterface carImgDao;
 	private JwtUtils jwtUtil;
 	private final UserImgInterface userImgInterface;
 	private final CarImgInterface carImgInterface;
 
-
+//Commented Due to modification in Signup SANKET
 	@Override
-	public UserResponseDto RegisterUser(UserRequestDto userDto) {
+	public SignupResponseDto RegisterUser(UserRequestDto userDto) {
+		SignupResponseDto obj = new SignupResponseDto();
+		System.out.println(userDto.getLicenseNumber()+userDto.getDateOfBirth());
+		LicenseStatus l_Status = LicenseStatus.ACTIVE;
+//		System.out.println(licenseDao.validateLicenseNumber(userDto.getLicenseNumber(),userDto.getDateOfBirth(),l_Status)+"validating license");
+		if(licenseDao.validateLicenseNumber(userDto.getLicenseNumber(),userDto.getDateOfBirth(),l_Status)==null)
+		{
+			obj.setMessage("License number is not VALID/EXPIRED/SUSPENDED. Please check license number or DOB.");
+			obj.setStatusCode(400);
+			return obj;
+		}
 		if(userDaoInterface.existsByEmail(userDto.getEmail()))
 			throw new ApiException("Duplicate Email Found....... User Already Exist");
 		User user = modelMapper.map(userDto, User.class);
 		user.setPassword(password.encode(userDto.getPassword()));
 		user.setUserRole(UserRole.USER);
 		user.setUserStatus(UserStatus.ACTIVE);
-		return modelMapper.map(userDaoInterface.save(user), UserResponseDto.class);
+		userDaoInterface.save(user);
+		
+		obj.setMessage("Registration successfull");
+		obj.setStatusCode(200);
+//		Commented Due to modification in Signup SANKET
+//		return modelMapper.map(userDaoInterface.save(user), UserResponseDto.class);
+		return obj;
 	}
 
 	@Override
@@ -125,6 +145,7 @@ public class UserServiceImpl implements UserService{
 		entity.setBookingdate(LocalDate.now());
 		entity.setCar(car);
 		entity.setClient(user);
+		entity.setLicenseNumber(user.getLicenseNumber());
 		entity.setHost(host);
 		entity.setBookingStatus(BookingStatus.CONFIRMED);
 		bookingDao.save(entity);
@@ -173,11 +194,13 @@ public class UserServiceImpl implements UserService{
 		return list.stream().map(booking -> modelMapper.map(booking, UserBookingsDto.class)).toList();
 	}
 
-//	top cars
+//	ALL CARS 
 	@Override
 	public List<TopCarsResponseDto> getTopCars() {
 		
 		List<TopCarsResponseDto> responseList = new ArrayList<>();
+		
+		
 		
 		List<Car> carList = carDao.findAllCarsByStatus();
 		for(Car list:carList)
@@ -194,6 +217,7 @@ public class UserServiceImpl implements UserService{
 			obj.setFirstName(list.getHost().getFirstName());
 			obj.setLastName(list.getHost().getLastName());
 			obj.setAddress(list.getAddress().getAddress());
+			obj.setImagelist(carImgDao.findOrderedImagesByCarId(list.getId()));
 			responseList.add(obj);
 		}
 //		sorting according to rating 
@@ -232,7 +256,7 @@ public class UserServiceImpl implements UserService{
 		
 		ratingDao.save(rating);
 		
-		return "Review Successfully Added";
+		return "Thank you for sharing your feedback! Your review has been submitted successfully.";
 	}
 
 	public ApiResponse addImage(Long userId, String imgUrl , String publicId, String format) {
@@ -442,6 +466,7 @@ public class UserServiceImpl implements UserService{
 			obj.setFirstName(list.getHost().getFirstName());
 			obj.setLastName(list.getHost().getLastName());
 			obj.setAddress(list.getAddress().getAddress());
+			obj.setImagelist(carImgDao.findOrderedImagesByCarId(list.getId()));
 			responseList.add(obj);
 		}
 //		sorting according to rating 
@@ -471,6 +496,28 @@ public class UserServiceImpl implements UserService{
 			top3Cars.add(allCars.get(i));
 		}
 		return top3Cars;
+	}
+
+	@Override
+	public List<TopReviewsResponseHome> getReviewsTop3() {
+		
+		Pageable pageable = PageRequest.of(0, 3);
+		
+		List<Rating> rating = ratingDao.getReview(pageable);
+//		List<TopReviewsResponseHome> list = rating.stream().map(rate->modelMapper.map(rate, TopReviewsResponseHome.class)).toList();
+		List<TopReviewsResponseHome> list = new ArrayList<>();
+		for(Rating r : rating)
+		{
+			TopReviewsResponseHome obj = new TopReviewsResponseHome();
+			obj.setFirstNmae(r.getClient().getFirstName());
+			obj.setLastName(r.getClient().getLastName());
+			obj.setCarBrand(r.getCar().getBrand());
+			obj.setCarModel(r.getCar().getCarModel());
+			obj.setRating(r.getRating());
+			obj.setFeedback(r.getFeedback());
+			list.add(obj);
+		}
+		return list;
 	}
 
 	

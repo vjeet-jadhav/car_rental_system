@@ -17,6 +17,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -60,6 +62,11 @@ public class User extends BaseEntity implements UserDetails{
 	@Enumerated(EnumType.STRING)
 	@Column(name="status",length=30,nullable = false)
 	private UserStatus userStatus;
+	
+	@NotBlank(message = "License number is mandatory")
+	@Pattern(regexp = "^[A-Z]{2}-\\d{2}-\\d{4}-\\d{6,7}$", message = "Invalid Indian driving license format. Expected format: XX-00-YYYY-XXXXXX")
+	@Column(name = "license_number", nullable = false, unique = true, length = 20)
+	private String licenseNumber;
 	
 	@OneToMany(mappedBy = "host",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Car> hostedCars = new ArrayList<>();
