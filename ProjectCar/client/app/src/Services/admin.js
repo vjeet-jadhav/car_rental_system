@@ -137,10 +137,10 @@ export async function getUserApi(email) {
 
 
 export async function restrictUserApi(remark,id) {
-  const url = `${config.serverUrl}/admin/restrictUser/${id}`
+  const url = `${config.serverUrl}/admin/restrictUser/${id}/${remark}`
   const body = remark;
   try {
-    const response = await axios.put(url,body,{
+    const response = await axios.put(url,{},{
       headers:{
         Authorization:`Bearer ${token}`
       }
