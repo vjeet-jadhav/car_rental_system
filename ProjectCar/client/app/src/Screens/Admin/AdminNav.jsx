@@ -1,15 +1,25 @@
-import React from 'react'
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext } from 'react'
+import { Link, useNavigate ,useLocation} from "react-router-dom";
+import { AuthContext } from '../../App';
 
 function AdminNav() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const {user, setUser} = useContext(AuthContext)
+  const isActive = (path) => location.pathname === path;
 
   function onLogout(){
-   sessionStorage.removeItem("token");
-   sessionStorage.removeItem("user");
+   sessionStorage.clear();
+   setUser(null);
    navigate("/");
   }
   
+  const buttonStyle = (path) => ({
+    backgroundColor: isActive(path) ? "#fb830bff" : "rgba(248, 91, 60, 1)",
+    border: "none",
+    color: isActive(path) ? "#ffffffff" : "#fff"
+  });
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary ">
       <div className="container">
@@ -46,19 +56,19 @@ function AdminNav() {
           </ul>
 
           <div className="d-flex align-items-center">
-            <Link to="/admin" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
+            <Link to="/admin" className="btn btn-primary px-3 me-2" style={buttonStyle("/admin")}>
               Schedule Agent
             </Link>
-            <Link to="/admin/register" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
+            <Link to="/admin/register" className="btn btn-primary px-3 me-2" style={buttonStyle("/admin/register")}>
               Register Agent
             </Link>
-            <Link to="/admin/restrictCar" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
+            <Link to="/admin/restrictCar" className="btn btn-primary px-3 me-2" style={buttonStyle("/admin/restrictCar")}>
               Cars 
             </Link>
-            <Link to="/admin/restrictUser" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
+            <Link to="/admin/restrictUser" className="btn btn-primary px-3 me-2" style={buttonStyle("/admin/restrictUser")}>
               Users
             </Link>
-            <Link to="/admin/edit" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
+            <Link to="/admin/edit" className="btn btn-primary px-3 me-2" style={buttonStyle("/admin/edit")}>
               Edit
             </Link>
             <button type="button" className="btn btn-primary me-3" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}} onClick={() => onLogout()}>

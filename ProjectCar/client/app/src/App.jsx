@@ -81,7 +81,7 @@ function App() {
       <AuthContext.Provider value={{ user, setUser}}>
         <Routes>
           <Route path="/" element={<Container></Container>}>
-            <Route path="admin" element={user ? <AdminContainer></AdminContainer> : <Home></Home>}>
+            <Route path="admin" element={user ? <AdminContainer></AdminContainer> : <ClientContainer/>}>
               <Route path="restrictCar" element={<CarList />}></Route>
               <Route path="restrictUser" element={<UserDetails></UserDetails>}> </Route>
               <Route path="edit" element={<Profile />} />
