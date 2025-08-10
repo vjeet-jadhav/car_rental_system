@@ -6,12 +6,7 @@ import java.util.List;
 import com.carrental.entity.CarFuelType;
 import com.carrental.entity.CarStatus;
 import com.carrental.entity.CarTransmissionType;
-import com.carrental.entity.Rating;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +18,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class CarResponseDTO {
-
+public class CarResponceWithOneImgDTO {
+	
 	private Long id;
 	
     private String brand;
@@ -51,9 +46,6 @@ public class CarResponseDTO {
 
     private AddressDTO address;
     
-    private List<CarImgResponseDTO> imagelist;
-    
-    private LocalDate sheduledFrom;
-    
-    private LocalDate sheduledTill;
+    private CarImgResponseDTO image;
+
 }
