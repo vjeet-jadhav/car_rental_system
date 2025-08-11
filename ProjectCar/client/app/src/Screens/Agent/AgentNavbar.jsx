@@ -1,17 +1,19 @@
 import React, { useContext } from 'react'
+
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from '../../App';
 
 function AgentNavbar() {
     const navigate = useNavigate();
 
-    const {user, setUser} = useContext(AuthContext)
+    const { user, setUser } = useContext(AuthContext)
 
-    function onLogout(){
-     sessionStorage.clear();
-     setUser(null);
-     navigate("/");
-  }
+    function onLogout() {
+        sessionStorage.clear();
+        setUser(null);
+        navigate("/");
+    }
+
 
     return (
         <div>
@@ -59,14 +61,16 @@ function AgentNavbar() {
                             <Link to="/agent/edit" className="btn btn-primary px-3 me-2" style={{ backgroundColor: 'rgba(248, 91, 60, 1)', border: 'none' }}>
                                 Profile
                             </Link>
+
                             <Link to="/user-login" className="btn btn-primary me-3" style={{ backgroundColor: 'rgba(248, 91, 60, 1)', border: 'none' }} onClick={onLogout}>
                                 LogOut
                             </Link>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </div>
+
+                        </div >
+                    </div >
+                </div >
+            </nav >
+        </div >
     )
 }
 
