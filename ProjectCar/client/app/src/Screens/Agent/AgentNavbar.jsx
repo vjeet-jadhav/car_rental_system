@@ -1,6 +1,16 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../App';
 function AgentNavbar() {
+    const navigate = useNavigate();
+    // SANKET 
+    const { user, setUser } = useContext(AuthContext)
+    const agentLogout = () => {
+        sessionStorage.clear();
+        setUser(null);
+        // toast.success("Successfully logged out");
+        navigate("/");
+    };
     return (
         <div>
             <nav className="navbar navbar-expand-lg bg-body-tertiary ">
@@ -47,9 +57,10 @@ function AgentNavbar() {
                             <Link to="/agent/edit" className="btn btn-primary px-3 me-2" style={{ backgroundColor: 'rgba(248, 91, 60, 1)', border: 'none' }}>
                                 Profile
                             </Link>
-                            <Link to="/user-login" className="btn btn-primary me-3" style={{ backgroundColor: 'rgba(248, 91, 60, 1)', border: 'none' }}>
+                            {/* SANKET */}
+                            <button onClick={agentLogout}  className="btn btn-primary me-3" style={{ backgroundColor: 'rgba(248, 91, 60, 1)', border: 'none' }}>
                                 LogOut
-                            </Link>
+                            </button>
                         </div>
                     </div>
                 </div>
