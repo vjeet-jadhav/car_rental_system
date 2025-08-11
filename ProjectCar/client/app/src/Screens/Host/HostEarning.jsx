@@ -25,7 +25,7 @@ const HostEarning = () => {
   return (
     <div className="overflow-x-auto px-4 py-6">
       <h2 className="text-3xl font-bold mb-6 text-center mt-4">
-        Host Total Earnings
+       Total Earnings
       </h2>
 
       {loading ? (
