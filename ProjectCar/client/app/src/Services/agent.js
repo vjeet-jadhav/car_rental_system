@@ -7,6 +7,7 @@ const token = sessionStorage.getItem('token');
 
 export const fetchHistory = async () => {
   try {
+    const token = sessionStorage.getItem('token');
     const url = `${config.serverUrl}/agent/history`
     const response = await axios.get(url, { headers: {
           Authorization: `Bearer ${token}`}
@@ -21,6 +22,7 @@ export const fetchHistory = async () => {
 
 export const fetchPendingRequests = async () => {
   try {
+    const token = sessionStorage.getItem('token');
     const url = `${config.serverUrl}/agent`
     const response = await axios.get(url, { headers: {
           Authorization: `Bearer ${token}`}
@@ -34,7 +36,7 @@ export const fetchPendingRequests = async () => {
 };
 
 export const verifyRequest = async (id) => {
-  // const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   const url = `${config.serverUrl}/agent/${id}/verify`
   const response = await axios.put(
     url,
@@ -52,6 +54,7 @@ export const verifyRequest = async (id) => {
 };
 
 export const rejectRequest = async (id) => {
+  const token = sessionStorage.getItem('token');
   const url = `${config.serverUrl}/agent/${id}/reject`
   const response = await axios.put(
     url,

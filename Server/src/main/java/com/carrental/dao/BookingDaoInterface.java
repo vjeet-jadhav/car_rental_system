@@ -65,6 +65,7 @@ public interface BookingDaoInterface extends JpaRepository<Booking, Long> {
 	        SELECT new com.carrental.dto.CarBookingHistoryDTO(
 	            b.client.firstName,
 	            b.client.lastName,
+	            b.client.mob_num,
 	            b.car.brand,
 	            b.car.carModel,
 	            b.car.carNumber,
@@ -75,6 +76,7 @@ public interface BookingDaoInterface extends JpaRepository<Booking, Long> {
 	        )
 	        FROM Booking b
 	        WHERE b.host.id = :userId
+	        and b.bookingStatus != com.carrental.entity.BookingStatus.PENDING
 	        ORDER BY b.bookingdate DESC
 	    """)
 	Optional<List<CarBookingHistoryDTO>> findHistoryByClientId(Long userId);

@@ -119,7 +119,7 @@ function CarBooking() {
                     <div className='d-flex justify-content-evenly align-content-center '>
                         {/* Main Image */}
                         <div>
-                            <img src="/Image/carBg1.jpg" alt="" className='border border-2 rounded-4' style={{ width: '400px', height: '410px' }} />
+                            <img src={carInfo.imagelist?.[0]?.imgUrl || '/Image/car-hero-section.svg'} alt="" className='border border-2 rounded-4' style={{ width: '400px', height: '410px' }} />
                         </div>
 
                         {/* Image Thumbnails and Car Info */}
@@ -127,12 +127,12 @@ function CarBooking() {
 
                             {/* Thumbnails */}
                             <div className='d-flex flex-row gap-2'>
-                                <img src="/Image/carBg1.jpg" alt="" style={{ maxWidth: '200px', height: '200px' }} className='rounded-4 border border-2' />
-                                <img src="/Image/carBg1.jpg" alt="" style={{ maxWidth: '200px', height: '200px' }} className='rounded-4 border border-2' />
+                                <img src={carInfo.imagelist?.[1]?.imgUrl || '/Image/car-hero-section.svg'} alt="" style={{ maxWidth: '200px', height: '200px' }} className='rounded-4 border border-2' />
+                                <img src={carInfo.imagelist?.[2]?.imgUrl || '/Image/car-hero-section.svg'} alt="" style={{ maxWidth: '200px', height: '200px' }} className='rounded-4 border border-2' />
                             </div>
                             <div className='d-flex flex-row gap-2'>
-                                <img src="/Image/carBg1.jpg" alt="" style={{ maxWidth: '200px', height: '200px' }} className='rounded-4 border border-2' />
-                                <img src="/Image/carBg1.jpg" alt="" style={{ maxWidth: '200px', height: '200px' }} className='rounded-4 border border-2' />
+                                <img src={carInfo.imagelist?.[3]?.imgUrl || '/Image/car-hero-section.svg'} alt="" style={{ maxWidth: '200px', height: '200px' }} className='rounded-4 border border-2' />
+                                <img src={carInfo.imagelist?.[4]?.imgUrl || '/Image/car-hero-section.svg'} alt="" style={{ maxWidth: '200px', height: '200px' }} className='rounded-4 border border-2' />
                             </div>
 
 

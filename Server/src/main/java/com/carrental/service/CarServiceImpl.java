@@ -87,7 +87,6 @@ public class CarServiceImpl implements CarService{
 //	    car2.setStatus(CarStatus.NOTVERIFIED);
 	    car2.setStatus(CarStatus.PENDING);
 	    car2.getAddress().setCar(car2);
-	    
 
 	    // Car is saved
 	    Car savedCar = carDao.save(car2); 
