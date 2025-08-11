@@ -2,12 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import "./CarInfo.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getCarsAfterFilter, getServiceAreaJS } from '../../Services/user';
+import { AuthContext } from "../../App";
 
 function CarInfo() {
 
 
   const location = useLocation();
   const navigate = useNavigate();
+  // const{setRani} = useContext(AuthContext);
   // derefference the content of previous component
   let { data = [], tripInfo = {}, city = "" } = location.state || {};
   // console.log(data);
@@ -81,6 +83,8 @@ function CarInfo() {
     // For New Booking
     sessionStorage.removeItem("paymentDone");
     console.log(car);
+    // sessionStorage.setItem("rani",JSON.stringify(car));
+    setRani(car);
     navigate("/carbooking", {
       state: {
         "carInfo": car,
@@ -287,7 +291,7 @@ function CarInfo() {
                       onClick={() => navigateToBookingCar(car)}
                     >
                       <img
-                        src="/Image/carBg1.jpg"
+                        src={car.imagelist?.[0]?.imgUrl || '/Image/car-hero-section.svg'}
                         alt="Car"
                         className="card-img-top"
                         style={{ height: "70%" }}

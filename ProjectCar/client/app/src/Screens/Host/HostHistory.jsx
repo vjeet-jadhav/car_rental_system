@@ -30,6 +30,7 @@ const HostHistory = () => {
         <thead className="bg-gray-100">
           <tr>
             <th className="p-3 border">User Name</th>
+            <th className="p-3 border">Contact Number</th>
             <th className="p-3 border">Brand</th>
             <th className="p-3 border">Model</th>
             <th className="p-3 border">Car Number</th>
@@ -44,6 +45,7 @@ const HostHistory = () => {
             history.map((entry, index) => (
               <tr key={index} className="hover:bg-gray-50">
                 <td className="p-3 border">{entry.firstName} {entry.lastName}</td>
+                <td className="p-3 border">{entry.mob_num}</td>
                 <td className="p-3 border">{entry.brand}</td>
                 <td className="p-3 border">{entry.carModel}</td>
                 <td className="p-3 border">{entry.carNumber}</td>
