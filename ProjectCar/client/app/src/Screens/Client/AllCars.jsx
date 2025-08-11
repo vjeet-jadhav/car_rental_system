@@ -32,7 +32,7 @@ function AllCars() {
                             {/* Car Card */}
                             <div className="card shadow-sm scale-up text-decoration-none">
                                 <img
-                                    src="/Image/carBg1.jpg"
+                                    src={car.imagelist?.[0]?.imgUrl || '/Image/car-hero-section.svg'}
                                     alt="Car"
                                     className="card-img-top"
                                     style={{ height: "70%" }}

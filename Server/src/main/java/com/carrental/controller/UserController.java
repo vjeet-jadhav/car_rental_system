@@ -112,7 +112,7 @@ public class UserController {
 	
 
 	@GetMapping("/topCars")
-	public ResponseEntity<?> uiTopCars()
+	public ResponseEntity<?> AllCars()
 	{
 		return ResponseEntity.ok(userService.getTopCars());
 	}
