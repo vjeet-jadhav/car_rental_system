@@ -84,7 +84,8 @@ public class CarServiceImpl implements CarService{
 	    // Map DTO to entity
 	    Car car2 = mapper.map(carDto, Car.class);
 	    car2.setId(null);
-	    car2.setStatus(CarStatus.NOTVERIFIED);
+//	    car2.setStatus(CarStatus.NOTVERIFIED);
+	    car2.setStatus(CarStatus.PENDING);
 	    car2.getAddress().setCar(car2);
 	    
 

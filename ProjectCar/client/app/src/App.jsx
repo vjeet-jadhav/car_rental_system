@@ -97,6 +97,7 @@ function App() {
               <Route path="history" element={<HostHistory></HostHistory>}></Route>
               <Route path="earning" element={<HostEarning></HostEarning>}></Route>
               <Route path="car/feedbacks" element={<CarRatings></CarRatings>}></Route>
+              <Route path="edit" element={<Profile />} />
             </Route>
 
 

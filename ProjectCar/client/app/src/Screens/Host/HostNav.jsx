@@ -53,7 +53,7 @@ function HostNav() {
             <Link to="/host/edit" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
               Edit
             </Link>
-            <button type="button" className="btn btn-primary me-3" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
+            <button type="button" className="btn btn-primary me-3" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}} >
               Logout
             </button>
           </div>

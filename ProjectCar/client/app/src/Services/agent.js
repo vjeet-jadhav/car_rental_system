@@ -3,7 +3,7 @@ import axios from 'axios';
 import { config } from "./config";
 import PendingRequests from './../Screens/Agent/PendingRequests';
 
-const token = localStorage.getItem('token');
+const token = sessionStorage.getItem('token');
 
 export const fetchHistory = async () => {
   try {
@@ -34,7 +34,7 @@ export const fetchPendingRequests = async () => {
 };
 
 export const verifyRequest = async (id) => {
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
   const url = `${config.serverUrl}/agent/${id}/verify`
   const response = await axios.put(
     url,
