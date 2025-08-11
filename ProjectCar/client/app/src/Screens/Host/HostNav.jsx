@@ -1,7 +1,20 @@
 import React from 'react'
-import { Link } from "react-router-dom";
+import { useContext } from 'react'
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from '../../App';
+
 
 function HostNav() {
+  const navigate = useNavigate();
+
+  const {user, setUser} = useContext(AuthContext)
+
+  function onLogout(){
+   sessionStorage.clear();
+   setUser(null);
+   navigate("/");
+  }
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary ">
       <div className="container">
@@ -53,7 +66,7 @@ function HostNav() {
             <Link to="/host/edit" className="btn btn-primary px-3 me-2" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
               Edit
             </Link>
-            <button type="button" className="btn btn-primary me-3" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}}>
+            <button type="button" className="btn btn-primary me-3" style={{backgroundColor:'rgba(248, 91, 60, 1)' , border:'none'}} onClick={onLogout}>
               Logout
             </button>
           </div>
