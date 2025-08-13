@@ -100,6 +100,7 @@ function App() {
               <Route path="earning" element={<HostEarning></HostEarning>}></Route>
                <Route path="edit" element={<Profile />} />
               <Route path="car/feedbacks" element={<CarRatings></CarRatings>}></Route>
+              <Route path="edit" element={<Profile />} />
             </Route>
 
 

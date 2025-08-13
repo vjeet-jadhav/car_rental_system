@@ -47,6 +47,8 @@ function RegisterAgent() {
       zipCode: "",
       mob_num: "",
       email: "",
+      dob:"",
+      license_num:""
     });
 
     navigate(-1); 
@@ -165,6 +167,33 @@ function RegisterAgent() {
               name="confirmPassword"
               placeholder="Confirm password"
               value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+
+         <div className="mb-4 row ">
+          <div className="col">
+            <label className="form-label">Date of Berth*</label>
+            <input
+              type="text"
+              className="form-control"
+              name="dob"
+              placeholder="Date of Berth"
+              value={formData.dob}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="col">
+            <label className="form-label">License Number *</label>
+            <input
+              type="text"
+              className="form-control"
+              name="license_num"
+              placeholder="License Number"
+              value={formData.license_num}
               onChange={handleChange}
               required
             />
