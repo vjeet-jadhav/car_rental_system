@@ -84,7 +84,7 @@ function CarInfo() {
     sessionStorage.removeItem("paymentDone");
     console.log(car);
     // sessionStorage.setItem("rani",JSON.stringify(car));
-    setRani(car);
+    
     navigate("/carbooking", {
       state: {
         "carInfo": car,

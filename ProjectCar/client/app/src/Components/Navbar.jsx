@@ -92,7 +92,7 @@ function Navbar() {
                   className="btn px-3 me-2"
                   style={buttonStyle("/become-host")}
                 >
-                  Become A Host
+                  Host A Car
                 </Link>
                 <Link
                   to="/edit"

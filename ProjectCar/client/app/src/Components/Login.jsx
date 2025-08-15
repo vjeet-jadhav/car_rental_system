@@ -31,14 +31,14 @@ function Login() {
       const result = await loginUser(email, password)
       if (result && result.status == 200) {
         console.log("Result from backend is ",JSON.stringify(result.data));
-        const token = sessionStorage.setItem("token", result.data);
+        sessionStorage.setItem("token", result.data);
         const decoded = jwtDecode(result.data);
         console.log("user contains " + JSON.stringify(decoded));
         setUser(decoded);
         const authorities = decoded.authorities;
 
         if (authorities == 'ADMIN') {
-          setTimeout(() => navigate("/admin"), 1000);
+          setTimeout(() => navigate("/admin"),0);
         } else if (authorities == 'AGENT') {
           setTimeout(() => navigate("/agent"), 1000);
         } else if (authorities == 'USER') {

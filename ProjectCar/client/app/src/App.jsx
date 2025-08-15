@@ -43,7 +43,7 @@ export const AuthContext = createContext();
 
 function App() {
   const [user, setUser] = useState(null);
-  
+
 
   // const [rani, setRani] = useState(() => {
   //   const setRani = sessionStorage.getItem("rani");
@@ -78,10 +78,10 @@ function App() {
 
   return (
     <>
-      <AuthContext.Provider value={{ user, setUser}}>
+      <AuthContext.Provider value={{ user, setUser }}>
         <Routes>
           <Route path="/" element={<Container></Container>}>
-            <Route path="admin" element={user ? <AdminContainer></AdminContainer> : <ClientContainer/>}>
+            <Route path="admin" element={user ? <AdminContainer></AdminContainer> : <ClientContainer />}>
               <Route path="restrictCar" element={<CarList />}></Route>
               <Route path="restrictUser" element={<UserDetails></UserDetails>}> </Route>
               <Route path="edit" element={<Profile />} />
@@ -94,11 +94,13 @@ function App() {
               <Route path="carregistration" element={<HostRegistration></HostRegistration>}></Route>
               <Route path="registrationform" element={<HostRegistrationForm></HostRegistrationForm>}></Route>
               <Route index element={<HostHomePage></HostHomePage>}></Route>
+              <Route path="edit" element={<Profile />} />
               <Route path="carinformation" element={<HostCarInformation></HostCarInformation>}></Route>
               <Route path="history" element={<HostHistory></HostHistory>}></Route>
               <Route path="earning" element={<HostEarning></HostEarning>}></Route>
                <Route path="edit" element={<Profile />} />
               <Route path="car/feedbacks" element={<CarRatings></CarRatings>}></Route>
+              <Route path="edit" element={<Profile />} />
             </Route>
 
 
@@ -122,7 +124,7 @@ function App() {
                 <Route path="become-host/registration-form" element={<HostRegistrationForm />} />
                 <Route path="user-booking" element={<ClientBooking />} />
                 <Route path="review-car" element={<ClientCarReview />} />
-                <Route path="/carbooking" element={<CarBooking />} />
+                <Route path="carbooking" element={<CarBooking />} />
               </Route>
 
             </Route>
