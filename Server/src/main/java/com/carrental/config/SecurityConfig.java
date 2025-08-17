@@ -64,7 +64,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.GET,"/user/getNearByCars/**").permitAll()
 
 
-				.requestMatchers(HttpMethod.GET,"/host").hasRole("HOST")
+				.requestMatchers(HttpMethod.GET,"/host").hasAnyRole("HOST","USER")
 				.requestMatchers(HttpMethod.POST, "/car/validate").hasAnyRole("HOST","USER")
 				.requestMatchers(HttpMethod.POST, "/car/registration").hasAnyRole("HOST","USER")
 				.requestMatchers(HttpMethod.PUT, "/car/update").hasRole("HOST")
