@@ -16,6 +16,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -47,6 +49,11 @@ public class Booking extends BaseEntity{
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
 	private BookingStatus bookingStatus;
+	
+	@NotBlank(message = "License number is mandatory")
+	@Pattern(regexp = "^[A-Z]{2}-\\d{2}-\\d{4}-\\d{6,7}$", message = "Invalid Indian driving license format. Expected format: XX-00-YYYY-XXXXXX")
+	@Column(name = "license_number", nullable = false, unique = true, length = 20)
+	private String licenseNumber;
 	
 	@ManyToOne
 	@JoinColumn(name="car_id", nullable = false)

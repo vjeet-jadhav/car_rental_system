@@ -14,6 +14,7 @@ public class CarBookingHistoryDTO {
 
 	private String firstName;
     private String lastName;
+    private String mob_num;
     
     private String brand;
     private String carModel;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAllAgents } from "../../Services/admin";
 import { getPendingCars , assignAgent} from "../../Services/admin";
 import { toast } from "react-toastify";
+import LoadingSpinner from "../../Components/LoadingSpinner";
 
 
 
@@ -13,6 +14,7 @@ function ScheduleAgenet() {
   const [agentId, setAgentId] = useState({
     agentId:0
   })
+  const [loading, setLoading] = useState(true);
 
   // console.log(cars);
 
@@ -38,11 +40,24 @@ function ScheduleAgenet() {
     setAgents(agentsResult.data);
   }
 
-  useEffect(() => {
-    getAgents();
-    loadCars();
-  },[agentId])
+  // useEffect(() => {
+  //   getAgents();
+  //   loadCars();
+  // },[])
 
+   useEffect(() => {
+    const timer = setTimeout(async () => {
+      await getAgents();
+      await loadCars();
+      setLoading(false);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if(loading){
+    return <LoadingSpinner></LoadingSpinner>;
+  }
   return (
     <div className="container mt-4">
       <h1 className="mb-3">Schedule Agents</h1>

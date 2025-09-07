@@ -1,11 +1,14 @@
 package com.carrental.dto;
 
+import java.time.LocalDate;
+
 import org.hibernate.validator.constraints.Length;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
@@ -43,4 +46,12 @@ public class UserRequestDto {
 	@NotBlank(message = "Mobile Number is Required")
 	@Length(max = 10,min=10, message = "Mobile Number Max Length Exceeded")
 	private String mob_num;
+	
+	@NotBlank(message = "License number is mandatory")
+	@Pattern(regexp = "^[A-Z]{2}-\\d{2}-\\d{4}-\\d{6,7}$", message = "Invalid Indian driving license format. Expected format: XX-00-YYYY-XXXXXX")
+	private String licenseNumber;
+	
+	@NotNull(message = "Date of birth is mandatory")
+	@Past(message = "Date of birth must be in the past")
+	private LocalDate dateOfBirth;
 }

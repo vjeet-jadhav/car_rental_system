@@ -2,7 +2,9 @@ import React, { useContext, useEffect, useState } from 'react'
 import './Home.css'
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 import { getAllCarCities, getAvailableCars, getFeedbacksForHome, getTopCars } from '../../Services/user';
+
 import Navbar from '../../Components/Navbar';
 import { AuthContext } from '../../App';
 
@@ -209,7 +211,7 @@ function Home() {
                         onClick={() => navigateToBookingCar(car)}
                       >
                         <img
-                          src="/Image/carBg1.jpg"
+                          src={car.imagelist?.[0]?.imgUrl || '/Image/car-hero-section.svg'}
                           alt="Car"
                           className="card-img-top"
                           style={{ height: "70%" }}

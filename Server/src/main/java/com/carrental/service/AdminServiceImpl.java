@@ -12,6 +12,7 @@ import com.carrental.dao.AdminDao;
 import com.carrental.dao.BookingDaoInterface;
 import com.carrental.dao.CarDaoInterface;
 import com.carrental.dao.PaymentDaoInterface;
+import com.carrental.dao.UserRemarkInterface;
 import com.carrental.dto.AgentResDTO;
 import com.carrental.dto.ApiResponse;
 import com.carrental.dto.BasicInfoDTO;
@@ -25,6 +26,7 @@ import com.carrental.entity.Car;
 import com.carrental.entity.CarStatus;
 import com.carrental.entity.Rating;
 import com.carrental.entity.User;
+import com.carrental.entity.UserRemark;
 import com.carrental.entity.UserRole;
 import com.carrental.entity.UserStatus;
 import com.carrental.exception.ApiException;
@@ -45,6 +47,7 @@ public class AdminServiceImpl implements AdminService {
 	private ModelMapper mapper;
 	private PasswordEncoder passwordEncoder;
 	private final UserService userService;
+	private final UserRemarkInterface userRemarkDao;
 
 	@Override
 	public AgentResDTO register(RegisterAgentDTO dto) {
@@ -116,10 +119,16 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public ApiResponse restrictUserById(Long userId) {
+	public ApiResponse restrictUserById(Long userId, String remark) {
 		// TODO Auto-generated method stub
 		User user = adminDao.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User with given id is not found !"));
 		user.setUserStatus(UserStatus.INACTIVE);
+		
+		UserRemark userRemark = new UserRemark();
+		userRemark.setRemark(remark);
+		userRemark.setUser(user);
+		
+		userRemarkDao.save(userRemark);
 
 		return new ApiResponse("User Restricted By Admin");
 	}

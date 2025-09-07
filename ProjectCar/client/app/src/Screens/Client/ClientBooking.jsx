@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 // import { getBooking } from '../../Services/user';
 import { getBooking } from '../../Services/user';
+import { AuthContext } from '../../App';
 function ClientBooking() {
 
     const [bookings, setBookings] = useState([]);
+    const{user}=useContext(AuthContext);
     const navigate = useNavigate();
     const getUserBooking = async () => {
         const result = await getBooking();

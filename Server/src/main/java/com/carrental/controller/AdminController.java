@@ -71,9 +71,9 @@ public class AdminController {
 		
 	}
 	
-	@PutMapping("/restrictUser/{userId}")
-	public ResponseEntity<?> restrictUser(@PathVariable Long userId){
-		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.restrictUserById(userId));
+	@PutMapping("/restrictUser/{userId}/{remark}")
+	public ResponseEntity<?> restrictUser(@PathVariable Long userId, @PathVariable String remark){
+		return ResponseEntity.status(HttpStatus.CREATED).body(adminService.restrictUserById(userId,remark));
 		
 	}
 	

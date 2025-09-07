@@ -21,7 +21,7 @@ import com.carrental.entity.CarTransmissionType;
 public interface CarDaoInterface extends JpaRepository<Car, Long> {
 
 
-	@Query("SELECT c FROM Car c WHERE c.status IN (CarStatus.AVAILABLE,CarStatus.BOOKED,CarStatus.VERIFIED)")
+	@Query("SELECT c FROM Car c WHERE c.status IN (CarStatus.AVAILABLE)")
 	List<Car> findAllCarsByStatus();
 
 	

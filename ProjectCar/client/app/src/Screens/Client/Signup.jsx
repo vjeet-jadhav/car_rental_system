@@ -15,7 +15,9 @@ function Signup() {
     city: "",
     state: "",
     zipCode: "",
-    mob_num: ""
+    mob_num: "",
+    licenseNumber: "",
+    dateOfBirth:""
   });
 
   const navigate = useNavigate();
@@ -69,18 +71,34 @@ function Signup() {
     } else if (!/^\d{10}$/.test(signInInfo.mob_num)) {
       toast.warn("Mobile Number must be exactly 10 digits");
     }
+    else if(!signInInfo.licenseNumber.trim())
+    {
+      toast.warn("License Number is required");
+    }else if(!/^[A-Z]{2}-\d{2}-\d{4}-\d{6,7}$/.test(signInInfo.licenseNumber.trim()))
+    {
+      toast.warn("Not a valid format of license");
+    }else if(!signInInfo.dateOfBirth)
+    {
+      toast.warn("Please Enter DOB");
+    }
     else {
 
       const result = await userSignUp(signInInfo);
-      // console.log(JSON.stringify(result.data));
-      if (result && result.status == 201) {
+      console.log(JSON.stringify(result.data.message));
+      console.log(JSON.stringify(result.data.statusCode));
+      console.log(JSON.stringify(result.data));
+
+
+       if(result && result.data.statusCode === 400)
+      {
+        toast.success(result.data.message);
+      }else if (result && result.status === 201) {
         toast.success("Regestration successfully...)");
         navigate("/user-login");
       }
-      else
-      {
+      else {
         console.log("Error is comming");
-       toast.warn("Duplicate Email Found, try with another email.:)"); 
+        toast.warn("Duplicate Email Found, try with another email.:)");
       }
     }
 
@@ -164,6 +182,27 @@ function Signup() {
                 <input type="number" id='zip' className="form-control mb-4" placeholder="zipcode"
                   onChange={(e) => setSignInInfo({ ...signInInfo, zipCode: e.target.value })} />
               </div>
+              <div className="col-6 mb-3">
+                <label className="form-check-label ms-2 mb-3 fw-bold" htmlFor="zip"> License :</label>
+                <input
+                  type="text"
+                  id="lic"
+                  className="form-control mb-4"
+                  placeholder="MH-XX-XXXX-XXXXX"
+                  required
+                  pattern="^[A-Z]{2}-\\d{2}-\\d{4}-\\d{6,7}$"
+                  title="Enter license in format: XX-00-YYYY-XXXXXX"
+                  onChange={(e) => setSignInInfo({ ...signInInfo, licenseNumber: e.target.value.toUpperCase() })}
+                  style={{ textTransform: "uppercase" }}
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-6 mb-3">
+                <label className="form-check-label ms-2 mb-3 fw-bold" htmlFor="dob"> Bade Of Birth :</label>
+                <input type="date" id='dob' className="form-control mb-4" required
+                  onChange={(e) => setSignInInfo({ ...signInInfo, dateOfBirth: e.target.value })} />
+              </div>
             </div>
 
             <div className="row">
@@ -172,7 +211,7 @@ function Signup() {
                   onClick={handleSignIn}>Sign-In</button>
               </div>
               <div className="col-6 ">
-                <Link to="/user-login" style={{ backgroundColor: '#fb8500', color: '#fff' }} className="btn  w-100 fw-bold">Login-In</Link>
+                <Link to="/user-login" style={{ backgroundColor: '#fb8500', color: '#fff' }} className="btn  w-100 fw-bold">Login</Link>
               </div>
             </div>
 

@@ -78,9 +78,18 @@ export const Component = () => {
     
   }
 
-  useEffect(() =>{
-    getBasicInfo();
-  },[]);
+  // useEffect(() =>{
+  //   getBasicInfo();
+  // },[]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      getBasicInfo();
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
 
   return (
     <div className="container my-5" >

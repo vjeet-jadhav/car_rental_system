@@ -23,7 +23,7 @@ public interface AdminService {
 
 	ApiResponse restrictCarById(Long carId);
 
-	ApiResponse restrictUserById(Long carId);
+	ApiResponse restrictUserById(Long carId, String remark);
 
 	List<PendingCarDto> getPendingCars();
 

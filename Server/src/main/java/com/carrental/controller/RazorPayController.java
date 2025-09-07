@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.carrental.config.RazorPayConfig;
+import com.carrental.dao.UserDaoInterface;
 import com.carrental.dto.BookingRequestComDto;
 import com.carrental.dto.CarPaymentDto;
 import com.carrental.dto.PaymentRequestDto;
@@ -38,9 +39,10 @@ public class RazorPayController {
 	
 	private RazorPayConfig razorConfig;
 	private RazorpayClient razorpayClient;
+	
 //	For adding the details to our data base;
 	private UserController userCon;
-	private ModelMapper modelMapper;
+	private UserDaoInterface userDao;
     
 	
 	@PostMapping("/create-order")
